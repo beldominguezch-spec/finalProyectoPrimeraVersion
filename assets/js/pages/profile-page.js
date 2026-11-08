@@ -69,4 +69,54 @@ if (window.protegerPagina("./login.html")) {
 
         mensaje.textContent = "Cambios guardados correctamente.";
     });
+
+    // Cambio de contraseña: la nueva solo se guarda si todas las comprobaciones pasan.
+    const formularioClave = document.getElementById("passwordForm");
+    const claveActual = document.getElementById("passwordActual");
+    const claveNueva = document.getElementById("passwordNueva");
+    const claveConfirmar = document.getElementById("passwordConfirmar");
+    const mensajeClave = document.getElementById("passwordMessage");
+
+    formularioClave.addEventListener("submit", function (evento) {
+        evento.preventDefault();
+        mensajeClave.textContent = "";
+
+        if (claveActual.value === "" || claveNueva.value === "" || claveConfirmar.value === "") {
+            mensajeClave.textContent = "Complete los tres campos de contraseña.";
+            return;
+        }
+
+        const usuarioActual = window.obtenerUsuarioActual();
+        if (usuarioActual === null) {
+            window.location.replace("./login.html");
+            return;
+        }
+        const cuentas = leerCuentas();
+        const cuentaActual = buscarUsuario(usuarioActual.correo, cuentas);
+        if (cuentaActual === null) {
+            mensajeClave.textContent = "No se encontró la cuenta.";
+            return;
+        }
+
+        if (claveActual.value !== cuentaActual.clave) {
+            mensajeClave.textContent = "La contraseña actual no es correcta. No se cambió nada.";
+            return;
+        }
+        // Mismo mínimo que pide el registro.
+        if (claveNueva.value.length < 6) {
+            mensajeClave.textContent = "La nueva contraseña debe tener al menos 6 caracteres.";
+            return;
+        }
+        if (claveNueva.value !== claveConfirmar.value) {
+            mensajeClave.textContent = "La nueva contraseña y su confirmación no coinciden. No se cambió nada.";
+            return;
+        }
+
+        cuentaActual.clave = claveNueva.value;
+        localStorage.setItem("paginas_cuentas_v1", JSON.stringify(cuentas));
+        claveActual.value = "";
+        claveNueva.value = "";
+        claveConfirmar.value = "";
+        mensajeClave.textContent = "Contraseña actualizada correctamente.";
+    });
 }

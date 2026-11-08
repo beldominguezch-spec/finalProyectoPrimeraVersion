@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historial de pedidos | Páginas del Tiempo</title>
+    <link rel="shortcut icon" href="../assets/img/favicon/libro.png" type="image/x-icon">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/pages/auth.css">
+    <link rel="stylesheet" href="../assets/css/pages/profile.css">
+    <link rel="stylesheet" href="../assets/css/pages/orders.css">
+</head>
+
+<body>
+    <header>
+        <div class="header-top">
+            <div class="logo">
+                <a href="../index.html">
+                    <img src="../assets/img/logo/libro.png" alt="Logo Páginas del Tiempo">
+                    <div class="logo-content">
+                        <h1>PÁGINAS DEL TIEMPO</h1>
+                        <p>LIBROS QUE CUENTAN HISTORIAS</p>
+                    </div>
+                </a>
+            </div>
+
+            <div class="search">
+                <input type="search" id="search" placeholder="🔍 Buscar libro, autor o ISBN">
+                <button type="submit">Buscar</button>
+            </div>
+
+            <div class="actions">
+                <div class="icon-actions">
+                    <a href="./login.html">
+                        <img src="../assets/img/icons/actions/favorito.png" alt="Ver favoritos">
+                    </a>
+                    <a href="./cart.html">
+                        <img src="../assets/img/icons/actions/carrito-de-compras.png" alt="Ver carrito">
+                    </a>
+                </div>
+                <div class="auth-actions">
+                    <a href="./login.html" class="login-btn">Iniciar sesión</a>
+                    <a href="./register.html" class="register-btn">Registrarse</a>
+                </div>
+            </div>
+        </div>
+
+        <nav class="header-nav" aria-label="Navegación principal">
+            <ul>
+                <li><a href="../index.html">Inicio</a></li>
+                <li><a href="./book-categories.html">Libros</a></li>
+                <li><a href="./about-us.html">Sobre Nosotros</a></li>
+                <li><a href="./contact.html">Contáctanos</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="profile-page">
+        <section class="profile-panel" aria-labelledby="ordersTitle">
+            <h2 id="ordersTitle">Historial de pedidos</h2>
+            <p>Consulta las compras que has realizado con tu cuenta.</p>
+
+            <div id="ordersList"></div>
+            <div id="orderDetail" hidden></div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-brand">
+            <h3>PÁGINAS DEL TIEMPO</h3>
+            <p>Libros que cuentan historias</p>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 PÁGINAS DEL TIEMPO - Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script src="../assets/js/data-initial.js"></script>
+    <script src="../assets/js/data/reservas.js"></script>
+    <script src="../assets/js/catalog.js"></script>
+    <script src="../assets/js/auth.js"></script>
+    <script type="module" src="../assets/js/pages/orders-page.js"></script>
+</body>
+
+</html>

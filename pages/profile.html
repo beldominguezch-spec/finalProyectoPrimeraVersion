@@ -59,6 +59,7 @@
         <section class="profile-panel" aria-labelledby="profileTitle">
             <h2 id="profileTitle">Mi perfil</h2>
             <p>Consulta y actualiza los datos de tu cuenta.</p>
+            <p><a href="./orders.html">Ver mi historial de pedidos</a></p>
 
             <form id="profileForm">
                 <div class="form-group">
@@ -79,6 +80,28 @@
                 </div>
                 <button type="submit" class="btn-submit">Guardar cambios</button>
                 <p id="profileMessage" role="status" aria-live="polite"></p>
+            </form>
+        </section>
+
+        <section class="profile-panel" aria-labelledby="passwordTitle">
+            <h2 id="passwordTitle">Cambiar contraseña</h2>
+            <p>Para cambiarla, escribe primero la contraseña actual.</p>
+
+            <form id="passwordForm" novalidate>
+                <div class="form-group">
+                    <label for="passwordActual">Contraseña actual</label>
+                    <input type="password" id="passwordActual" autocomplete="current-password">
+                </div>
+                <div class="form-group">
+                    <label for="passwordNueva">Nueva contraseña</label>
+                    <input type="password" id="passwordNueva" autocomplete="new-password" placeholder="Mínimo 6 caracteres">
+                </div>
+                <div class="form-group">
+                    <label for="passwordConfirmar">Confirmar nueva contraseña</label>
+                    <input type="password" id="passwordConfirmar" autocomplete="new-password">
+                </div>
+                <button type="submit" class="btn-submit">Cambiar contraseña</button>
+                <p id="passwordMessage" role="status" aria-live="polite"></p>
             </form>
         </section>
     </main>

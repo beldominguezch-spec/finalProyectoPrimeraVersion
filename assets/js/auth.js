@@ -329,6 +329,7 @@ document.addEventListener("DOMContentLoaded", function () {
         rutaPerfil = enPaginas ? "./proveedor.html" : "./pages/proveedor.html";
     }
     const rutaLogin = enPaginas ? "./login.html" : "./pages/login.html";
+    const rutaPedidos = enPaginas ? "./orders.html" : "./pages/orders.html";
 
     for (let i = 0; i < zonas.length; i = i + 1) {
         const contenedor = document.createElement("div");
@@ -368,6 +369,12 @@ document.addEventListener("DOMContentLoaded", function () {
         });
 
         menu.appendChild(perfil);
+        if (usuario.rol === "User") {
+            const pedidos = document.createElement("a");
+            pedidos.href = rutaPedidos;
+            pedidos.textContent = "Mis pedidos";
+            menu.appendChild(pedidos);
+        }
         menu.appendChild(salir);
         contenedor.appendChild(burbuja);
         contenedor.appendChild(menu);

@@ -57,6 +57,18 @@ Copias de seguridad: `../_backup/` (una por bloque).
 - Número de pedido corregido: ahora es `PDT-AAAA-NNNNNN` con contador que solo sube (`paginas_contador_pedidos_v1`, `generarNumeroPedido()` en `storage-service.js`, asignado en `confirmarCompra`) y revisado contra los pedidos guardados. Antes usaba la hora en ms y podía repetirse. Verificado: 6 pedidos seguidos con reloj detenido, todos distintos; la factura y la guía siguen bien. Los pedidos anteriores conservan su número `PDT-<hora>`. Archivos: models/order.js, services/shop-service.js, services/storage-service.js.
 - Archivos: models/order.js, services/storage-service.js, services/shop-service.js, pages/cart-page.js, pages/checkout.js, pages/cart.html.
 
+## Correcciones previas al bloque 6 (TERMINADAS)
+**1. Cambiar contraseña (pages/profile.html)**
+- Segundo formulario "Cambiar contraseña" debajo del de datos: actual, nueva y confirmar. Lógica en `profile-page.js`, sobre la clave `clave` de `paginas_cuentas_v1` (la misma que usa el login).
+- Validaciones: ningún campo vacío; la actual debe coincidir; nueva de al menos 6 caracteres (mismo mínimo que el registro); nueva = confirmación. Si algo falla se muestra el mensaje y NO se cambia nada. Si todo está bien se guarda, se limpian los campos y se confirma.
+- Probado (Chrome headless): vacío, actual vacía, actual incorrecta, nueva corta, confirmación distinta (todos sin cambiar la clave), cambio correcto, y que la clave anterior deja de servir como "actual".
+**2. Historial de pedidos (pages/orders.html, assets/js/pages/orders-page.js, assets/css/pages/orders.css)**
+- Acceso: "Mis pedidos" en el menú de la burbuja (solo clientes, `auth.js`) y enlace en el perfil. Solo entra el rol Cliente.
+- Lee `paginas_pedidos_v1` y muestra solo los que tienen `usuarioId` igual al de la sesión, del más reciente al más antiguo. No crea, modifica ni borra pedidos. Sin pedidos: "Aún no tienes pedidos registrados."
+- Lista: PDT, fecha, libros, total, estado, guía SIM. Detalle: libros por condición con cantidad, precio unitario y subtotal, subtotal/envío/total, datos de envío de esa compra, "Tarjeta (pago simulado)" y guía, con acceso a la ventana de guía de demostración (mismo aviso y enlace a Interrapidísimo). Pedidos antiguos sin guía reciben una única al abrir la ventana (`asegurarGuia`).
+- Probado: cliente con 2 pedidos ve solo los suyos (más reciente primero); otro cliente ve solo el suyo y no aparece el título del primero; cliente sin compras ve el mensaje; el número de pedidos guardados no cambia; cerrar sesión solo borra la sesión, no los pedidos.
+- Archivos modificados: profile.html, profile-page.js, profile.css, auth.js. Nuevos: orders.html, orders-page.js, orders.css. Respaldo en `_backup/Frontend-correcciones-*`.
+
 ## Pendientes
 - Admin: validar precio base mínimo $20.000 y estado Excelente/Bueno/Aceptable al crear/editar libros (bloque 6).
 - Bloques 3-8 según el orden acordado.

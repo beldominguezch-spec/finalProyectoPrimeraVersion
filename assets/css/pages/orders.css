@@ -1,0 +1,162 @@
+/* Historial de pedidos del cliente. Usa el panel y los colores del perfil. */
+
+.order-card {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem 1.25rem;
+    margin-bottom: 1rem;
+    padding: 1rem 1.2rem;
+    background-color: var(--bg-main);
+    border: 1px solid var(--brown-light);
+    border-radius: 10px;
+}
+
+.order-card strong {
+    display: block;
+    color: var(--brown-dark);
+    font-size: 1.05rem;
+}
+
+.order-card p {
+    margin: 0.2rem 0 0;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+
+.orders-btn {
+    padding: 0.65rem 1.2rem;
+    color: #fff;
+    background-color: var(--brown-dark);
+    border: none;
+    border-radius: 9px;
+    font-family: inherit;
+    font-size: 0.9rem;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.orders-btn:hover {
+    background-color: var(--brown-medium);
+}
+
+.orders-empty {
+    padding: 1.5rem;
+    text-align: center;
+    color: var(--text-muted);
+    background-color: var(--bg-secondary);
+    border: 2px dashed var(--brown-light);
+    border-radius: 10px;
+}
+
+/* Detalle de un pedido */
+#orderDetail h3 {
+    margin: 0 0 0.3rem;
+    color: var(--brown-dark);
+}
+
+#orderDetail table {
+    width: 100%;
+    margin: 1rem 0;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+}
+
+#orderDetail th,
+#orderDetail td {
+    padding: 0.55rem 0.5rem;
+    text-align: left;
+    border-bottom: 1px solid var(--brown-light);
+}
+
+#orderDetail th {
+    color: var(--brown-dark);
+}
+
+.order-totals p {
+    margin: 0.25rem 0;
+    text-align: right;
+}
+
+.order-info {
+    margin: 1rem 0;
+    padding: 0.9rem 1rem;
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--brown-light);
+    border-radius: 8px;
+    line-height: 1.6;
+}
+
+.order-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 1rem;
+}
+
+/* Ventana de la guía de demostración (mismo aspecto que la del carrito) */
+.track-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 10001;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    background-color: rgba(26, 18, 12, 0.6);
+}
+
+.track-modal {
+    position: relative;
+    width: 100%;
+    max-width: 22rem;
+    padding: 1.75rem 1.5rem 1.5rem;
+    background-color: var(--bg-main);
+    border: 2px solid var(--border-color);
+    border-radius: 10px;
+    box-shadow: 5px 5px 0 rgba(0, 0, 0, 0.25);
+    text-align: center;
+}
+
+.track-modal h2 {
+    margin-bottom: 0.5rem;
+    font-size: 1.25rem;
+    color: var(--text-strong);
+}
+
+.track-modal p {
+    margin-bottom: 1.25rem;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: var(--text-muted);
+}
+
+.track-icon {
+    margin-bottom: 0.5rem;
+    font-size: 2.5rem;
+}
+
+.track-close {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.75rem;
+    background: none;
+    border: none;
+    font-size: 1.6rem;
+    line-height: 1;
+    color: var(--brown-dark);
+    cursor: pointer;
+}
+
+@media (max-width: 600px) {
+    .order-card {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    #orderDetail table {
+        font-size: 0.8rem;
+    }
+}
