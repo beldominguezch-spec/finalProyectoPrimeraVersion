@@ -1,0 +1,145 @@
+/* 
+===============================================================================================
+CONTACT PAGE STYLES
+===============================================================================================
+*/
+
+/* 
+======================================================
+GENERAL CONTAINER
+======================================================
+*/
+
+.contact-container {
+    width: 90%;
+    margin: 2.5rem auto 3.75rem auto;
+}
+
+.contact-container h2 {
+    text-align: center;
+    font-size: 1.7rem;
+    margin: 1.875rem 0 1.5625rem 0;
+}
+
+/* 
+======================================================
+SECTION: CONTACT / HERO
+======================================================
+*/
+
+.methods-grid, .hours-grid {
+    display: flex;
+    text-align: center;
+}
+
+.method-card {
+    width: 25%;
+}
+
+.method-card img {
+    width: 2.8125rem;
+    margin: 0 auto;
+}
+
+.method-card h3 {
+    margin: 1rem 0 0.625rem 0;
+}
+
+.method-card span, .contact-hero-subtitle {
+    font-weight: bold;
+    font-size: 1rem;
+}
+
+.method-card a:hover {
+    text-decoration: underline;
+    color: var(--link-hover);
+}
+
+/* 
+======================================================
+SECTION: CONTACT HOURS
+======================================================
+*/
+
+.hours-grid {
+    border-bottom: 2px solid var(--border-color);
+    padding-bottom: 1.25rem;
+}
+
+.hours-card {
+    width: 33.33%;
+    padding: 0.625rem 0;
+}
+
+.separator-hours {
+    width: 0.125rem;
+    background-color: var(--border-color);
+}
+
+/* 
+======================================================
+SECTION: CONTACT FORM
+======================================================
+*/
+
+.contact-form-container p {
+    text-align: center;
+}
+
+.form-group {
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+}
+
+.form-group label {
+    padding: 0.375rem;
+    margin: 1rem 0 0.125rem 0;
+}
+
+.form-group input, 
+.form-group select,
+.form-group textarea {
+    background-color: var(--bg-soft);
+    background-image: url("https://www.transparenttextures.com/patterns/light-paper-fibers.png");
+    padding: 0.375rem;
+    margin: 0.125rem;
+    border-radius: 8px;
+    border: 2px solid var(--border-color);
+    outline: none;
+}
+
+.form-group input:focus, 
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: 2px dotted var(--brown-dark);
+}
+
+.form-group span, .contact-final-container span {
+    color: var(--bg-gradient-red);
+}
+
+.btn-submit {
+    display: flex;
+    margin: 1.875rem auto 2.5rem auto;
+    background-color: var(--btn-bg);
+    color: var(--bg-main);
+    border: none;
+    padding: 1.2rem 2.5rem;
+    border-radius: 10px;
+}
+
+.btn-submit:hover {
+    background-color: var(--btn-hover);
+    font-weight: bold;
+}
+
+.btn-submit:active {
+    background: var(--btn-active);
+}
+
+.contact-final-container p{
+    text-align: center;
+    margin-top: 1rem;
+}

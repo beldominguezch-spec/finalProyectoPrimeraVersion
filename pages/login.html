@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet">
+
+    <!-- CSS del proyecto -->
+    <link rel="stylesheet" href="./../assets/css/style.css">
+    <link rel="stylesheet" href="./../assets/css/pages/auth.css">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="./../assets/img/favicon/libro.png" type="image/x-icon">
+    <title>Iniciar Sesión</title>
+
+    <!-- Scripts de Catálogo y Autenticación -->
+    <script src="./../assets/js/data-initial.js"></script>
+    <script src="./../assets/js/data/reservas.js"></script>
+    <script src="./../assets/js/catalog.js"></script>
+    <script src="./../assets/js/auth.js"></script>
+</head>
+
+<body>
+
+    <header>
+        <!-- Parte Superior -->
+        <div class="header-top">
+            <div class="logo">
+                <a href="./../index.html">
+                    <img src="./../assets/img/logo/libro.png" alt="Logo pag">
+                    <div class="logo-content">
+                        <h1>PÁGINAS DEL TIEMPO</h1>
+                        <p>LIBROS QUE CUENTAN HISTORIAS</p>
+                    </div>
+                </a>
+            </div>
+
+            <div class="search">
+                <input type="search" id="search" placeholder="🔍 Buscar libro, autor o ISBN">
+                <button type="submit">Buscar</button>
+            </div>
+
+            <div class="actions">
+                <div class="icon-actions">
+
+                    <a href="./login.html">
+                        <img src="./../assets/img/icons/actions/favorito.png" alt="Ver favoritos">
+                    </a>
+
+                    <a href="./cart.html">
+                        <img src="./../assets/img/icons/actions/carrito-de-compras.png" alt="Ver carrito">
+                    </a>
+
+                </div>
+
+                <div class="auth-actions">
+
+                    <a href="./login.html" class="login-btn">Iniciar sesión</a>
+                    <a href="./register.html" class="register-btn">Registrarse</a>
+
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Navegacion -->
+        <nav class="header-nav" aria-label="Navegación principal">
+            <ul>
+                <li><a href="./../index.html">Inicio</a></li>
+                <li><a href="./book-categories.html">Libros</a></li>
+                <li><a href="./about-us.html">Sobre Nosotros</a></li>
+                <li><a href="./contact.html">Contáctanos</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+
+        <div class="login-page-wrapper">
+
+            <section class="login-form">
+
+                <div class="login-form-container">
+
+                    <h2>INICIAR SESIÓN</h2>
+
+                    <div class="login-welcome-text">
+
+                        <p class="login-notice">
+                            Para guardar tus libros <strong>favoritos</strong> y usar el <strong>carrito de compras</strong>, necesitas iniciar sesión en
+                            tu cuenta.
+                        </p>
+
+                        <p>
+                            Ingresa a <strong>Páginas del Tiempo</strong> y continúa tu experiencia literaria.
+                        </p>
+
+                    </div>
+
+                    <form action="javascript:void(0);" onsubmit="event.preventDefault(); return (window.ejecutarLogin ? window.ejecutarLogin(event) : false);" id="loginForm">
+
+                        <div class="form-group">
+                            <label for="email">Correo electrónico:</label>
+                            <input type="email" name="email" id="email" placeholder="Ej: johndoe@gmail.com" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="password">Contraseña:</label>
+                            <input type="password" name="password" id="password" placeholder="Tu contraseña" required>
+                        </div>
+
+                        <button type="submit" class="btn-submit" id="btnLoginSubmit" onclick="event.preventDefault(); return (window.ejecutarLogin ? window.ejecutarLogin(event) : false);">Ingresar</button>
+
+                        <div class="form-footer-actions">
+
+                            <p class="form-legal">
+                                ¿Olvidaste tu contraseña? <a href="#">Recupérala aquí</a>
+                            </p>
+
+                            <p class="form-redirect">
+                                ¿No tienes una cuenta? <a href="./register.html">Regístrate</a>
+                            </p>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </section>
+
+        </div>
+
+    </main>
+
+    <footer class="footer">
+        <!-- Marca -->
+        <div class="footer-brand">
+            <h3>PÁGINAS DEL TIEMPO</h3>
+            <p>Libros que cuentan historias</p>
+        </div>
+
+        <!-- Contenido -->
+        <div class="footer-content">
+
+            <div class="footer-links">
+                <h4>Explorar</h4>
+                <ul>
+                    <li><a href="./../index.html">Inicio</a></li>
+                    <li><a href="./book-categories.html">Libros</a></li>
+                    <li><a href="./about-us.html">Sobre Nosotros</a></li>
+                    <li><a href="./../index.html#categories">Categorías</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-help">
+                <h4>Ayuda</h4>
+                <ul>
+                    <li><a href="#">Preguntas frecuentes</a></li>
+                    <li><a href="#">Envíos</a></li>
+                    <li><a href="#">Devoluciones</a></li>
+                    <li><a href="./contact.html">Contáctanos</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-social-pay">
+
+                <h4>Síguenos</h4>
+                <div class="social-icons">
+                    <a href="#" target="_blank">
+                        <img src="./../assets/img/icons/social/instagram.svg" alt="Instagram" title="Instagram">
+                    </a>
+                    <a href="#" target="_blank">
+                        <img src="./../assets/img/icons/social/facebook.svg" alt="Facebook" title="Facebook">
+                    </a>
+                    <a href="#" target="_blank">
+                        <img src="./../assets/img/icons/social/gmail.svg" alt="Gmail" title="Gmail">
+                    </a>
+                </div>
+
+                <h4>Métodos de pago</h4>
+                <div class="payment-icons">
+                    <img src="./../assets/img/icons/payment/visa.svg" alt="Visa" title="Visa">
+                    <img src="./../assets/img/icons/payment/mastercard.svg" alt="Mastercard" title="Mastercard">
+                    <img src="./../assets/img/icons/payment/american-express.svg" alt="American Express"
+                        title="American Express">
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2026 PÁGINAS DEL TIEMPO - Todos los derechos reservados.</p>
+        </div>
+    </footer>
+</body>
+
+</html>

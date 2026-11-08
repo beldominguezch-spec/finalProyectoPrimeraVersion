@@ -1,0 +1,371 @@
+/* 
+===============================================================================================
+BOOK CARD & GRID COMPONENT STYLES
+Vintage aesthetic matching Páginas del Tiempo design system
+===============================================================================================
+*/
+
+/* CONTENEDOR DE CUADRÍCULA DE LIBROS */
+.books-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+    gap: 1.5rem;
+    padding: 1rem 0;
+    width: 100%;
+}
+
+/* TARJETA INDIVIDUAL DE LIBRO */
+.book-card {
+    background-color: var(--bg-card);
+    background-image: url("https://www.transparenttextures.com/patterns/cream-paper.png");
+    border: 2px solid var(--border-color);
+    box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.18);
+    border-radius: 6px;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.book-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.24);
+    background-color: var(--bg-secondary);
+}
+
+/* CONTENEDOR DE PORTADA */
+.book-card-cover {
+    position: relative;
+    width: 100%;
+    height: 230px;
+    background-color: var(--bg-soft);
+    border: 1px solid var(--brown-medium);
+    border-radius: 4px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.1), 2px 2px 5px rgba(0,0,0,0.25);
+    margin-bottom: 0.85rem;
+}
+
+/* EFECTO LOMO DE LIBRO */
+.book-card-cover::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 12px;
+    background: linear-gradient(90deg, rgba(0,0,0,0.3) 0%, rgba(255,255,255,0.2) 50%, rgba(0,0,0,0.15) 100%);
+    z-index: 2;
+    pointer-events: none;
+}
+
+.book-card-cover img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.book-card:hover .book-card-cover img {
+    transform: scale(1.03);
+}
+
+/* ETIQUETA DE CATEGORÍA */
+.book-badge {
+    font-size: 0.72rem;
+    font-weight: bold;
+    padding: 3px 8px;
+    border-radius: 3px;
+    border: 1px solid var(--border-color);
+    box-shadow: 1px 1px 2px rgba(0,0,0,0.25);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.book-badge.category {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    background-color: rgba(245, 235, 221, 0.92);
+    color: var(--brown-dark);
+    font-size: 0.7rem;
+    padding: 2px 6px;
+    border: 1px solid var(--brown-medium);
+    border-radius: 3px;
+    z-index: 3;
+    max-width: 120px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* INFORMACIÓN DEL LIBRO */
+.book-card-info {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.book-card-title {
+    font-size: 1.05rem;
+    font-weight: bold;
+    color: var(--text-strong);
+    margin-bottom: 0.3rem;
+    line-height: 1.3;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-height: 2.6rem;
+}
+
+.book-card-author {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    font-style: italic;
+    margin-bottom: 0.5rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.book-card-rating {
+    font-size: 0.85rem;
+    color: #d97706;
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+.book-card-rating span.rating-num {
+    color: var(--text-muted);
+    font-size: 0.78rem;
+}
+
+/* PRECIO Y STOCK */
+.book-card-price-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-top: auto;
+    padding-top: 0.6rem;
+    border-top: 1px dotted var(--brown-medium);
+    margin-bottom: 0.8rem;
+}
+
+.book-card-price {
+    font-size: 1.15rem;
+    font-weight: bold;
+    color: var(--brown-dark);
+}
+
+.book-card-stock {
+    font-size: 0.78rem;
+    font-weight: bold;
+}
+
+.book-card-stock.available {
+    color: #166534;
+}
+
+.book-card-stock.out {
+    color: #991b1b;
+}
+
+/* BOTONES DE ACCIÓN */
+.book-card-actions {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.btn-card-detail {
+    flex: 1;
+    background-color: var(--btn-bg);
+    color: var(--bg-main);
+    border: 1px solid var(--border-color);
+    padding: 0.55rem 0.7rem;
+    border-radius: 6px;
+    font-family: inherit;
+    font-size: 0.88rem;
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.2s ease;
+    box-shadow: 2px 2px 0 rgba(0,0,0,0.15);
+}
+
+.btn-card-detail:hover {
+    background-color: var(--btn-hover);
+    font-weight: bold;
+}
+
+.btn-card-cart {
+    background-color: var(--bg-soft);
+    border: 1px solid var(--border-color);
+    padding: 0.55rem 0.7rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    transition: all 0.2s ease;
+    box-shadow: 2px 2px 0 rgba(0,0,0,0.15);
+}
+
+.btn-card-cart:hover {
+    background-color: var(--brown-light);
+    color: #fff;
+    transform: scale(1.05);
+}
+
+.btn-card-fav {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+    padding: 0.2rem;
+    line-height: 1;
+}
+
+.btn-card-fav:hover {
+    transform: scale(1.2);
+}
+
+.btn-card-fav.active {
+    color: #dc2626;
+}
+
+/* LISTA DE CATEGORÍAS EN ASIDE */
+.categories ul {
+    list-style: none;
+    margin: 1.5rem 0 1rem 0;
+    padding: 0;
+}
+
+.categories ul li {
+    margin-bottom: 0.5rem;
+}
+
+.categories ul li a {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.35rem 0.5rem;
+    border-radius: 4px;
+    color: var(--text-main);
+    text-decoration: none;
+    transition: all 0.2s ease;
+    font-size: 0.92rem;
+    cursor: pointer;
+}
+
+.categories ul li a:hover {
+    background-color: var(--bg-card);
+    color: var(--link-hover);
+    padding-left: 0.8rem;
+}
+
+.categories ul li a.active {
+    background-color: var(--brown-dark);
+    color: var(--bg-main) !important;
+    font-weight: bold;
+}
+
+.categories ul li a span.count {
+    font-size: 0.75rem;
+    background-color: rgba(0,0,0,0.08);
+    padding: 1px 6px;
+    border-radius: 10px;
+    color: inherit;
+}
+
+/* BANNER DE FILTRO / BÚSQUEDA ACTIVA */
+.filter-active-banner {
+    background-color: var(--bg-secondary);
+    background-image: url("https://www.transparenttextures.com/patterns/cream-paper.png");
+    border: 2px dashed var(--brown-medium);
+    padding: 1rem 1.5rem;
+    margin-bottom: 1.5rem;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+}
+
+.filter-active-banner strong {
+    color: var(--brown-dark);
+}
+
+.btn-clear-filter {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    padding: 0.4rem 0.9rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 0.85rem;
+    transition: all 0.2s ease;
+}
+
+.btn-clear-filter:hover {
+    background-color: var(--brown-dark);
+    color: #fff;
+}
+
+/* TOAST FLOTANTE */
+.vintage-toast {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    background-color: var(--brown-dark);
+    color: var(--bg-main);
+    border: 2px solid var(--border-color);
+    padding: 0.9rem 1.5rem;
+    border-radius: 8px;
+    box-shadow: 4px 4px 12px rgba(0,0,0,0.3);
+    font-size: 0.95rem;
+    z-index: 3000;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.3s ease;
+    pointer-events: none;
+}
+
+.vintage-toast.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* MENSAJE DE ESTADO VACÍO EN GRID */
+.empty-grid-msg {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 2.5rem 1rem;
+    color: var(--text-muted);
+    font-style: italic;
+    background-color: var(--bg-card);
+    border: 2px dashed var(--brown-light);
+    border-radius: 8px;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+    .books-grid {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        gap: 1rem;
+    }
+
+    .book-card-cover {
+        height: 180px;
+    }
+
+}

@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Special+Elite&amp;display=swap" rel="stylesheet">
+
+    <!-- CSS del proyecto -->
+    <link rel="stylesheet" href="./../assets/css/style.css">
+    <link rel="stylesheet" href="./../assets/css/pages/cart.css">
+    <link rel="stylesheet" href="./../assets/css/components/checkout-provided.css">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="./../assets/img/favicon/libro.png" type="image/x-icon">
+    <title>Mi carrito | Páginas del Tiempo</title>
+</head>
+
+<body>
+    <header>
+        <div class="header-top">
+            <div class="logo">
+                <a href="./../index.html">
+                    <img src="./../assets/img/logo/libro.png" alt="Logo Páginas del Tiempo">
+                    <div class="logo-content">
+                        <h1>PÁGINAS DEL TIEMPO</h1>
+                        <p>LIBROS QUE CUENTAN HISTORIAS</p>
+                    </div>
+                </a>
+            </div>
+
+            <div class="search">
+                <input type="search" id="search" placeholder="🔍 Buscar libro, autor o ISBN">
+                <button type="submit">Buscar</button>
+            </div>
+
+            <div class="actions">
+                <div class="icon-actions">
+                    <a href="./login.html">
+                        <img src="./../assets/img/icons/actions/favorito.png" alt="Ver favoritos">
+                    </a>
+                    <a href="./cart.html" aria-current="page">
+                        <img src="./../assets/img/icons/actions/carrito-de-compras.png" alt="Ver carrito">
+                    </a>
+                </div>
+
+                <div class="auth-actions">
+                    <a href="./login.html" class="login-btn">Iniciar sesión</a>
+                    <a href="./register.html" class="register-btn">Registrarse</a>
+                </div>
+            </div>
+        </div>
+
+        <nav class="header-nav" aria-label="Navegación principal">
+            <ul>
+                <li><a href="./../index.html">Inicio</a></li>
+                <li><a href="./book-categories.html">Libros</a></li>
+                <li><a href="./about-us.html">Sobre Nosotros</a></li>
+                <li><a href="./contact.html">Contáctanos</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="cart-page">
+            <div class="cart-page-header">
+                <div class="cart-page-heading">
+                    <h1>Mi carrito</h1>
+                    <p class="cart-page-count" id="cartPageCount">0 ejemplares reservados en tu carrito</p>
+                </div>
+                <a href="./book-categories.html" class="cart-continue-link">← Seguir comprando</a>
+            </div>
+
+            <!-- El controlador muestra esta zona cuando el carrito contiene productos. -->
+            <div class="cart-layout" id="cartLayout" hidden>
+                <section class="cart-items" aria-label="Libros en el carrito">
+                    <div class="cart-items-head">
+                        <span>Producto</span>
+                        <span>Cantidad</span>
+                        <span>Precio</span>
+                    </div>
+
+                    <div id="cartItemsList"></div>
+
+                    <button type="button" class="cart-item-remove" id="boton-vaciar">× Vaciar carrito</button>
+
+                    <p class="cart-items-note">
+                        Los ejemplares quedan reservados por 30 minutos. El stock se confirma al finalizar la compra.
+                    </p>
+                </section>
+
+                <aside class="cart-summary" aria-label="Resumen del pedido">
+                    <h2>Resumen del pedido</h2>
+
+                    <ul class="summary-lines">
+                        <li>
+                            <span id="summarySubtotalLabel">Subtotal (0 ejemplares)</span>
+                            <span id="summarySubtotal">$0</span>
+                        </li>
+                        <li>
+                            <span>Envío</span>
+                            <span id="summaryShipping">$0</span>
+                        </li>
+                    </ul>
+
+                    <div class="summary-total">
+                        <span>Total</span>
+                        <strong id="summaryTotal">$0</strong>
+                    </div>
+
+                    <button type="button" class="btn-checkout" id="boton-ventas">Finalizar compra</button>
+
+                    <p class="summary-note">
+                        Al continuar podrás elegir el método de pago y la dirección de envío.
+                        Los precios están expresados en pesos colombianos.
+                    </p>
+
+                    <ul class="summary-benefits">
+                        <li>Envíos a todo el país en 2 a 4 días hábiles</li>
+                        <li>Pago de demostración sin almacenar datos bancarios</li>
+                        <li>Devoluciones dentro de los 30 días</li>
+                        <li>Tu información crediticia está a salvo</li>
+                    </ul>
+
+                    <div class="summary-payment">
+                        <h3>Métodos de pago</h3>
+                        <div class="payment-icons">
+                            <img src="./../assets/img/icons/payment/visa.svg" alt="Visa" title="Visa">
+                            <img src="./../assets/img/icons/payment/mastercard.svg" alt="Mastercard" title="Mastercard">
+                            <img src="./../assets/img/icons/payment/american-express.svg" alt="American Express" title="American Express">
+                        </div>
+                    </div>
+                </aside>
+            </div>
+
+            <div class="cart-status-message" id="cartStatusMessage" role="status" aria-live="polite"></div>
+        </section>
+
+        <section class="book-list" aria-label="Libros recomendados">
+            <div class="section-header">
+                <h2>También te puede interesar</h2>
+                <a href="./book-categories.html" class="view-all">Ver todos →</a>
+            </div>
+            <div class="books-grid" id="recommendedBooksGrid"></div>
+        </section>
+
+        <!-- Estado que se oculta automáticamente cuando se agrega un libro. -->
+        <section class="cart-empty-reference" id="emptyCartState" aria-label="Carrito vacío">
+            <img class="cart-empty-reference-icon" src="./../assets/img/icons/actions/carrito-de-compras.png" alt="">
+            <h2>Tu carrito está vacío</h2>
+            <p>Aún no has agregado libros. Explora la colección y encuentra tu próxima lectura.</p>
+            <a href="./book-categories.html" class="btn-empty-cart">Explorar libros</a>
+            <!-- Solo aparece si el usuario ya realizó una compra. -->
+            <button type="button" class="btn-review-order btn-track-empty" id="boton-revisar" hidden>Ver guía de envío</button>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-brand">
+            <h3>PÁGINAS DEL TIEMPO</h3>
+            <p>Libros que cuentan historias</p>
+        </div>
+
+        <div class="footer-content">
+            <div class="footer-links">
+                <h4>Explorar</h4>
+                <ul>
+                    <li><a href="./../index.html">Inicio</a></li>
+                    <li><a href="./book-categories.html">Libros</a></li>
+                    <li><a href="./about-us.html">Sobre Nosotros</a></li>
+                    <li><a href="./../index.html#categories">Categorías</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-help">
+                <h4>Ayuda</h4>
+                <ul>
+                    <li><a href="#">Preguntas frecuentes</a></li>
+                    <li><a href="#">Envíos</a></li>
+                    <li><a href="#">Devoluciones</a></li>
+                    <li><a href="./contact.html">Contáctanos</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-social-pay">
+                <h4>Síguenos</h4>
+                <div class="social-icons">
+                    <a href="#" target="_blank" rel="noopener noreferrer">
+                        <img src="./../assets/img/icons/social/instagram.svg" alt="Instagram" title="Instagram">
+                    </a>
+                    <a href="#" target="_blank" rel="noopener noreferrer">
+                        <img src="./../assets/img/icons/social/facebook.svg" alt="Facebook" title="Facebook">
+                    </a>
+                    <a href="#" target="_blank" rel="noopener noreferrer">
+                        <img src="./../assets/img/icons/social/gmail.svg" alt="Gmail" title="Gmail">
+                    </a>
+                </div>
+
+                <h4>Métodos de pago</h4>
+                <div class="payment-icons">
+                    <img src="./../assets/img/icons/payment/visa.svg" alt="Visa" title="Visa">
+                    <img src="./../assets/img/icons/payment/mastercard.svg" alt="Mastercard" title="Mastercard">
+                    <img src="./../assets/img/icons/payment/american-express.svg" alt="American Express" title="American Express">
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2026 PÁGINAS DEL TIEMPO - Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- Controlador modular del carrito -->
+    <script src="./../assets/js/data-initial.js"></script>
+    <script src="./../assets/js/data/precios.js"></script>
+    <script src="./../assets/js/data/reservas.js"></script>
+    <script type="module" src="./../assets/js/pages/cart-page.js"></script>
+    <script src="./../assets/js/pages/checkout.js"></script>
+</body>
+
+</html>

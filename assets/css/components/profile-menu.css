@@ -1,0 +1,50 @@
+.profile-menu {
+    position: relative;
+}
+
+.profile-bubble {
+    width: 2.75rem;
+    height: 2.75rem;
+    border: 2px solid var(--brown-medium);
+    border-radius: 50%;
+    background-color: var(--bg-soft);
+    color: var(--brown-dark);
+    font: inherit;
+    font-weight: bold;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+.profile-bubble img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.profile-dropdown {
+    position: absolute;
+    top: 3rem;
+    right: 0;
+    z-index: 20;
+    min-width: 10rem;
+    padding: 0.4rem;
+    background-color: var(--bg-soft);
+    border: 1px solid var(--brown-medium);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.profile-dropdown[hidden] {
+    display: none;
+}
+
+.profile-dropdown a {
+    display: block;
+    padding: 0.5rem 0.7rem;
+    color: var(--text-strong);
+    text-decoration: none;
+}
+
+.profile-dropdown a:hover,
+.profile-dropdown a:focus {
+    background-color: var(--bg-card);
+}

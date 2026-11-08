@@ -1,0 +1,33 @@
+/* 
+========================================
+NAVIGATION LAYOUT
+========================================
+*/
+
+.header-nav {
+    background-color: var(--color-overlay-soft);
+    padding: 1.25rem 0;
+    border-bottom: 2px solid var(--text-strong);
+}
+
+.header-nav ul {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+/* LINKS */
+
+.header-nav ul li a {
+    text-decoration: none;
+    color: var(--brown-dark);
+    font-weight: 500;
+    padding: 1.25rem 5rem;
+}
+
+/* HOVER */
+
+.header-nav ul li a:hover {
+    background-color: var(--color-overlay-light);
+    border-radius: 5px;
+    font-weight: bold;
+}

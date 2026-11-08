@@ -1,0 +1,2903 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet">
+<link rel="shortcut icon" href="../assets/img/favicon/libro.png" type="image/x-icon">
+
+<title>Panel de Administración | Páginas del Tiempo</title>
+
+<link rel="stylesheet" href="../assets/css/pages/admin.css">
+<!-- Protección por rol: sin sesión de Admin se vuelve al login (solo académico; la real irá en Java) -->
+<script src="../assets/js/auth.js"></script>
+<script>
+  window.protegerPagina("../pages/login.html", "Admin");
+</script>
+</head>
+
+<body>
+
+<!-- BARRA SUPERIOR -->
+<header>
+<div style="display: flex; align-items: center; gap: 1rem;">
+<button class="mobile-toggle" id="menuToggle" aria-label="Abrir menú">☰</button>
+<a href="#" class="logo">
+<div class="logo-content">
+<h1>PÁGINAS DEL TIEMPO</h1>
+<p>LIBROS QUE CUENTAN HISTORIAS</p>
+</div>
+</a>
+</div>
+
+<div class="header-right">
+<a href="../index.html" target="_blank" style="color: var(--bg-main); text-decoration: none; font-size: 0.85rem; background: var(--brown-medium); border: 1px solid var(--border-color); padding: 0.4rem 0.8rem; border-radius: 6px; box-shadow: 2px 2px 0 rgba(0,0,0,0.2); display: flex; align-items: center; gap: 0.3rem;">🌐 Ver tienda</a>
+<div class="header-title">Panel de Administración</div>
+<div class="admin-profile">
+<span>Admin. J. Salazar</span>
+<div class="admin-avatar">BG</div>
+<a href="#" class="logout-btn" id="logoutBtn">Cerrar sesión</a>
+</div>
+</div>
+</header>
+
+<div class="dashboard-container">
+<!-- BARRA LATERAL (CATÁLOGO) -->
+<aside class="sidebar" id="sidebar">
+<div class="sidebar-header">
+Registro del Archivo
+</div>
+<ul>
+<li><a href="#">📖 Dashboard</a></li>
+<li><a href="#">📚 Libros</a></li>
+<li><a href="#">🏷️ Categorías</a></li>
+<li><a href="#">👥 Usuarios</a></li>
+<li><a href="#">🛒 Pedidos</a></li>
+<li><a href="#">🛡️ Garantías</a></li>
+<li><a href="#">❤️ Favoritos</a></li>
+<li><a href="#">📦 Inventario</a></li>
+<li><a href="#">📊 Estadísticas</a></li>
+<li><a href="#" id="sidebarProveedores" style="position: relative;">🤝 Proveedores <span id="badgeProveedores" style="display:none; position:absolute; right:1rem; top:50%; transform:translateY(-50%); background:#b91c1c; color:#fff; border-radius:50%; width:20px; height:20px; font-size:0.7rem; align-items:center; justify-content:center; font-weight:bold;">0</span></a></li>
+</ul>
+</aside>
+
+<!-- CONTENIDO PRINCIPAL -->
+<main class="main-content">
+<div class="welcome-section">
+<h2>Panel de Administración</h2>
+<p>Bienvenido de nuevo, administrador. Aquí puedes gestionar las historias que forman parte de nuestra colección.</p>
+</div>
+
+<!-- ACCIONES RÁPIDAS -->
+<div class="quick-actions">
+<button type="button" class="btn-action" id="btnAgregarLibro"><span>+</span> Agregar libro</button>
+<button type="button" class="btn-action" id="btnAgregarCategoria"><span>+</span> Agregar categoría</button>
+<button type="button" class="btn-action" id="btnVerPedidos"><span>👁</span> Ver pedidos</button>
+<button type="button" class="btn-action" id="btnGestionarUsuarios"><span>👥</span> Gestionar usuarios</button>
+<button type="button" class="btn-action" id="btnVerProveedores"><span>🤝</span> Solicitudes proveedores</button>
+</div>
+
+<!-- TARJETAS DE ESTADÍSTICAS -->
+<div class="stats-grid">
+<div class="stat-card">
+<div class="stat-header">
+<span class="stat-title">Libros en catálogo</span>
+<span class="stat-icon">📚</span>
+</div>
+<div class="stat-value" id="stat-total-libros">0</div>
+<div class="stat-change" id="stat-total-change">↑ 0 registrados</div>
+</div>
+<div class="stat-card">
+<div class="stat-header">
+<span class="stat-title">Pedidos realizados</span>
+<span class="stat-icon">🛒</span>
+</div>
+<div class="stat-value" id="stat-total-pedidos">0</div>
+<div class="stat-change" id="stat-total-pedidos-sub">↑ 0 pedidos completados</div>
+</div>
+<div class="stat-card">
+<div class="stat-header">
+<span class="stat-title">Usuarios registrados</span>
+<span class="stat-icon">👥</span>
+</div>
+<div class="stat-value" id="stat-total-usuarios">3</div>
+<div class="stat-change" id="stat-total-usuarios-sub">↑ 3 lectores registrados</div>
+</div>
+<div class="stat-card">
+<div class="stat-header">
+<span class="stat-title">Ventas del mes</span>
+<span class="stat-icon">💰</span>
+</div>
+<div class="stat-value" id="stat-ventas-mes">$0</div>
+<div class="stat-change" id="stat-ventas-mes-sub">↑ ingresos totales</div>
+</div>
+</div>
+
+<div class="content-grid">
+<!-- SECCIÓN DE LIBROS -->
+<div class="section-box" id="seccionLibros">
+<h3>Libros del catálogo <span>📖</span></h3>
+<div class="table-filter-bar">
+<input type="text" id="searchBookInput" placeholder="🔍 Buscar por título, autor, ISBN..." style="flex: 1; min-width: 200px;">
+<select id="filterCategorySelect">
+<option value="">Todas las categorías</option>
+</select>
+<button type="button" class="btn-cancel" id="btnResetFilters" style="padding: 0.5rem 1rem;">Limpiar</button>
+</div>
+<div class="table-container">
+<table class="vintage-table">
+<thead>
+<tr>
+<th>Libro</th>
+<th>Autor</th>
+<th>Categoría</th>
+<th>Precio</th>
+<th>Stock</th>
+<th>Estado</th>
+<th>Acciones</th>
+</tr>
+</thead>
+<tbody id="tablaLibrosBody">
+</tbody>
+</table>
+</div>
+</div>
+
+<!-- COLUMNA SECUNDARIA (GRÁFICO Y ACTIVIDAD) -->
+<div>
+<div class="section-box">
+<h3>Ventas en el tiempo <span>📈</span></h3>
+<div class="chart-container">
+<div class="chart-bar" data-month="Ene"></div>
+<div class="chart-bar" data-month="Feb"></div>
+<div class="chart-bar" data-month="Mar"></div>
+<div class="chart-bar" data-month="Abr"></div>
+<div class="chart-bar" data-month="May"></div>
+</div>
+</div>
+
+<div class="section-box">
+<h3>Actividad reciente <span>🕰️</span></h3>
+<ul class="activity-feed" id="activityFeed">
+<!-- Renderizado dinámico desde JS -->
+</ul>
+</div>
+</div>
+</div>
+
+<!-- SECCIÓN PROVEEDORES (oculta por defecto, se muestra al hacer clic en sidebar) -->
+<div class="section-box" id="seccionProveedores" style="display:none; margin-top:2rem;">
+  <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem; margin-bottom:0.5rem;">
+    <h3 style="margin:0;">Solicitudes de Proveedores <span>🤝</span></h3>
+    <button type="button" class="btn-cancel" onclick="mostrarDashboard()" style="padding:0.4rem 1rem; font-size:0.9rem; cursor:pointer;">← Volver al Dashboard</button>
+  </div>
+  <p style="margin-bottom:1.2rem; color:var(--text-muted); font-style:italic; font-size:0.95rem;">
+    Aquí aparecen todas las solicitudes enviadas desde la página <em>Proveedores</em> del sitio. Puedes ver el detalle, escribir una respuesta interna o responder directamente por correo.
+  </p>
+
+  <div class="table-filter-bar" style="margin-bottom:1.2rem;">
+    <input type="text" id="searchProvInput" placeholder="🔍 Buscar por nombre, empresa, correo..." style="flex: 1; min-width: 200px;">
+    <select id="filterProvEstadoSelect">
+      <option value="">Todos los estados</option>
+      <option value="pendiente">🕐 Pendientes</option>
+      <option value="respondido">✅ Respondidos</option>
+    </select>
+    <select id="filterProvTipoSelect">
+      <option value="">Todos los tipos</option>
+      <option value="vender-libros">📚 Vender libros</option>
+      <option value="proveedor-materiales">📦 Proveedor materiales</option>
+      <option value="colaboracion">🤝 Colaboración</option>
+      <option value="otro">✉️ Otro</option>
+    </select>
+    <button type="button" class="btn-cancel" id="btnResetProvFilters" style="padding: 0.5rem 1rem;">Limpiar</button>
+  </div>
+
+  <div class="table-container">
+    <table class="vintage-table">
+      <thead>
+        <tr>
+          <th>Solicitante</th>
+          <th>Tipo</th>
+          <th>Correo</th>
+          <th>Fecha</th>
+          <th>Estado</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody id="tablaProveedoresBody"></tbody>
+    </table>
+  </div>
+</div>
+
+</main>
+</div>
+
+
+<!-- MODAL PROVEEDORES: VER DETALLE Y RESPONDER -->
+<div class="modal-overlay" id="modalProveedores">
+<div class="modal-card" style="max-width: 700px;">
+<h3>Solicitud de Proveedor <button type="button" class="modal-close" onclick="cerrarModal('modalProveedores')">&times;</button></h3>
+<input type="hidden" id="modalProvId">
+
+<div class="book-detail-list" style="display:grid; grid-template-columns:1fr 1fr; gap:0.6rem 1.5rem; margin-bottom:1.5rem;">
+  <div><span style="font-weight:bold; color:var(--text-muted); font-size:0.85rem; text-transform:uppercase;">Nombre</span><div id="modalProvNombre" style="margin-top:0.2rem;">—</div></div>
+  <div><span style="font-weight:bold; color:var(--text-muted); font-size:0.85rem; text-transform:uppercase;">Empresa</span><div id="modalProvEmpresa" style="margin-top:0.2rem;">—</div></div>
+  <div><span style="font-weight:bold; color:var(--text-muted); font-size:0.85rem; text-transform:uppercase;">Correo</span><div style="margin-top:0.2rem;"><a id="modalProvEmail" href="#" style="color:var(--link);">—</a></div></div>
+  <div><span style="font-weight:bold; color:var(--text-muted); font-size:0.85rem; text-transform:uppercase;">Teléfono</span><div id="modalProvTel" style="margin-top:0.2rem;">—</div></div>
+  <div><span style="font-weight:bold; color:var(--text-muted); font-size:0.85rem; text-transform:uppercase;">Tipo de solicitud</span><div id="modalProvTipo" style="margin-top:0.2rem;">—</div></div>
+  <div><span style="font-weight:bold; color:var(--text-muted); font-size:0.85rem; text-transform:uppercase;">Ciudad</span><div id="modalProvCiudad" style="margin-top:0.2rem;">—</div></div>
+  <div><span style="font-weight:bold; color:var(--text-muted); font-size:0.85rem; text-transform:uppercase;">Fecha de envío</span><div id="modalProvFecha" style="margin-top:0.2rem;">—</div></div>
+  <div><span style="font-weight:bold; color:var(--text-muted); font-size:0.85rem; text-transform:uppercase;">Estado</span><div id="modalProvEstado" style="margin-top:0.2rem;">—</div></div>
+</div>
+
+<div style="margin-bottom:1.2rem;">
+  <span style="font-weight:bold; color:var(--text-muted); font-size:0.85rem; text-transform:uppercase;">Mensaje del solicitante</span>
+  <div id="modalProvMensaje" style="margin-top:0.5rem; background:var(--bg-secondary); border:1px solid var(--brown-light); padding:0.8rem 1rem; border-radius:6px; white-space:pre-wrap; font-size:0.95rem; line-height:1.6;">—</div>
+</div>
+
+<div style="border-top:2px dotted var(--brown-medium); padding-top:1.2rem; margin-bottom:1rem;">
+  <label for="modalProvRespuesta" style="font-weight:bold; font-size:0.95rem; display:block; margin-bottom:0.5rem;">📝 Respuesta / Notas internas del administrador:</label>
+  <textarea id="modalProvRespuesta" rows="4" placeholder="Escribe aquí tu respuesta o notas internas sobre esta solicitud..." style="width:100%; background:var(--bg-soft); background-image:url('https://www.transparenttextures.com/patterns/light-paper-fibers.png'); border:2px solid var(--border-color); border-radius:8px; padding:0.6rem; font-family:inherit; font-size:0.92rem; resize:vertical; outline:none;"></textarea>
+</div>
+
+<div id="modalProvConfirm" style="display:none; background:#d1fae5; border:1px solid #6ee7b7; color:#065f46; padding:0.6rem 1rem; border-radius:6px; margin-bottom:1rem; font-size:0.9rem; text-align:center;">
+  ✅ Respuesta guardada y solicitud marcada como respondida.
+</div>
+
+<div class="modal-actions" style="flex-wrap:wrap; gap:0.8rem;">
+  <button type="button" class="btn-cancel" onclick="cerrarModal('modalProveedores')">Cerrar</button>
+  <a id="btnProvCorreo" href="#" target="_blank" class="btn-action" style="font-size:0.9rem; padding:0.6rem 1.2rem; text-decoration:none;">📧 Responder por correo</a>
+  <button type="button" class="btn-submit" onclick="guardarRespuestaProveedor()">💾 Guardar respuesta</button>
+</div>
+</div>
+</div>
+
+<!-- MODAL AGREGAR / EDITAR LIBRO -->
+<div class="modal-overlay" id="modalFormLibro">
+<div class="modal-card">
+<h3 id="modalFormTitle">Agregar Nuevo Libro <button type="button" class="modal-close" onclick="cerrarModal('modalFormLibro')">&times;</button></h3>
+<form id="formLibro">
+<input type="hidden" id="libroFormId">
+<div class="form-grid">
+<div class="form-group">
+<label for="libroFormIsbn">ISBN</label>
+<div style="display:flex; gap: 0.5rem; align-items: center;">
+  <input type="text" id="libroFormIsbn" required placeholder="Ej: 9788415618836" style="flex:1;" maxlength="13">
+  <button type="button" id="btnBuscarISBN" onclick="buscarPorISBN()" style="white-space:nowrap; padding: 0.5rem 0.8rem; background: var(--brown-dark); color: #fff; border: 2px solid #000; font-family: inherit; font-weight: bold; cursor: pointer; font-size: 0.85rem;">🔍 Buscar</button>
+</div>
+<div id="isbnBuscandoMsg" style="display:none; font-size:0.8rem; color: var(--text-muted); font-style:italic; margin-top:0.3rem;">⏳ Buscando en Open Library...</div>
+<div id="isbnResultadoMsg" style="display:none; font-size:0.8rem; font-style:italic; margin-top:0.3rem;"></div>
+</div>
+<div class="form-group">
+<label for="libroFormTitulo">Título del Libro</label>
+<input type="text" id="libroFormTitulo" required placeholder="Ej: Drácula">
+</div>
+<div class="form-group">
+<label for="libroFormAutor">Autor</label>
+<input type="text" id="libroFormAutor" required placeholder="Ej: Bram Stoker">
+</div>
+<div class="form-group">
+<label for="libroFormCategoria">Categoría</label>
+<select id="libroFormCategoria" required onchange="manejarCambioCategoriaForm(this.value)">
+  <!-- Carga dinámica vía JS -->
+</select>
+</div>
+<div class="form-group full-width" id="grupoNuevaCategoriaForm" style="display:none; background: var(--bg-secondary); padding: 0.8rem; border: 1px dashed var(--brown-dark);">
+<label for="libroFormNuevaCategoria">Especificar Nueva Categoría</label>
+<input type="text" id="libroFormNuevaCategoria" placeholder="Ej: Ficción, Novela gráfica, Thriller...">
+</div>
+<div class="form-group">
+<label for="libroFormPrecio">Precio ($)</label>
+<input type="number" id="libroFormPrecio" min="20000" step="500" required placeholder="Ej: 35000">
+</div>
+<div class="form-group">
+<label for="libroFormStock">Cantidad en Stock</label>
+<input type="number" id="libroFormStock" min="0" required placeholder="Ej: 8">
+</div>
+<div class="form-group">
+<label for="libroFormEncuadernacion">Encuadernación</label>
+<select id="libroFormEncuadernacion" required>
+<option value="Dura">Tapa Dura</option>
+<option value="Blanda">Tapa Blanda</option>
+</select>
+</div>
+<div class="form-group">
+<label for="libroFormEstado">Estado del Libro Usado</label>
+<select id="libroFormEstado" required>
+<option value="Excelente">Excelente (Como nuevo)</option>
+<option value="Bueno">Bueno (Desgaste menor)</option>
+<option value="Aceptable">Aceptable (Legible/Usado)</option>
+</select>
+</div>
+<div class="form-group full-width">
+<label for="libroFormDescripcion">Descripción / Resumen</label>
+<textarea id="libroFormDescripcion" rows="3" placeholder="Breve reseña del libro..."></textarea>
+</div>
+  <div class="form-group full-width" style="border: 2px dashed var(--brown-light); padding: 1rem; background: var(--bg-secondary);">
+    <label>Portada personalizada</label>
+    <div style="display: flex; align-items: center; gap: 1rem; margin-top: 0.5rem;">
+      <img id="libroFormPortadaPreview" src="" alt="Vista previa" style="display:none; width: 60px; height: 88px; object-fit: cover; border: 2px solid var(--border-color); box-shadow: 2px 2px 4px rgba(0,0,0,0.3);">
+      <div style="flex:1;">
+        <input type="file" id="libroFormPortadaInput" accept="image/*" style="display:block; margin-bottom: 0.5rem; font-family: inherit; font-size: 0.85rem;">
+        <div style="font-size:0.8rem; color: var(--text-muted); font-style: italic;">Sube una imagen JPG/PNG. Si el ISBN carga portada automáticamente, esta la reemplazará.</div>
+        <button type="button" id="libroFormPortadaBorrar" onclick="eliminarPortadaPersonalizada()" style="display:none; margin-top: 0.5rem; color: #b71c1c; background: none; border: none; cursor: pointer; font-family: inherit; text-decoration: underline; font-weight: bold;">🗑 Eliminar portada personalizada</button>
+      </div>
+    </div>
+  </div>
+  <input type="hidden" id="libroFormPortadaData">
+</div>
+<div class="modal-actions">
+<button type="button" class="btn-cancel" onclick="cerrarModal('modalFormLibro')">Cancelar</button>
+<button type="submit" class="btn-submit" id="btnGuardarLibro">Guardar Libro</button>
+</div>
+</form>
+</div>
+</div>
+
+<!-- MODAL VER DETALLES DE LIBRO -->
+<div class="modal-overlay" id="modalVerLibro">
+<div class="modal-card">
+<h3>Ficha Bibliográfica <button type="button" class="modal-close" onclick="cerrarModal('modalVerLibro')">&times;</button></h3>
+<div class="book-detail-list" id="modalVerDetalleContent">
+</div>
+<div class="modal-actions">
+<button type="button" class="btn-submit" onclick="cerrarModal('modalVerLibro')">Cerrar Ficha</button>
+</div>
+</div>
+</div>
+
+<!-- MODAL AGREGAR CATEGORÍA -->
+<div class="modal-overlay" id="modalCategoria">
+<div class="modal-card">
+<h3>Gestión de Categorías <button type="button" class="modal-close" onclick="cerrarModal('modalCategoria')">&times;</button></h3>
+<form id="formNuevaCategoria" style="margin-bottom: 1.5rem;">
+<div class="form-group">
+<label for="inputNuevaCat">Nueva Categoría</label>
+<div style="display: flex; gap: 0.5rem;">
+<input type="text" id="inputNuevaCat" placeholder="Ej: Ciencia Ficción" required style="flex: 1;">
+<button type="submit" class="btn-submit">Añadir</button>
+</div>
+</div>
+</form>
+<h4>Categorías Existentes:</h4>
+<ul id="listaCategoriasExistentes" style="list-style: square; padding-left: 1.5rem; margin-top: 0.5rem; max-height: 200px; overflow-y: auto;">
+</ul>
+<div class="modal-actions">
+<button type="button" class="btn-cancel" onclick="cerrarModal('modalCategoria')">Cerrar</button>
+</div>
+</div>
+</div>
+
+<!-- MODAL PEDIDOS -->
+<!-- MODAL PEDIDOS CON BÚSQUEDA Y FILTROS -->
+<div class="modal-overlay" id="modalPedidos">
+<div class="modal-card" style="max-width: 960px; width: 95%;">
+<div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--brown-medium); padding-bottom: 0.8rem; margin-bottom: 1rem;">
+  <h3 style="margin:0; border:none; padding:0;">🛒 Pedidos del Sistema</h3>
+  <button type="button" class="modal-close" onclick="cerrarModal('modalPedidos')">&times;</button>
+</div>
+
+<!-- BARRA DE BÚSQUEDA Y FILTROS DE PEDIDOS -->
+<div class="table-filter-bar" style="margin-bottom: 1rem; flex-wrap: wrap; gap: 0.6rem; align-items: center;">
+  <input type="text" id="searchPedidosInput" placeholder="🔍 Buscar por #orden, cliente, correo o libro..." style="flex: 1; min-width: 230px;">
+  <select id="filterPedidosEstado" style="min-width: 160px;">
+    <option value="">Todos los estados</option>
+    <option value="Completado">✅ Completado</option>
+    <option value="Enviado">🚚 Enviado</option>
+    <option value="Procesando">⏳ Procesando</option>
+  </select>
+  <button type="button" class="btn-cancel" id="btnResetPedidosFilters" style="padding: 0.5rem 1rem;">Limpiar</button>
+  <span id="conteoPedidosTexto" style="color: var(--text-muted); font-size: 0.88rem; margin-left: auto; font-weight: bold;">0 pedidos</span>
+</div>
+
+<div class="table-container" style="max-height: 380px; overflow-y: auto;">
+<table class="vintage-table">
+<thead>
+<tr>
+<th># Pedido</th>
+<th>Cliente</th>
+<th>Libros</th>
+<th>Total</th>
+<th>Estado</th>
+<th style="text-align:center;">Acciones</th>
+</tr>
+</thead>
+<tbody id="tablaPedidosBody">
+</tbody>
+</table>
+</div>
+
+<div class="modal-actions" style="margin-top: 1rem;">
+<button type="button" class="btn-cancel" onclick="cerrarModal('modalPedidos')">Cerrar</button>
+</div>
+</div>
+</div>
+
+<!-- MODAL DETALLE DE PEDIDO -->
+<div class="modal-overlay" id="modalDetallePedido" style="z-index: 10001;">
+<div class="modal-card" style="max-width: 720px; width: 95%;">
+<div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--brown-medium); padding-bottom: 0.8rem; margin-bottom: 1.2rem;">
+  <h3 style="margin:0; border:none; padding:0;">📄 Detalle de la Orden <span id="detPedId" style="color:var(--brown-dark);">#ORD</span></h3>
+  <button type="button" class="modal-close" onclick="cerrarModal('modalDetallePedido')">&times;</button>
+</div>
+
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.2rem; background: var(--bg-main); padding: 1rem; border: 1px solid var(--brown-light); border-radius: 6px;">
+  <div>
+    <span style="font-size:0.75rem; text-transform:uppercase; color:var(--text-muted); font-weight:bold;">Cliente:</span>
+    <div id="detPedCliente" style="font-weight:bold; font-size:1.05rem; margin-top:0.2rem;">—</div>
+    <div id="detPedEmail" style="font-size:0.85rem; color:var(--text-muted);">—</div>
+    <div id="detPedUsuarioId" style="font-size:0.78rem; color:var(--text-muted); margin-top:0.2rem;">ID: —</div>
+  </div>
+  <div>
+    <span style="font-size:0.75rem; text-transform:uppercase; color:var(--text-muted); font-weight:bold;">Fecha y Hora:</span>
+    <div id="detPedFecha" style="font-size:0.95rem; margin-top:0.2rem;">—</div>
+    <div style="margin-top: 0.6rem; display:flex; align-items:center; gap:0.5rem;">
+      <span style="font-size:0.75rem; text-transform:uppercase; color:var(--text-muted); font-weight:bold;">Estado:</span>
+      <select id="detPedEstadoSelect" style="padding: 0.25rem 0.6rem; font-size: 0.85rem; font-family: inherit;">
+        <option value="Completado">Completado</option>
+        <option value="Enviado">Enviado</option>
+        <option value="Procesando">Procesando</option>
+      </select>
+      <button type="button" onclick="guardarEstadoPedidoModal()" style="background:var(--brown-dark); color:#fff; border:none; padding:0.3rem 0.7rem; border-radius:4px; font-size:0.8rem; cursor:pointer;">Guardar</button>
+    </div>
+  </div>
+</div>
+
+<h4 style="margin-bottom: 0.6rem; color: var(--text-strong);">Artículos del Pedido:</h4>
+<table class="vintage-table" style="margin-bottom: 1.2rem;">
+<thead>
+<tr>
+<th>Ítem / Libro</th>
+<th style="text-align:center;">Cant.</th>
+<th style="text-align:right;">Precio</th>
+<th style="text-align:right;">Subtotal</th>
+</tr>
+</thead>
+<tbody id="detPedItemsBody"></tbody>
+</table>
+
+<div style="display:flex; justify-content:flex-end; margin-bottom: 1.2rem;">
+  <div style="min-width: 240px; background: var(--bg-main); border: 1px solid var(--brown-light); padding: 0.8rem 1rem; border-radius: 6px;">
+    <div style="display:flex; justify-content:space-between; margin-bottom:0.3rem; font-size:0.9rem;">
+      <span>Subtotal libros:</span>
+      <strong id="detPedSubtotal">$0</strong>
+    </div>
+    <div style="display:flex; justify-content:space-between; margin-bottom:0.4rem; font-size:0.85rem; color:var(--text-muted);">
+      <span>Costo de envío:</span>
+      <span style="color:#166534; font-weight:bold;">GRATIS</span>
+    </div>
+    <div style="display:flex; justify-content:space-between; border-top: 1.5px dashed var(--brown-medium); padding-top:0.5rem; font-size:1.1rem; color:var(--brown-dark);">
+      <span>Total Facturado:</span>
+      <strong id="detPedTotal">$0</strong>
+    </div>
+  </div>
+</div>
+
+<div class="modal-actions" style="justify-content: space-between;">
+  <button type="button" class="btn-cancel" onclick="imprimirReciboPedido()" style="display:flex; align-items:center; gap:0.4rem;">🖨️ Imprimir Recibo</button>
+  <button type="button" class="btn-cancel" onclick="cerrarModal('modalDetallePedido')">Cerrar</button>
+</div>
+</div>
+</div>
+
+<!-- MODAL USUARIOS CON BÚSQUEDA Y FILTROS -->
+<div class="modal-overlay" id="modalUsuarios">
+<div class="modal-card" style="max-width: 960px; width: 95%;">
+<div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--brown-medium); padding-bottom: 0.8rem; margin-bottom: 1rem;">
+  <h3 style="margin:0; border:none; padding:0;">👥 Gestión de Usuarios Registrados</h3>
+  <button type="button" class="modal-close" onclick="cerrarModal('modalUsuarios')">&times;</button>
+</div>
+
+<!-- FORMULARIO PLEGABLE PARA REGISTRAR NUEVO USUARIO -->
+<details style="margin-bottom: 1.2rem; background: var(--bg-secondary); padding: 0.8rem 1rem; border: 1px solid var(--brown-medium); border-radius: 6px;">
+  <summary style="cursor: pointer; font-weight: bold; color: var(--brown-dark);">➕ Registrar nuevo usuario en el sistema</summary>
+  <form id="formNuevoUsuario" style="margin-top: 0.8rem;">
+    <div class="form-grid">
+      <div class="form-group">
+        <label for="usrNombre">Nombre Completo o Usuario</label>
+        <input type="text" id="usrNombre" placeholder="Ej: Pedro Gómez" required>
+      </div>
+      <div class="form-group">
+        <label for="usrEmail">Correo Electrónico</label>
+        <input type="email" id="usrEmail" placeholder="Ej: pedro@gmail.com" required>
+      </div>
+      <div class="form-group">
+        <label for="usrRol">Rol del Usuario</label>
+        <select id="usrRol" required>
+          <option value="Lector">Lector</option>
+          <option value="Administrador">Administrador</option>
+        </select>
+      </div>
+      <div class="form-group" style="justify-content: flex-end;">
+        <label>&nbsp;</label>
+        <button type="submit" class="btn-submit" style="width: 100%;">+ Crear Usuario</button>
+      </div>
+    </div>
+  </form>
+</details>
+
+<!-- BARRA DE BÚSQUEDA Y FILTROS DE USUARIOS -->
+<div class="table-filter-bar" style="margin-bottom: 1rem; flex-wrap: wrap; gap: 0.6rem; align-items: center;">
+  <input type="text" id="searchUsuariosInput" placeholder="🔍 Buscar por ID, nombre, usuario o email..." style="flex: 1; min-width: 230px;">
+  <select id="filterUsuariosRol" style="min-width: 150px;">
+    <option value="">Todos los roles</option>
+    <option value="Lector">📖 Lector</option>
+    <option value="Administrador">⚙️ Administrador</option>
+  </select>
+  <select id="filterUsuariosEstado" style="min-width: 150px;">
+    <option value="">Todos los estados</option>
+    <option value="Activo">🟢 Activo</option>
+    <option value="Inactivo">🔴 Inactivo</option>
+  </select>
+  <button type="button" class="btn-cancel" id="btnResetUsuariosFilters" style="padding: 0.5rem 1rem;">Limpiar</button>
+  <span id="conteoUsuariosTexto" style="color: var(--text-muted); font-size: 0.88rem; margin-left: auto; font-weight: bold;">0 usuarios</span>
+</div>
+
+<div class="table-container" style="max-height: 380px; overflow-y: auto;">
+<table class="vintage-table">
+<thead>
+<tr>
+<th>ID</th>
+<th>Usuario / Nombre</th>
+<th>Email</th>
+<th>Rol</th>
+<th>Estado</th>
+<th style="text-align:center;">Acciones</th>
+</tr>
+</thead>
+<tbody id="tablaUsuariosBody">
+</tbody>
+</table>
+</div>
+
+<div class="modal-actions" style="margin-top: 1rem;">
+<button type="button" class="btn-cancel" onclick="cerrarModal('modalUsuarios')">Cerrar</button>
+</div>
+</div>
+</div>
+
+<!-- MODAL DETALLE DE USUARIO -->
+<div class="modal-overlay" id="modalDetalleUsuario" style="z-index: 10001;">
+<div class="modal-card" style="max-width: 750px; width: 95%;">
+<div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--brown-medium); padding-bottom: 0.8rem; margin-bottom: 1.2rem;">
+  <h3 style="margin:0; border:none; padding:0;">👤 Ficha del Lector / Usuario</h3>
+  <button type="button" class="modal-close" onclick="cerrarModal('modalDetalleUsuario')">&times;</button>
+</div>
+
+<input type="hidden" id="detUsrIdHidden">
+<div style="display: flex; gap: 1.2rem; align-items: flex-start; background: var(--bg-main); padding: 1.2rem; border: 1px solid var(--brown-light); border-radius: 8px; margin-bottom: 1.2rem;">
+  <div id="detUsrAvatar" style="width: 65px; height: 65px; border-radius: 50%; background: var(--brown-dark); color: var(--bg-main); font-size: 1.6rem; font-weight: bold; display: flex; align-items: center; justify-content: center; flex-shrink: 0; box-shadow: 2px 2px 0 var(--border-color);">
+    CL
+  </div>
+  <div style="flex: 1;">
+    <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+      <div>
+        <h3 id="detUsrNombre" style="margin: 0 0 0.2rem 0; border: none; padding: 0;">Carlos Lector</h3>
+        <div id="detUsrEmail" style="color: var(--text-muted); font-size: 0.95rem;">carlos@gmail.com</div>
+      </div>
+      <span id="detUsrRolBadge" style="background: var(--bg-card); color: var(--brown-dark); border: 1px solid var(--brown-medium); padding: 3px 10px; border-radius: 12px; font-size: 0.78rem; font-weight: bold; text-transform: uppercase;">
+        LECTOR
+      </span>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 0.8rem; margin-top: 1rem; padding-top: 0.8rem; border-top: 1px dotted var(--brown-medium);">
+      <div>
+        <span style="font-size: 0.75rem; text-transform: uppercase; color: var(--text-muted); font-weight: bold;">ID Sistema:</span>
+        <div id="detUsrId" style="font-weight: bold;">USR-02</div>
+      </div>
+      <div>
+        <span style="font-size: 0.75rem; text-transform: uppercase; color: var(--text-muted); font-weight: bold;">Fecha Registro:</span>
+        <div id="detUsrFecha">2026-02-10</div>
+      </div>
+      <div>
+        <span style="font-size: 0.75rem; text-transform: uppercase; color: var(--text-muted); font-weight: bold;">Estado:</span>
+        <div style="display: flex; align-items: center; gap: 0.4rem; margin-top: 0.2rem;">
+          <span id="detUsrEstadoLabel" class="status disponible">Activo</span>
+          <button type="button" id="btnToggleEstadoUsr" onclick="alternarEstadoUsuarioModal()" style="font-size: 0.75rem; padding: 2px 7px; background: none; border: 1px solid var(--border-color); border-radius: 3px; cursor: pointer;">Cambiar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.2rem;">
+  <div style="background: var(--bg-main); padding: 1rem; border: 1px solid var(--brown-light); border-radius: 6px;">
+    <h4 style="margin-bottom: 0.6rem; color: var(--brown-dark); display:flex; justify-content:space-between; align-items:center;">
+      <span>🛒 Compras Realizadas</span>
+      <span id="detUsrTotalComprasBadge" style="font-size:0.8rem; font-weight:normal; color:var(--text-muted);">0 pedidos</span>
+    </h4>
+    <div id="detUsrComprasContenido" style="max-height: 160px; overflow-y: auto; font-size: 0.88rem;">
+      <!-- Lista de pedidos del usuario -->
+    </div>
+  </div>
+  <div style="background: var(--bg-main); padding: 1rem; border: 1px solid var(--brown-light); border-radius: 6px;">
+    <h4 style="margin-bottom: 0.6rem; color: var(--brown-dark); display:flex; justify-content:space-between; align-items:center;">
+      <span>❤️ Libros Favoritos</span>
+      <span id="detUsrTotalFavsBadge" style="font-size:0.8rem; font-weight:normal; color:var(--text-muted);">0 favoritos</span>
+    </h4>
+    <div id="detUsrFavsContenido" style="max-height: 160px; overflow-y: auto; font-size: 0.88rem;">
+      <!-- Lista de favoritos del usuario -->
+    </div>
+  </div>
+</div>
+
+<div class="modal-actions">
+  <button type="button" class="btn-cancel" onclick="cerrarModal('modalDetalleUsuario')">Cerrar</button>
+</div>
+</div>
+</div>
+
+<!-- MODAL GARANTÍAS -->
+<div class="modal-overlay" id="modalGarantias">
+<div class="modal-card">
+<h3>Solicitudes de Garantía y Reclamaciones 🛡️ <button type="button" class="modal-close" onclick="cerrarModal('modalGarantias')">&times;</button></h3>
+<p style="margin-bottom: 1rem; color: var(--text-muted);">Casos reportados por usuarios que buscan solución por garantía de su compra:</p>
+<table class="vintage-table">
+<thead>
+<tr>
+<th># Caso</th>
+<th>Usuario</th>
+<th>Libro</th>
+<th>Motivo</th>
+<th>Estado</th>
+<th>Acciones de Chat</th>
+</tr>
+</thead>
+<tbody id="tablaGarantiasBody">
+</tbody>
+</table>
+<div class="modal-actions">
+<button type="button" class="btn-cancel" onclick="cerrarModal('modalGarantias')">Cerrar</button>
+</div>
+</div>
+</div>
+
+<!-- MODAL CHAT DE GARANTÍA CON FOTOS -->
+<div class="modal-overlay" id="modalChatGarantia">
+<div class="modal-card" style="width: 92%; max-width: 600px;">
+<h3 id="chatGarantiaTitulo">Chat de Soporte <button type="button" class="modal-close" onclick="cerrarModal('modalChatGarantia')">&times;</button></h3>
+<p style="margin-bottom: 0.8rem; color: var(--text-muted);" id="chatGarantiaSubtitulo">Conversación en directo con el comprador:</p>
+
+<div class="chat-container" id="chatGarantiaMensajes">
+</div>
+
+<!-- PREVIEW DE FOTO ADJUNTA -->
+<div id="chatPhotoPreviewArea" class="chat-photo-preview" style="display: none;">
+<img id="chatPhotoPreviewImg" src="" alt="Vista previa foto">
+<div style="flex: 1; font-size: 0.85rem; color: var(--brown-dark);">
+<strong>Foto de prueba lista para adjuntar</strong>
+<div style="font-size: 0.75rem; color: var(--text-muted);">Se enviará junto con tu mensaje al hacer clic en Enviar.</div>
+</div>
+<button type="button" class="modal-close" onclick="cancelarFotoAdjunta()" style="font-size: 1.2rem;">&times;</button>
+</div>
+
+<form id="formChatGarantia" class="chat-input-bar">
+<input type="file" id="inputChatFoto" accept="image/*" style="display: none;" onchange="procesarFotoSeleccionada(event)">
+<button type="button" class="btn-cancel" onclick="document.getElementById('inputChatFoto').click()" title="Adjuntar foto de prueba" style="padding: 0.6rem 0.9rem; display: flex; align-items: center; gap: 0.3rem;">
+📷 <span style="font-size: 0.85rem;">Foto</span>
+</button>
+<input type="text" id="inputChatMensaje" placeholder="Escribe tu respuesta o adjunta una foto..." style="flex: 1;">
+<button type="submit" class="btn-submit">Enviar</button>
+</form>
+
+<div class="modal-actions" style="margin-top: 1rem;">
+<button type="button" class="btn-cancel" onclick="cerrarModal('modalChatGarantia')">Volver a Casos</button>
+<button type="button" class="btn-submit" id="btnMarcarResuelto" onclick="marcarCasoActualResuelto()" style="background-color: #2e7d32; border-color: #1b5e20;">✔ Marcar Caso Resuelto</button>
+<button type="button" class="btn-cancel" id="btnEliminarChatModal" onclick="eliminarCasoGarantia(casoGarantiaActivoId)" style="display: none; color: #b71c1c; border-color: #b71c1c; background-color: #fff0f0;">🗑️ Eliminar Chat</button>
+</div>
+</div>
+</div>
+
+<!-- MODAL FAVORITOS (MÁS VENDIDOS) -->
+<div class="modal-overlay" id="modalFavoritos">
+<div class="modal-card">
+<h3>Libros Más Vendidos y Favoritos del Público ❤️ <button type="button" class="modal-close" onclick="cerrarModal('modalFavoritos')">&times;</button></h3>
+<p style="margin-bottom: 1rem; color: var(--text-muted);">Ranking de las historias más solicitadas por los lectores:</p>
+<table class="vintage-table">
+<thead>
+<tr>
+<th>Ranking</th>
+<th>Libro</th>
+<th>Ventas</th>
+<th>Calificación</th>
+<th>Stock</th>
+</tr>
+</thead>
+<tbody id="tablaFavoritosBody">
+</tbody>
+</table>
+<div class="modal-actions">
+<button type="button" class="btn-cancel" onclick="cerrarModal('modalFavoritos')">Cerrar</button>
+</div>
+</div>
+</div>
+
+<!-- MODAL INVENTARIO -->
+<div class="modal-overlay" id="modalInventario">
+<div class="modal-card">
+<h3>Control de Inventario y Stock General 📦 <button type="button" class="modal-close" onclick="cerrarModal('modalInventario')">&times;</button></h3>
+<div style="display: flex; justify-content: space-between; align-items: center; background: var(--bg-secondary); padding: 1rem; border: 1px solid var(--brown-medium); margin-bottom: 1.2rem; flex-wrap: wrap; gap: 1rem;">
+<div>
+<strong>Resumen de Existencias:</strong>
+<div id="inventarioResumenTexto" style="font-size: 0.95rem; margin-top: 0.3rem; color: var(--text-strong);">
+Cargando datos de stock...
+</div>
+</div>
+<button type="button" class="btn-submit" onclick="cerrarModal('modalInventario'); abrirModalForm();">+ Agregar libro al inventario</button>
+</div>
+<div style="max-height: 350px; overflow-y: auto;">
+<table class="vintage-table">
+<thead>
+<tr>
+<th>Libro</th>
+<th>Categoría</th>
+<th>Precio</th>
+<th>Stock Actual</th>
+<th>Estado Usado</th>
+<th>Acciones de Stock</th>
+</tr>
+</thead>
+<tbody id="tablaInventarioBody">
+</tbody>
+</table>
+</div>
+<div class="modal-actions">
+<button type="button" class="btn-cancel" onclick="cerrarModal('modalInventario')">Cerrar</button>
+</div>
+</div>
+</div>
+
+<!-- MODAL ESTADÍSTICAS -->
+<div class="modal-overlay" id="modalEstadisticas">
+<div class="modal-card" style="width: 92%; max-width: 800px;">
+<h3>Estadísticas Reales de Ventas 📊 <button type="button" class="modal-close" onclick="cerrarModal('modalEstadisticas')">&times;</button></h3>
+<div class="stats-grid" style="margin-bottom: 1.5rem;">
+<div class="stat-card">
+<div class="stat-title">Ingresos Totales</div>
+<div class="stat-value" id="statRealIngresos">$4.280.000</div>
+<div class="stat-change">↑ +15% este mes</div>
+</div>
+<div class="stat-card">
+<div class="stat-title">Unidades Vendidas</div>
+<div class="stat-value" id="statRealUnidades">124</div>
+<div class="stat-change">↑ +12% este mes</div>
+</div>
+<div class="stat-card">
+<div class="stat-title">Ticket Promedio</div>
+<div class="stat-value" id="statRealTicket">$34.516</div>
+<div class="stat-change">Promedio por orden</div>
+</div>
+<div class="stat-card">
+<div class="stat-title">Nivel de Garantía</div>
+<div class="stat-value" id="statRealGarantia" style="color: #33691e;">98.2%</div>
+<div class="stat-change" id="statRealGarantiaSub">Satisfacción alta</div>
+</div>
+</div>
+<h4>Desglose de Ventas por Mes:</h4>
+<table class="vintage-table" style="margin-top: 0.8rem;">
+<thead>
+<tr>
+<th>Período</th>
+<th>Pedidos</th>
+<th>Unidades</th>
+<th>Total Facturado</th>
+</tr>
+</thead>
+<tbody id="tablaVentasMesBody">
+<tr><td colspan="4" style="text-align:center; color:var(--text-muted); padding:1.5rem; font-style:italic;">No hay ventas registradas aún.</td></tr>
+</tbody>
+</table>
+<div class="modal-actions">
+<button type="button" class="btn-cancel" onclick="cerrarModal('modalEstadisticas')">Cerrar</button>
+</div>
+</div>
+</div>
+
+<!-- SCRIPT COMPLETO INTERACTIVO -->
+<script src="../assets/js/data-initial.js"></script>
+<script>
+const LIBROS_INICIALES = [
+  { id: 101, isbn: "9788415618836", titulo: "Dracula", autor: "Bram Stoker", precio: 35000, descripcion: "Clasico de terror", stock: 8, categoria: "Terror", encuadernacion: "Dura", estado: "Excelente" },
+  { id: 102, isbn: "9788478884452", titulo: "Harry Potter", autor: "J.K Rowling", precio: 50000, descripcion: "Magia y aventura", stock: 10, categoria: "Fantasia", encuadernacion: "Blanda", estado: "Bueno" },
+  { id: 103, isbn: "9788491990437", titulo: "Breves respuestas", autor: "Stephen Hawking", precio: 42000, descripcion: "Ciencia moderna", stock: 6, categoria: "Ciencia", encuadernacion: "Dura", estado: "Excelente" },
+  { id: 104, isbn: "9788437604947", titulo: "20 poemas de amor", autor: "Pablo Neruda", precio: 25000, descripcion: "Poesia romantica", stock: 7, categoria: "Poesia", encuadernacion: "Blanda", estado: "Bueno" },
+  { id: 105, isbn: "9788491050292", titulo: "Orgullo y prejuicio", autor: "Jane Austen", precio: 38000, descripcion: "Novela romantica", stock: 9, categoria: "Romance", encuadernacion: "Dura", estado: "Excelente" },
+  { id: 106, isbn: "9788499924212", titulo: "Sapiens", autor: "Yuval Noah", precio: 60000, descripcion: "Historia humanidad", stock: 5, categoria: "Historia", encuadernacion: "Dura", estado: "Excelente" },
+  { id: 107, isbn: "9788401021282", titulo: "Mi historia", autor: "Michelle Obama", precio: 47000, descripcion: "Biografia inspiradora", stock: 4, categoria: "Biografia", encuadernacion: "Blanda", estado: "Bueno" },
+  { id: 108, isbn: "9788498381498", titulo: "El principito", autor: "Antoine", precio: 30000, descripcion: "Libro infantil", stock: 15, categoria: "Infantil", encuadernacion: "Dura", estado: "Excelente" },
+  { id: 109, isbn: "9788418118036", titulo: "Habitos atomicos", autor: "James Clear", precio: 55000, descripcion: "Desarrollo personal", stock: 12, categoria: "Autoayuda", encuadernacion: "Blanda", estado: "Excelente" },
+  { id: 110, isbn: "9788403522121", titulo: "Padre rico padre pobre", autor: "Robert Kiyosaki", precio: 40000, descripcion: "Finanzas", stock: 11, categoria: "Economia", encuadernacion: "Dura", estado: "Bueno" },
+  { id: 1, isbn: "9788420471839", titulo: "Cien años de soledad", autor: "Gabriel García M.", precio: 45000, descripcion: "Obra cumbre del realismo mágico", stock: 12, categoria: "Novela clásica", encuadernacion: "Dura", estado: "Excelente" },
+  { id: 2, isbn: "9788424116040", titulo: "Don Quijote de la Mancha", autor: "Miguel de Cervantes", precio: 65000, descripcion: "Clásico de la literatura universal", stock: 8, categoria: "Novela clásica", encuadernacion: "Dura", estado: "Bueno" },
+  { id: 3, isbn: "9788497592208", titulo: "Los tres mosqueteros", autor: "Alexandre Dumas", precio: 48000, descripcion: "Novela de aventuras", stock: 0, categoria: "Novela clásica", encuadernacion: "Blanda", estado: "Aceptable" },
+  { id: 4, isbn: "9788445071403", titulo: "El señor de los anillos", autor: "J.R.R. Tolkien", precio: 85000, descripcion: "Trilogía épica de fantasía", stock: 5, categoria: "Fantasia", encuadernacion: "Dura", estado: "Excelente" }
+];
+
+const usuariosInicialesRespaldo = window.USUARIOS_INICIALES || [
+  { id: "USR-01", usuario: "Admin. J. Salazar", email: "admin@paginasdeltiempo.com", rol: "Administrador", estado: "Activo" },
+  { id: "USR-02", usuario: "Carlos Lector", email: "carlos@gmail.com", rol: "Lector", estado: "Activo" },
+  { id: "USR-03", usuario: "María González", email: "maria.g@hotmail.com", rol: "Lector", estado: "Activo" }
+];
+
+const garantiasInicialesRespaldo = window.GARANTIAS_INICIALES || [
+  {
+    id: "GAR-201",
+    usuario: "Carlos Lector",
+    libro: "Breves respuestas",
+    motivo: "Páginas sueltas en capítulo 2",
+    estado: "Pendiente",
+    mensajes: [
+      { 
+        sender: "Carlos Lector", 
+        rol: "cliente", 
+        time: "Ayer 10:15", 
+        text: "Hola, recibí mi copia de Breves Respuestas pero tiene las páginas del capítulo 2 totalmente sueltas. Adjunto foto de la prueba:",
+        foto: "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=400&q=80"
+      },
+      { sender: "Admin. J. Salazar", rol: "admin", time: "Ayer 11:30", text: "Hola Carlos, lamento el inconveniente con tu libro usado. ¿Nos podrías confirmar si deseas cambio por otro ejemplar o la devolución en saldo de tienda?" }
+    ]
+  },
+  {
+    id: "GAR-202",
+    usuario: "María González",
+    libro: "Los tres mosqueteros",
+    motivo: "Daño en lomo por transporte",
+    estado: "En Revisión",
+    mensajes: [
+      { 
+        sender: "María González", 
+        rol: "cliente", 
+        time: "Hace 2 días", 
+        text: "Buenas tardes, la caja del envío llegó aplastada y el lomo del libro sufrió un doblez severo como se ve en esta foto:",
+        foto: "https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&w=400&q=80"
+      }
+    ]
+  },
+  {
+    id: "GAR-203",
+    usuario: "Ana Martínez",
+    libro: "Sapiens",
+    motivo: "Manchas de humedad no especificadas",
+    estado: "En Revisión",
+    mensajes: [
+      { sender: "Ana Martínez", rol: "cliente", time: "Hace 3 días", text: "Hola, acabo de recibir el libro Sapiens pero noté que varias páginas traseras tienen manchas de humedad no descritas." },
+      { sender: "Admin. J. Salazar", rol: "admin", time: "Hace 2 días", text: "Hola Ana, lamento lo sucedido. Para evaluar tu garantía, ¿podrías adjuntarnos una fotografía clara donde se aprecien las manchas de humedad?" },
+      { 
+        sender: "Ana Martínez", 
+        rol: "cliente", 
+        time: "Ayer 14:20", 
+        text: "Claro que sí, aquí adjunto la fotografía del daño en las páginas traseras para que lo revisen:",
+        foto: "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=400&q=80"
+      },
+      { sender: "Admin. J. Salazar", rol: "admin", time: "Ayer 16:05", text: "Gracias por la fotografía Ana. Hemos verificado la evidencia. Podemos ofrecerte: 1) Reembolso del 50% conservando el libro, o 2) Devolución total del saldo al retornar el ejemplar. ¿Qué opción prefieres?" }
+    ]
+  },
+  {
+    id: "GAR-204",
+    usuario: "Pedro Gómez",
+    libro: "El principito",
+    motivo: "Edición diferente a la publicada",
+    estado: "Resuelto",
+    mensajes: [
+      { sender: "Pedro Gómez", rol: "cliente", time: "Hace 10 días", text: "Buenas tardes, el libro llegó pero era la edición de tapa blanda en lugar de dura." },
+      { sender: "Admin. J. Salazar", rol: "admin", time: "Hace 9 días", text: "Hola Pedro, acordamos el cambio de ejemplar y enviamos el correcto." },
+      { sender: "Admin. J. Salazar", rol: "admin", time: "Hace 8 días", text: "[SISTEMA] El caso de garantía ha sido marcado como RESUELTO por el administrador." }
+    ]
+  },
+  {
+    id: "GAR-205",
+    usuario: "Valentina Ospina",
+    libro: "Cien años de soledad",
+    motivo: "Falta de pliegos entre páginas 120 y 135 (Cliente #101)",
+    estado: "Pendiente",
+    mensajes: [
+      { 
+        sender: "Valentina Ospina", 
+        rol: "cliente", 
+        time: "Hoy 09:15", 
+        text: "Hola, soy Valentina Ospina (cliente registrada #101, pedido #ORD-1078). Al empezar a leer mi ejemplar de Cien Años de Soledad noté que le faltan los pliegos de las páginas 120 a la 135 por falla de imprenta. Adjunto foto:",
+        foto: "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=400&q=80"
+      },
+      { 
+        sender: "Admin. J. Salazar", 
+        rol: "admin", 
+        time: "Hoy 10:00", 
+        text: "Hola Valentina, lamentamos muchísimo este fallo editorial de fábrica. Ya aprobamos tu garantía como caso prioritario; te despacharemos un nuevo ejemplar perfecto sin ningún costo adicional." 
+      }
+    ]
+  },
+  {
+    id: "GAR-206",
+    usuario: "Mateo Cárdenas",
+    libro: "Don Quijote de la Mancha",
+    motivo: "Encuadernación despegada en cubierta trasera (Cliente #102)",
+    estado: "En Revisión",
+    mensajes: [
+      { 
+        sender: "Mateo Cárdenas", 
+        rol: "cliente", 
+        time: "Ayer 16:30", 
+        text: "Buenas tardes, soy Mateo Cárdenas (cliente registrado #102, pedido #ORD-1079). El tomo de Don Quijote llegó con la bisagra trasera despegada por el viaje. Adjunto la fotografía:",
+        foto: "https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&w=400&q=80"
+      },
+      { 
+        sender: "Admin. J. Salazar", 
+        rol: "admin", 
+        time: "Ayer 17:15", 
+        text: "Hola Mateo, gracias por avisarnos. Nuestro taller de restauración puede reacondicionar este tomo con lomo reforzado o podemos enviarte otro ejemplar en stock. ¿Cuál alternativa prefieres?" 
+      }
+    ]
+  }
+];
+
+const ACTIVIDADES_INICIALES = [
+  { icono: "🛒", texto: "Pedido completado por <strong>Valentina Ospina</strong> — $45.000", tiempo: "Hace 10 minutos" },
+  { icono: "👥", texto: "Nueva cuenta creada con éxito: <strong>Mateo Cárdenas</strong> (mateo.cardenas@outlook.com)", tiempo: "Hace 25 minutos" },
+  { icono: "🛡️", texto: "Ticket de garantía abierto por <strong>Valentina Ospina</strong> — <em>Cien años de soledad</em>", tiempo: "Hace 40 minutos" },
+  { icono: "🤝", texto: "Nueva propuesta de proveedor enviada por <strong>Editorial Clásicos Andinos</strong>", tiempo: "Hace 2 horas" },
+  { icono: "⚠️", texto: "Stock crítico: Solo quedan <strong>2 ejemplares</strong> de <strong>\"El señor de los anillos\"</strong>", tiempo: "Hace 3 horas" },
+  { icono: "🛒", texto: "Pedido completado por <strong>Carlos Lector</strong> — $50.000", tiempo: "Ayer, 18:30" },
+  { icono: "📦", texto: "¡Agotado! El libro <strong>\"Los tres mosqueteros\"</strong> se ha quedado sin stock", tiempo: "Ayer, 15:10" },
+  { icono: "👥", texto: "Nueva cuenta creada con éxito: <strong>Sofía Quintero</strong> (sofia.quintero@yahoo.es)", tiempo: "Ayer, 11:20" }
+];
+
+let libros = [];
+let usuarios = [];
+let garantias = [];
+let actividades = [];
+let categoriasPersonalizadas = [];
+let casoGarantiaActivoId = null;
+let fotoAdjuntaDataUrl = null;
+
+function cargarDatos() {
+  const guardadosLibros = localStorage.getItem('paginas_libros_v4');
+  libros = guardadosLibros ? JSON.parse(guardadosLibros) : [...LIBROS_INICIALES];
+
+  const guardadosUsuarios = localStorage.getItem('paginas_usuarios_v2');
+  let loadedUsuarios = guardadosUsuarios ? JSON.parse(guardadosUsuarios) : [];
+  if (!loadedUsuarios || loadedUsuarios.length < 10) {
+    usuarios = [...(window.USUARIOS_INICIALES || usuariosInicialesRespaldo)];
+  } else {
+    usuarios = loadedUsuarios;
+  }
+
+  const guardadasGarantias = localStorage.getItem('paginas_garantias_v5');
+  let loadedGarantias = guardadasGarantias ? JSON.parse(guardadasGarantias) : [];
+  if (!loadedGarantias || loadedGarantias.length < 4) {
+    garantias = [...(window.GARANTIAS_INICIALES || garantiasInicialesRespaldo)];
+  } else {
+    garantias = loadedGarantias;
+  }
+
+  const guardadasActividades = localStorage.getItem('paginas_actividades_v1');
+  let loadedActividades = guardadasActividades ? JSON.parse(guardadasActividades) : [];
+  if (!loadedActividades || loadedActividades.length === 0) {
+    actividades = [...ACTIVIDADES_INICIALES];
+  } else {
+    actividades = loadedActividades;
+  }
+
+  const guardadasCategorias = localStorage.getItem('paginas_categorias_v1');
+  categoriasPersonalizadas = guardadasCategorias ? JSON.parse(guardadasCategorias) : ["Terror", "Fantasía", "Ciencia", "Poesía", "Romance", "Historia", "Biografía", "Infantil", "Autoayuda", "Economía", "Novela clásica", "Ficción"];
+
+  guardarDatos();
+}
+
+function guardarDatos() {
+  localStorage.setItem('paginas_libros_v4', JSON.stringify(libros));
+  localStorage.setItem('paginas_usuarios_v2', JSON.stringify(usuarios));
+  localStorage.setItem('paginas_garantias_v5', JSON.stringify(garantias));
+  localStorage.setItem('paginas_actividades_v1', JSON.stringify(actividades));
+  localStorage.setItem('paginas_categorias_v1', JSON.stringify(categoriasPersonalizadas));
+}
+
+function obtenerTodasLasCategorias() {
+  const deLibros = libros.map(l => l.categoria).filter(Boolean);
+  const setCat = new Set([...deLibros, ...categoriasPersonalizadas]);
+  const arr = Array.from(setCat);
+  arr.sort((a, b) => a.localeCompare(b, 'es', { sensitivity: 'base' }));
+  return arr;
+}
+
+function registrarActividad(icono, texto) {
+  // REGLA ESTRICTA: Solo permitir actividades de los 5 tipos autorizados:
+  // 1. Pedidos realizados ('🛒')
+  // 2. Creación de cuenta con éxito ('👥', '👤')
+  // 3. Formulario de proveedor enviado ('🤝')
+  // 4. Apertura de ticket de garantía ('🛡️')
+  // 5. Poco stock o sin stock ('⚠️', '📦')
+  const permitidos = ['🛒', '👥', '👤', '🤝', '🛡️', '⚠️', '📦'];
+  if (!permitidos.includes(icono)) return;
+
+  if (icono === '🛡️') {
+    const tLower = texto.toLowerCase();
+    if (!tLower.includes('abierto') && !tLower.includes('nuevo ticket') && !tLower.includes('reporte') && !tLower.includes('apertura')) {
+      return;
+    }
+  }
+
+  if (icono === '📦') {
+    const tLower = texto.toLowerCase();
+    if (!tLower.includes('stock') && !tLower.includes('agotado')) {
+      return;
+    }
+  }
+
+  const ahora = new Date();
+  const horaStr = `${ahora.getHours()}:${String(ahora.getMinutes()).padStart(2, '0')}`;
+  
+  actividades.unshift({
+    icono: icono,
+    texto: texto,
+    tiempo: `Hoy, ${horaStr}`
+  });
+
+  if (actividades.length > 15) {
+    actividades = actividades.slice(0, 15);
+  }
+
+  guardarDatos();
+  renderizarActividadReciente();
+}
+
+function renderizarActividadReciente() {
+  const feed = document.getElementById('activityFeed');
+  if (!feed) return;
+
+  if (!actividades || actividades.length === 0) {
+    feed.innerHTML = `<li class="activity-item" style="color: var(--text-muted);">Sin actividad reciente registrada.</li>`;
+    return;
+  }
+
+  feed.innerHTML = actividades.map(act => `
+    <li class="activity-item">
+      <div class="activity-icon">${act.icono}</div>
+      <div class="activity-content">
+        <p>${act.texto}</p>
+        <span class="activity-time">${escaparHTML(act.tiempo)}</span>
+      </div>
+    </li>
+  `).join('');
+}
+
+function renderizarTabla() {
+  const tbody = document.getElementById('tablaLibrosBody');
+  const searchVal = document.getElementById('searchBookInput')?.value.toLowerCase().trim() || '';
+  const catVal = document.getElementById('filterCategorySelect')?.value || '';
+
+  const librosFiltrados = libros.filter(libro => {
+    const coincideTexto = !searchVal || 
+      libro.titulo.toLowerCase().includes(searchVal) ||
+      libro.autor.toLowerCase().includes(searchVal) ||
+      libro.isbn.toLowerCase().includes(searchVal) ||
+      (libro.descripcion && libro.descripcion.toLowerCase().includes(searchVal));
+    const coincideCat = !catVal || libro.categoria === catVal;
+    return coincideTexto && coincideCat;
+  });
+
+  tbody.innerHTML = '';
+
+  if (librosFiltrados.length === 0) {
+    tbody.innerHTML = `
+      <tr>
+        <td colspan="7" style="text-align: center; padding: 2rem; color: var(--text-muted);">
+          No se encontraron libros que coincidan con los criterios de búsqueda.
+        </td>
+      </tr>
+    `;
+  } else {
+    librosFiltrados.forEach(libro => {
+      let badgeClass = 'disponible';
+      let badgeText = 'Disponible';
+      if (libro.stock === 0) {
+        badgeClass = 'agotado';
+        badgeText = 'Agotado';
+      } else if (libro.stock <= 5) {
+        badgeClass = 'poco';
+        badgeText = 'Poco stock';
+      }
+
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>
+          <div class="book-cell">
+          <img
+              class="book-cover"
+              src="${libro.portada ? libro.portada : `https://covers.openlibrary.org/b/isbn/${escaparHTML(libro.isbn)}-M.jpg`}"
+              alt="Portada de ${escaparHTML(libro.titulo)}"
+              title="${escaparHTML(libro.titulo)}"
+              onerror="this.onerror=null; this.outerHTML='<div style=\'width:45px;height:65px;border:1px solid #000;box-shadow:2px 2px 4px rgba(0,0,0,0.3);background-color:${obtenerColorCover(libro.categoria)};display:flex;align-items:center;justify-content:center;font-size:0.65rem;font-weight:bold;color:#fff;padding:2px;text-align:center;\'>${escaparHTML(libro.titulo.substring(0,6))}</div>';"
+            >
+            <div>
+              <strong>${escaparHTML(libro.titulo)}</strong>
+              <div style="font-size: 0.8rem; color: var(--text-muted);">ISBN: ${escaparHTML(libro.isbn)}</div>
+            </div>
+          </div>
+        </td>
+        <td>${escaparHTML(libro.autor)}</td>
+        <td><span style="background: var(--bg-secondary); padding: 2px 6px; border: 1px solid var(--brown-light); font-size: 0.85rem;">${escaparHTML(libro.categoria)}</span></td>
+        <td>$${Number(libro.precio).toLocaleString('es-CO')}</td>
+        <td>${libro.stock}</td>
+        <td><span class="status ${badgeClass}">${badgeText}</span></td>
+        <td class="table-actions">
+          <button type="button" onclick="abrirModalVer(${libro.id})" title="Ver detalles">Ver</button>
+          <button type="button" onclick="abrirModalForm(${libro.id})" title="Editar libro">Editar</button>
+          <button type="button" onclick="eliminarLibro(${libro.id})" title="Eliminar libro" style="color: #b71c1c;">Borrar</button>
+        </td>
+      `;
+      tbody.appendChild(tr);
+    });
+  }
+
+  actualizarEstadisticas();
+  actualizarOpcionesCategorias();
+}
+
+function actualizarEstadisticas() {
+  const elTotal = document.getElementById('stat-total-libros');
+  const elChange = document.getElementById('stat-total-change');
+  if (elTotal) elTotal.textContent = libros.length.toLocaleString('es-CO');
+  if (elChange) elChange.textContent = `↑ ${libros.length} libros en catálogo`;
+
+  const elUsrTotal = document.getElementById('stat-total-usuarios');
+  const elUsrSub = document.getElementById('stat-total-usuarios-sub');
+  if (elUsrTotal) elUsrTotal.textContent = usuarios.length;
+  if (elUsrSub) elUsrSub.textContent = `↑ ${usuarios.length} lectores registrados`;
+
+  // Leer pedidos reales
+  let pedidos = [];
+  try { pedidos = JSON.parse(localStorage.getItem('paginas_pedidos_v1') || '[]'); } catch {}
+  const totalPedidos = pedidos.length;
+  const totalVentas = pedidos.reduce((acc, p) => acc + (p.total || 0), 0);
+
+  // Este mes
+  const ahora = new Date();
+  const pedidosMes = pedidos.filter(p => {
+    const f = new Date(p.fecha);
+    return f.getMonth() === ahora.getMonth() && f.getFullYear() === ahora.getFullYear();
+  });
+  const ventasMes = pedidosMes.reduce((acc, p) => acc + (p.total || 0), 0);
+
+  const elPedidos = document.getElementById('stat-total-pedidos');
+  const elPedidosSub = document.getElementById('stat-total-pedidos-sub');
+  if (elPedidos) elPedidos.textContent = totalPedidos;
+  if (elPedidosSub) elPedidosSub.textContent = `↑ ${pedidosMes.length} este mes`;
+
+  const elVentas = document.getElementById('stat-ventas-mes');
+  const elVentasSub = document.getElementById('stat-ventas-mes-sub');
+  if (elVentas) elVentas.textContent = '$' + ventasMes.toLocaleString('es-CO');
+  if (elVentasSub) elVentasSub.textContent = `↑ $${totalVentas.toLocaleString('es-CO')} ingresos totales`;
+}
+
+function actualizarOpcionesCategorias() {
+  const selectFilter = document.getElementById('filterCategorySelect');
+  const selectForm = document.getElementById('libroFormCategoria');
+  const todasCategorias = obtenerTodasLasCategorias();
+
+  // 1. Filtro en Dashboard
+  if (selectFilter) {
+    const catActual = selectFilter.value;
+    selectFilter.innerHTML = '<option value="">Todas las categorías</option>';
+    todasCategorias.forEach(cat => {
+      const count = libros.filter(l => l.categoria === cat).length;
+      const option = document.createElement('option');
+      option.value = cat;
+      option.textContent = `${cat} (${count})`;
+      if (cat === catActual) option.selected = true;
+      selectFilter.appendChild(option);
+    });
+  }
+
+  // 2. Select en Formulario de Agregar/Editar Libro
+  if (selectForm) {
+    const catActualForm = selectForm.value;
+    selectForm.innerHTML = '<option value="" disabled selected>-- Selecciona una categoría --</option>';
+    todasCategorias.forEach(cat => {
+      const option = document.createElement('option');
+      option.value = cat;
+      option.textContent = cat;
+      selectForm.appendChild(option);
+    });
+    const optionNueva = document.createElement('option');
+    optionNueva.value = '__NUEVA__';
+    optionNueva.textContent = '➕ Agregar nueva categoría...';
+    selectForm.appendChild(optionNueva);
+
+    if (catActualForm && (todasCategorias.includes(catActualForm) || catActualForm === '__NUEVA__')) {
+      selectForm.value = catActualForm;
+    }
+  }
+}
+
+function manejarCambioCategoriaForm(val) {
+  const grupoNueva = document.getElementById('grupoNuevaCategoriaForm');
+  const inputNueva = document.getElementById('libroFormNuevaCategoria');
+  if (val === '__NUEVA__') {
+    if (grupoNueva) grupoNueva.style.display = 'block';
+    if (inputNueva) {
+      inputNueva.required = true;
+      inputNueva.focus();
+    }
+  } else {
+    if (grupoNueva) grupoNueva.style.display = 'none';
+    if (inputNueva) {
+      inputNueva.required = false;
+      inputNueva.value = '';
+    }
+  }
+}
+
+function obtenerColorCover(cat) {
+  switch(cat) {
+    case 'Terror': return '#3e2723';
+    case 'Fantasía': case 'Fantasia': return '#4a148c';
+    case 'Ciencia': return '#0d47a1';
+    case 'Poesía': case 'Poesia': return '#880e4f';
+    case 'Romance': return '#b71c1c';
+    case 'Historia': return '#1b5e20';
+    case 'Biografía': case 'Biografia': return '#e65100';
+    case 'Infantil': return '#f57f17';
+    case 'Autoayuda': return '#004d40';
+    case 'Economía': case 'Economia': return '#33691e';
+    default: return '#5d4037';
+  }
+}
+
+function escaparHTML(str) {
+  if (!str) return '';
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
+function abrirModal(idModal) {
+  const modal = document.getElementById(idModal);
+  if (modal) modal.classList.add('active');
+}
+
+function cerrarModal(idModal) {
+  const modal = document.getElementById(idModal);
+  if (modal) modal.classList.remove('active');
+  restablecerSidebarActive();
+}
+
+function restablecerSidebarActive() {
+  const sidebarLinks = document.querySelectorAll('.sidebar li a');
+  if (sidebarLinks.length > 0) {
+    sidebarLinks.forEach(l => l.classList.remove('active'));
+    sidebarLinks[0].classList.add('active');
+  }
+}
+
+function abrirModalForm(idLibro = null) {
+  actualizarOpcionesCategorias();
+
+  const modalTitle = document.getElementById('modalFormTitle');
+  const inputId = document.getElementById('libroFormId');
+  const inputIsbn = document.getElementById('libroFormIsbn');
+  const inputTitulo = document.getElementById('libroFormTitulo');
+  const inputAutor = document.getElementById('libroFormAutor');
+  const selectCategoria = document.getElementById('libroFormCategoria');
+  const inputPrecio = document.getElementById('libroFormPrecio');
+  const inputStock = document.getElementById('libroFormStock');
+  const selectEnc = document.getElementById('libroFormEncuadernacion');
+  const selectEst = document.getElementById('libroFormEstado');
+  const inputDesc = document.getElementById('libroFormDescripcion');
+
+  if (idLibro) {
+    const libro = libros.find(l => l.id === idLibro);
+    if (!libro) return;
+    modalTitle.childNodes[0].nodeValue = `Editar Libro #${libro.id} `;
+    inputId.value = libro.id;
+    inputIsbn.value = libro.isbn || '';
+    inputTitulo.value = libro.titulo || '';
+    inputAutor.value = libro.autor || '';
+    
+    // Categoría
+    const cat = libro.categoria || '';
+    const todas = obtenerTodasLasCategorias();
+    if (cat && !todas.includes(cat)) {
+      const opt = document.createElement('option');
+      opt.value = cat;
+      opt.textContent = cat;
+      selectCategoria.insertBefore(opt, selectCategoria.lastElementChild);
+    }
+    selectCategoria.value = cat;
+    manejarCambioCategoriaForm(cat);
+
+    inputPrecio.value = libro.precio || 20000;
+    inputStock.value = libro.stock || 0;
+    selectEnc.value = libro.encuadernacion || 'Dura';
+    selectEst.value = libro.estado === 'Nuevo' ? 'Excelente' : (libro.estado || 'Excelente');
+    inputDesc.value = libro.descripcion || '';
+
+    // Portada
+    const preview = document.getElementById('libroFormPortadaPreview');
+    const btnBorrar = document.getElementById('libroFormPortadaBorrar');
+    const hiddenData = document.getElementById('libroFormPortadaData');
+    if (libro.portada) {
+      preview.src = libro.portada;
+      preview.style.display = 'block';
+      btnBorrar.style.display = 'inline-block';
+      hiddenData.value = libro.portada;
+    } else {
+      preview.src = '';
+      preview.style.display = 'none';
+      btnBorrar.style.display = 'none';
+      hiddenData.value = '';
+    }
+    document.getElementById('libroFormPortadaInput').value = '';
+  } else {
+    modalTitle.childNodes[0].nodeValue = 'Agregar Libro Usado ';
+    inputId.value = '';
+    document.getElementById('formLibro').reset();
+    selectCategoria.value = '';
+    manejarCambioCategoriaForm('');
+    inputPrecio.value = '';
+    // Limpiar portada
+    const preview = document.getElementById('libroFormPortadaPreview');
+    preview.src = '';
+    preview.style.display = 'none';
+    document.getElementById('libroFormPortadaBorrar').style.display = 'none';
+    document.getElementById('libroFormPortadaData').value = '';
+  }
+
+  abrirModal('modalFormLibro');
+}
+
+function eliminarPortadaPersonalizada() {
+  const preview = document.getElementById('libroFormPortadaPreview');
+  const btnBorrar = document.getElementById('libroFormPortadaBorrar');
+  const hidden = document.getElementById('libroFormPortadaData');
+  const fileInput = document.getElementById('libroFormPortadaInput');
+
+  preview.src = '';
+  preview.style.display = 'none';
+  btnBorrar.style.display = 'none';
+  hidden.value = '';
+  if (fileInput) fileInput.value = '';
+}
+
+async function buscarPorISBN() {
+  const isbn = document.getElementById('libroFormIsbn').value.trim().replace(/[-\s]/g, '');
+  const msgBuscando = document.getElementById('isbnBuscandoMsg');
+  const msgResultado = document.getElementById('isbnResultadoMsg');
+
+  if (!isbn || isbn.length < 10) {
+    msgResultado.style.display = 'block';
+    msgResultado.style.color = '#b71c1c';
+    msgResultado.textContent = '⚠️ Ingresa un ISBN válido de 10 o 13 dígitos.';
+    return;
+  }
+
+  msgBuscando.style.display = 'block';
+  msgResultado.style.display = 'none';
+  document.getElementById('btnBuscarISBN').disabled = true;
+
+  try {
+    const url = `https://openlibrary.org/api/books?bibkeys=ISBN:${isbn}&format=json&jscmd=data`;
+    const resp = await fetch(url);
+    const data = await resp.json();
+    const key = `ISBN:${isbn}`;
+
+    if (data[key]) {
+      const book = data[key];
+
+      // Título
+      if (book.title) {
+        document.getElementById('libroFormTitulo').value = book.title;
+      }
+
+      // Autor (primer autor)
+      if (book.authors && book.authors.length > 0) {
+        document.getElementById('libroFormAutor').value = book.authors[0].name;
+      }
+
+      // Categoría (primer subject si existe)
+      if (book.subjects && book.subjects.length > 0) {
+        const subject = (book.subjects[0].name || book.subjects[0]).substring(0, 30);
+        const selectCat = document.getElementById('libroFormCategoria');
+        let existe = Array.from(selectCat.options).some(o => o.value === subject);
+        if (!existe) {
+          const opt = document.createElement('option');
+          opt.value = subject;
+          opt.textContent = subject;
+          selectCat.insertBefore(opt, selectCat.lastElementChild);
+        }
+        selectCat.value = subject;
+        manejarCambioCategoriaForm(subject);
+      }
+
+      msgResultado.style.display = 'block';
+      msgResultado.style.color = '#33691e';
+      msgResultado.textContent = '✅ Datos encontrados y autocompletados. Revisa y ajusta si es necesario.';
+    } else {
+      msgResultado.style.display = 'block';
+      msgResultado.style.color = '#e65100';
+      msgResultado.textContent = '📭 ISBN no encontrado en Open Library. Completa los campos manualmente.';
+    }
+  } catch (err) {
+    msgResultado.style.display = 'block';
+    msgResultado.style.color = '#b71c1c';
+    msgResultado.textContent = '❌ Error al conectar con Open Library. Completa los campos manualmente.';
+  } finally {
+    msgBuscando.style.display = 'none';
+    document.getElementById('btnBuscarISBN').disabled = false;
+  }
+}
+
+function abrirModalVer(idLibro) {
+  const libro = libros.find(l => l.id === idLibro);
+  if (!libro) return;
+
+  const container = document.getElementById('modalVerDetalleContent');
+  container.innerHTML = `
+    <div class="book-detail-item">
+      <span class="book-detail-label">ID del Libro:</span>
+      <span>#${libro.id}</span>
+    </div>
+    <div class="book-detail-item">
+      <span class="book-detail-label">ISBN:</span>
+      <span>${escaparHTML(libro.isbn)}</span>
+    </div>
+    <div class="book-detail-item">
+      <span class="book-detail-label">Título:</span>
+      <span><strong>${escaparHTML(libro.titulo)}</strong></span>
+    </div>
+    <div class="book-detail-item">
+      <span class="book-detail-label">Autor:</span>
+      <span>${escaparHTML(libro.autor)}</span>
+    </div>
+    <div class="book-detail-item">
+      <span class="book-detail-label">Categoría:</span>
+      <span>${escaparHTML(libro.categoria)}</span>
+    </div>
+    <div class="book-detail-item">
+      <span class="book-detail-label">Precio:</span>
+      <span>$${Number(libro.precio).toLocaleString('es-CO')}</span>
+    </div>
+    <div class="book-detail-item">
+      <span class="book-detail-label">Stock disponible:</span>
+      <span>${libro.stock} unidades</span>
+    </div>
+    <div class="book-detail-item">
+      <span class="book-detail-label">Encuadernación:</span>
+      <span>${escaparHTML(libro.encuadernacion || 'N/A')}</span>
+    </div>
+    <div class="book-detail-item">
+      <span class="book-detail-label">Estado Libro:</span>
+      <span>${escaparHTML(libro.estado === 'Nuevo' ? 'Excelente' : libro.estado)}</span>
+    </div>
+    <div class="book-detail-item">
+      <span class="book-detail-label">Descripción:</span>
+      <span>${escaparHTML(libro.descripcion || 'Sin descripción disponible.')}</span>
+    </div>
+  `;
+
+  abrirModal('modalVerLibro');
+}
+
+function eliminarLibro(idLibro) {
+  const libro = libros.find(l => l.id === idLibro);
+  if (!libro) return;
+
+  if (confirm(`¿Estás seguro de que deseas eliminar "${libro.titulo}" del catálogo?`)) {
+    libros = libros.filter(l => l.id !== idLibro);
+    registrarActividad('🗑️', `Se eliminó <strong>"${escaparHTML(libro.titulo)}"</strong> del catálogo`);
+    guardarDatos();
+    renderizarTabla();
+  }
+}
+
+// GESTIÓN DINÁMICA DE USUARIOS (CON BÚSQUEDA Y FILTROS)
+function renderModalUsuarios() {
+  const tbody = document.getElementById('tablaUsuariosBody');
+  if (!tbody) return;
+
+  const searchVal = (document.getElementById('searchUsuariosInput')?.value || '').toLowerCase().trim();
+  const rolVal = (document.getElementById('filterUsuariosRol')?.value || '').trim();
+  const estadoVal = (document.getElementById('filterUsuariosEstado')?.value || '').trim();
+
+  const filtrados = usuarios.filter(u => {
+    if (rolVal && u.rol !== rolVal) return false;
+    if (estadoVal && u.estado !== estadoVal) return false;
+    if (searchVal) {
+      const matchId = (u.id || '').toLowerCase().includes(searchVal);
+      const matchNom = (u.usuario || '').toLowerCase().includes(searchVal);
+      const matchMail = (u.email || '').toLowerCase().includes(searchVal);
+      if (!matchId && !matchNom && !matchMail) return false;
+    }
+    return true;
+  });
+
+  const conteoEl = document.getElementById('conteoUsuariosTexto');
+  if (conteoEl) {
+    conteoEl.textContent = `${filtrados.length} de ${usuarios.length} usuario${usuarios.length !== 1 ? 's' : ''}`;
+  }
+
+  if (filtrados.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="6" style="text-align:center; padding:2rem; color:var(--text-muted); font-style:italic;">No se encontraron usuarios con los criterios de búsqueda aplicados.</td></tr>`;
+    return;
+  }
+
+  tbody.innerHTML = filtrados.map(u => {
+    const esAdmin = u.rol === 'Administrador' || u.id === 'USR-01';
+    const badgeEstado = u.estado === 'Activo' ? 'status disponible' : 'status poco';
+    return `
+      <tr>
+        <td><strong>${escaparHTML(u.id)}</strong></td>
+        <td>
+          <strong>${escaparHTML(u.usuario)}</strong>
+          ${u.nombres && u.apellidos && u.usuario !== `${u.nombres} ${u.apellidos}` ? `<div style="font-size:0.75rem; color:var(--text-muted);">${escaparHTML(u.nombres)} ${escaparHTML(u.apellidos)}</div>` : ''}
+        </td>
+        <td><a href="mailto:${escaparHTML(u.email)}" style="color:var(--link); font-size:0.88rem;">${escaparHTML(u.email)}</a></td>
+        <td><span style="background: var(--bg-secondary); padding: 2px 8px; border: 1px solid var(--brown-light); border-radius: 4px; font-size: 0.8rem; font-weight: bold;">${escaparHTML(u.rol)}</span></td>
+        <td><span class="${badgeEstado}">${escaparHTML(u.estado || 'Activo')}</span></td>
+        <td class="table-actions" style="text-align:center; white-space:nowrap;">
+          <button type="button" onclick="verDetalleUsuario('${u.id}')" title="Ver ficha completa y actividad" style="color:var(--brown-dark); font-weight:bold;">👁 Ver</button>
+          ${u.id === 'USR-01' ? '<span style="color: var(--text-muted); font-size: 0.8rem; margin-left:0.3rem;">Principal</span>' : `<button type="button" onclick="eliminarUsuario('${u.id}')" style="color: #b71c1c;" title="Eliminar usuario">Eliminar</button>`}
+        </td>
+      </tr>
+    `;
+  }).join('');
+}
+
+function verDetalleUsuario(idUsr) {
+  const u = usuarios.find(x => x.id === idUsr);
+  if (!u) return;
+
+  document.getElementById('detUsrIdHidden').value = u.id;
+  document.getElementById('detUsrId').textContent = u.id;
+  document.getElementById('detUsrNombre').textContent = u.usuario || `${u.nombres || ''} ${u.apellidos || ''}`.trim();
+  document.getElementById('detUsrEmail').textContent = u.email;
+  document.getElementById('detUsrFecha').textContent = u.fechaRegistro || '2026-01-15';
+
+  // Avatar iniciales
+  const avatarEl = document.getElementById('detUsrAvatar');
+  if (avatarEl) {
+    const nom = (u.usuario || 'U').trim();
+    const parts = nom.split(' ');
+    const init = parts.length > 1 ? (parts[0][0] + parts[1][0]).toUpperCase() : nom.slice(0, 2).toUpperCase();
+    avatarEl.textContent = init;
+  }
+
+  // Rol badge
+  const rolBadge = document.getElementById('detUsrRolBadge');
+  if (rolBadge) {
+    rolBadge.textContent = (u.rol || 'Lector').toUpperCase();
+    if (u.rol === 'Administrador') {
+      rolBadge.style.background = '#854d0e';
+      rolBadge.style.color = '#ffffff';
+      rolBadge.style.borderColor = '#713f12';
+    } else {
+      rolBadge.style.background = 'var(--bg-card)';
+      rolBadge.style.color = 'var(--brown-dark)';
+      rolBadge.style.borderColor = 'var(--brown-medium)';
+    }
+  }
+
+  // Estado
+  const estLabel = document.getElementById('detUsrEstadoLabel');
+  if (estLabel) {
+    estLabel.textContent = u.estado || 'Activo';
+    estLabel.className = u.estado === 'Activo' ? 'status disponible' : 'status poco';
+  }
+
+  // Compras de este usuario
+  let pedidos = [];
+  try { pedidos = JSON.parse(localStorage.getItem('paginas_pedidos_v1') || '[]'); } catch {}
+  const pedidosUsuario = pedidos.filter(p => p.usuarioId === u.id || (p.email && p.email.toLowerCase() === u.email.toLowerCase()));
+
+  const comprasBadge = document.getElementById('detUsrTotalComprasBadge');
+  if (comprasBadge) comprasBadge.textContent = `${pedidosUsuario.length} orden${pedidosUsuario.length !== 1 ? 'es' : ''}`;
+
+  const comprasCont = document.getElementById('detUsrComprasContenido');
+  if (comprasCont) {
+    if (pedidosUsuario.length === 0) {
+      comprasCont.innerHTML = `<p style="color:var(--text-muted); font-style:italic; padding:0.5rem 0; margin:0;">Este lector aún no ha realizado pedidos en la tienda.</p>`;
+    } else {
+      comprasCont.innerHTML = pedidosUsuario.map(p => `
+        <div style="display:flex; justify-content:space-between; align-items:center; padding:0.4rem 0; border-bottom:1px dotted var(--brown-medium);">
+          <div>
+            <strong>#${escaparHTML(p.id)}</strong> — $${Number(p.total).toLocaleString('es-CO')}
+            <div style="font-size:0.75rem; color:var(--text-muted);">${p.fecha ? new Date(p.fecha).toLocaleDateString('es-CO', { day:'2-digit', month:'short', year:'numeric' }) : ''} · ${(p.items || []).length} libro(s)</div>
+          </div>
+          <button type="button" onclick="cerrarModal('modalDetalleUsuario'); verDetallePedido('${p.id}');" style="background:none; border:1px solid var(--border-color); padding:2px 6px; font-size:0.75rem; border-radius:3px; cursor:pointer;">Ver orden</button>
+        </div>
+      `).join('');
+    }
+  }
+
+  // Favoritos de este usuario
+  const favKey = `paginas_favoritos_${u.id}`;
+  let favIds = [];
+  try { favIds = JSON.parse(localStorage.getItem(favKey) || '[]'); } catch {}
+
+  const favsBadge = document.getElementById('detUsrTotalFavsBadge');
+  if (favsBadge) favsBadge.textContent = `${favIds.length} libro${favIds.length !== 1 ? 's' : ''}`;
+
+  const favsCont = document.getElementById('detUsrFavsContenido');
+  if (favsCont) {
+    if (favIds.length === 0) {
+      favsCont.innerHTML = `<p style="color:var(--text-muted); font-style:italic; padding:0.5rem 0; margin:0;">No tiene libros guardados en su lista de favoritos.</p>`;
+    } else {
+      favsCont.innerHTML = favIds.map(fId => {
+        const lib = libros.find(l => l.id === fId);
+        const tit = lib ? lib.titulo : `Libro #${fId}`;
+        const prec = lib ? `$${Number(lib.precio).toLocaleString('es-CO')}` : '';
+        return `
+          <div style="display:flex; justify-content:space-between; align-items:center; padding:0.35rem 0; border-bottom:1px dotted var(--brown-medium);">
+            <span>❤️ <strong>${escaparHTML(tit)}</strong></span>
+            <span style="font-size:0.8rem; color:var(--text-muted);">${prec}</span>
+          </div>
+        `;
+      }).join('');
+    }
+  }
+
+  abrirModal('modalDetalleUsuario');
+}
+
+function alternarEstadoUsuarioModal() {
+  const idUsr = document.getElementById('detUsrIdHidden').value;
+  const u = usuarios.find(x => x.id === idUsr);
+  if (!u) return;
+
+  if (u.id === 'USR-01') {
+    alert('No es posible desactivar al Administrador Principal del sistema.');
+    return;
+  }
+
+  u.estado = u.estado === 'Activo' ? 'Inactivo' : 'Activo';
+  guardarDatos();
+  renderModalUsuarios();
+
+  const estLabel = document.getElementById('detUsrEstadoLabel');
+  if (estLabel) {
+    estLabel.textContent = u.estado;
+    estLabel.className = u.estado === 'Activo' ? 'status disponible' : 'status poco';
+  }
+}
+
+function eliminarUsuario(idUsr) {
+  const usr = usuarios.find(u => u.id === idUsr);
+  if (!usr) return;
+
+  if (confirm(`¿Estás seguro de que deseas eliminar el usuario "${usr.usuario}"?`)) {
+    usuarios = usuarios.filter(u => u.id !== idUsr);
+    guardarDatos();
+    renderModalUsuarios();
+    actualizarEstadisticas();
+  }
+}
+
+// GESTIÓN DINÁMICA DE GARANTÍAS Y CHAT CON FOTOS
+function renderModalGarantias() {
+  const tbody = document.getElementById('tablaGarantiasBody');
+  if (!tbody) return;
+
+  tbody.innerHTML = garantias.map(g => {
+    let badgeClass = 'poco';
+    if (g.estado === 'Resuelto') badgeClass = 'disponible';
+
+    return `
+      <tr>
+        <td><strong>#${g.id}</strong></td>
+        <td>${escaparHTML(g.usuario)}</td>
+        <td><strong>${escaparHTML(g.libro)}</strong></td>
+        <td>${escaparHTML(g.motivo)}</td>
+        <td><span class="status ${badgeClass}">${escaparHTML(g.estado)}</span></td>
+        <td class="table-actions">
+          <button type="button" onclick="abrirChatGarantia('${g.id}')">${g.estado === 'Resuelto' ? 'Ver Chat' : 'Abrir Chat'}</button>
+          ${g.estado === 'Resuelto' ? `<button type="button" onclick="eliminarCasoGarantia('${g.id}')" style="color: #b71c1c;" title="Eliminar este chat resuelto">Borrar Chat</button>` : ''}
+        </td>
+      </tr>
+    `;
+  }).join('');
+}
+
+function abrirChatGarantia(idCaso) {
+  const caso = garantias.find(g => g.id === idCaso);
+  if (!caso) return;
+
+  casoGarantiaActivoId = idCaso;
+  cancelarFotoAdjunta();
+  document.getElementById('chatGarantiaTitulo').childNodes[0].nodeValue = `Chat de Garantía - #${caso.id} `;
+  document.getElementById('chatGarantiaSubtitulo').textContent = `Conversación con ${caso.usuario} sobre "${caso.libro}" (${caso.estado}):`;
+
+  const btnResuelto = document.getElementById('btnMarcarResuelto');
+  const btnEliminar = document.getElementById('btnEliminarChatModal');
+
+  if (caso.estado === 'Resuelto') {
+    if (btnResuelto) btnResuelto.style.display = 'none';
+    if (btnEliminar) btnEliminar.style.display = 'inline-block';
+  } else {
+    if (btnResuelto) btnResuelto.style.display = 'inline-block';
+    if (btnEliminar) btnEliminar.style.display = 'none';
+  }
+
+  renderMensajesChat();
+  abrirModal('modalChatGarantia');
+}
+
+function renderMensajesChat() {
+  const container = document.getElementById('chatGarantiaMensajes');
+  const caso = garantias.find(g => g.id === casoGarantiaActivoId);
+  if (!container || !caso) return;
+
+  container.innerHTML = caso.mensajes.map(m => `
+    <div class="chat-msg ${m.rol === 'admin' ? 'admin' : 'cliente'}">
+      <span class="chat-sender">${escaparHTML(m.sender)}</span>
+      <div>${escaparHTML(m.text)}</div>
+      ${m.foto ? `<img src="${escaparHTML(m.foto)}" alt="Prueba de garantía" class="chat-img-proof" onclick="window.open(this.src, '_blank')" title="Clic para ampliar foto">` : ''}
+      <span class="chat-time">${escaparHTML(m.time)}</span>
+    </div>
+  `).join('');
+
+  container.scrollTop = container.scrollHeight;
+}
+
+function procesarFotoSeleccionada(event) {
+  const file = event.target.files[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      fotoAdjuntaDataUrl = e.target.result;
+      document.getElementById('chatPhotoPreviewImg').src = fotoAdjuntaDataUrl;
+      document.getElementById('chatPhotoPreviewArea').style.display = 'flex';
+    };
+    reader.readAsDataURL(file);
+  }
+}
+
+function cancelarFotoAdjunta() {
+  fotoAdjuntaDataUrl = null;
+  const inputFoto = document.getElementById('inputChatFoto');
+  if (inputFoto) inputFoto.value = '';
+  const previewArea = document.getElementById('chatPhotoPreviewArea');
+  if (previewArea) previewArea.style.display = 'none';
+}
+
+function marcarCasoActualResuelto() {
+  const caso = garantias.find(g => g.id === casoGarantiaActivoId);
+  if (!caso) return;
+
+  caso.estado = 'Resuelto';
+  caso.mensajes.push({
+    sender: "Admin. J. Salazar",
+    rol: "admin",
+    time: "Ahora mismo",
+    text: "[SISTEMA] El caso de garantía ha sido marcado como RESUELTO por el administrador."
+  });
+
+  registrarActividad('🛡️', `Caso de garantía <strong>#${caso.id}</strong> marcado como RESUELTO`);
+  guardarDatos();
+  renderMensajesChat();
+  renderModalGarantias();
+
+  const btnResuelto = document.getElementById('btnMarcarResuelto');
+  const btnEliminar = document.getElementById('btnEliminarChatModal');
+  if (btnResuelto) btnResuelto.style.display = 'none';
+  if (btnEliminar) btnEliminar.style.display = 'inline-block';
+
+  alert(`El caso #${caso.id} fue marcado como Resuelto.`);
+}
+
+function eliminarCasoGarantia(idCaso) {
+  const caso = garantias.find(g => g.id === idCaso);
+  if (!caso) return;
+
+  if (caso.estado !== 'Resuelto') {
+    alert('Solo es posible eliminar el chat de casos que hayan sido marcados como Resueltos.');
+    return;
+  }
+
+  if (confirm(`¿Estás seguro de que deseas eliminar permanentemente el chat del caso #${caso.id} (${caso.usuario})?`)) {
+    garantias = garantias.filter(g => g.id !== idCaso);
+    registrarActividad('🗑️', `Se eliminó el historial del chat <strong>#${caso.id}</strong>`);
+    guardarDatos();
+    renderModalGarantias();
+    if (casoGarantiaActivoId === idCaso) {
+      cerrarModal('modalChatGarantia');
+      casoGarantiaActivoId = null;
+    }
+  }
+}
+
+// Renderizado del Modal Favoritos (Libros más guardados por usuarios)
+function renderModalFavoritos() {
+  const tbody = document.getElementById('tablaFavoritosBody');
+  if (!tbody) return;
+
+  // Recopilar todos los favoritos de todos los usuarios desde localStorage
+  const conteoFavs = {};
+  const usuarios_local = JSON.parse(localStorage.getItem('paginas_usuarios_v2') || '[]');
+  usuarios_local.forEach(u => {
+    if (!u.id) return;
+    const favKey = `paginas_favoritos_${u.id}`;
+    const favs = JSON.parse(localStorage.getItem(favKey) || '[]');
+    favs.forEach(idLibro => {
+      conteoFavs[idLibro] = (conteoFavs[idLibro] || 0) + 1;
+    });
+  });
+
+  // Ordenar por conteo descendente
+  const librosConFavs = Object.entries(conteoFavs)
+    .map(([idStr, count]) => ({ id: parseInt(idStr), count }))
+    .sort((a, b) => b.count - a.count)
+    .slice(0, 10);
+
+  if (librosConFavs.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="5" style="text-align:center; color:var(--text-muted); padding:1.5rem; font-style:italic;">Aún no hay libros guardados en favoritos por ningún usuario.</td></tr>`;
+    return;
+  }
+
+  // Leer pedidos para ranking de ventas por libro
+  let pedidos = [];
+  try { pedidos = JSON.parse(localStorage.getItem('paginas_pedidos_v1') || '[]'); } catch {}
+  const ventasPorLibro = {};
+  pedidos.forEach(p => {
+    (p.items || []).forEach(item => {
+      const key = String(item.id);
+      ventasPorLibro[key] = (ventasPorLibro[key] || 0) + 1;
+    });
+  });
+
+  tbody.innerHTML = librosConFavs.map((entry, idx) => {
+    const libro = libros.find(l => String(l.id) === String(entry.id));
+    const titulo = libro ? libro.titulo : `ID #${entry.id}`;
+    const stockNum = libro ? libro.stock : null;
+    const stockText = stockNum !== null ? (stockNum === 0 ? '<span style="color:#b71c1c;">Agotado</span>' : `${stockNum} unid.`) : '—';
+    const ventas = ventasPorLibro[entry.id] || ventasPorLibro[String(entry.id)] || 0;
+    return `
+    <tr>
+      <td><strong>#${idx + 1}</strong></td>
+      <td><strong>${escaparHTML(titulo)}</strong></td>
+      <td>${ventas} venta${ventas !== 1 ? 's' : ''}</td>
+      <td>❤️ ${entry.count} favorito${entry.count !== 1 ? 's' : ''}</td>
+      <td>${stockText}</td>
+    </tr>`;
+  }).join('');
+}
+
+// Renderizado del Modal Pedidos (Con Búsqueda, Filtros y Detalle)
+function renderModalPedidos() {
+  const tbody = document.getElementById('tablaPedidosBody');
+  if (!tbody) return;
+
+  let pedidos = [];
+  try { pedidos = JSON.parse(localStorage.getItem('paginas_pedidos_v1') || '[]'); } catch {}
+
+  const searchVal = (document.getElementById('searchPedidosInput')?.value || '').toLowerCase().trim();
+  const estadoVal = (document.getElementById('filterPedidosEstado')?.value || '').trim();
+
+  // Ordenar del más reciente al más antiguo
+  const pedidosOrdenados = [...pedidos].reverse();
+
+  const filtrados = pedidosOrdenados.filter(p => {
+    if (estadoVal && p.estado !== estadoVal) return false;
+    if (searchVal) {
+      const matchId = (p.id || '').toLowerCase().includes(searchVal);
+      const matchNom = (p.usuario || '').toLowerCase().includes(searchVal);
+      const matchMail = (p.email || '').toLowerCase().includes(searchVal);
+      const matchLibros = (p.items || []).some(it => (it.titulo || '').toLowerCase().includes(searchVal));
+      if (!matchId && !matchNom && !matchMail && !matchLibros) return false;
+    }
+    return true;
+  });
+
+  const conteoEl = document.getElementById('conteoPedidosTexto');
+  if (conteoEl) {
+    conteoEl.textContent = `${filtrados.length} de ${pedidos.length} pedido${pedidos.length !== 1 ? 's' : ''}`;
+  }
+
+  if (filtrados.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="6" style="text-align:center; color:var(--text-muted); padding:2rem; font-style:italic;">No se encontraron pedidos con los criterios de búsqueda aplicados.</td></tr>`;
+    return;
+  }
+
+  tbody.innerHTML = filtrados.map(p => {
+    const itemsResumen = (p.items || []).map(it => `${escaparHTML(it.titulo || 'Libro')}`).join(', ') || '1x Libro';
+    const totalFormateado = '$' + Number(p.total || 0).toLocaleString('es-CO');
+    const fecha = p.fecha ? new Date(p.fecha).toLocaleDateString('es-CO', { day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' }) : 'Reciente';
+    const idPedido = p.id ? String(p.id) : '#ORD';
+
+    let badgeClass = 'status disponible';
+    if (p.estado === 'Procesando') badgeClass = 'status poco';
+    else if (p.estado === 'Enviado') badgeClass = 'status regular';
+
+    return `
+      <tr>
+        <td><strong>#${escaparHTML(idPedido)}</strong><div style="font-size:0.75rem; color:var(--text-muted);">${fecha}</div></td>
+        <td><strong>${escaparHTML(p.usuario || 'Lector')}</strong><div style="font-size:0.8rem; color:var(--text-muted);">${escaparHTML(p.email || '')}</div></td>
+        <td style="max-width: 250px; font-size: 0.88rem;">${itemsResumen}</td>
+        <td><strong>${totalFormateado}</strong></td>
+        <td><span class="${badgeClass}">${escaparHTML(p.estado || 'Completado')}</span></td>
+        <td class="table-actions" style="text-align:center; white-space:nowrap;">
+          <button type="button" onclick="verDetallePedido('${p.id}')" title="Ver desglose completo de la orden" style="color:var(--brown-dark); font-weight:bold;">👁 Ver detalle</button>
+        </td>
+      </tr>
+    `;
+  }).join('');
+}
+
+let pedidoActivoModalId = null;
+
+function verDetallePedido(idPedido) {
+  let pedidos = [];
+  try { pedidos = JSON.parse(localStorage.getItem('paginas_pedidos_v1') || '[]'); } catch {}
+  const p = pedidos.find(x => String(x.id) === String(idPedido));
+  if (!p) return;
+
+  pedidoActivoModalId = p.id;
+  document.getElementById('detPedId').textContent = `#${p.id}`;
+  document.getElementById('detPedCliente').textContent = p.usuario || 'Lector Registrado';
+  document.getElementById('detPedEmail').textContent = p.email || '—';
+  document.getElementById('detPedUsuarioId').textContent = `ID Usuario: ${p.usuarioId || '—'}`;
+
+  const fechaStr = p.fecha 
+    ? new Date(p.fecha).toLocaleDateString('es-CO', { day: '2-digit', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit' }) 
+    : 'Reciente';
+  document.getElementById('detPedFecha').textContent = fechaStr;
+
+  const estadoSelect = document.getElementById('detPedEstadoSelect');
+  if (estadoSelect) estadoSelect.value = p.estado || 'Completado';
+
+  // Renderizar items
+  const items = p.items || [];
+  const itemsBody = document.getElementById('detPedItemsBody');
+  if (itemsBody) {
+    itemsBody.innerHTML = items.map(it => {
+      const prec = Number(it.precio || 0);
+      return `
+        <tr>
+          <td><strong>${escaparHTML(it.titulo || 'Libro')}</strong></td>
+          <td style="text-align:center;">1</td>
+          <td style="text-align:right;">$${prec.toLocaleString('es-CO')}</td>
+          <td style="text-align:right;"><strong>$${prec.toLocaleString('es-CO')}</strong></td>
+        </tr>
+      `;
+    }).join('');
+  }
+
+  const total = Number(p.total || 0);
+  document.getElementById('detPedSubtotal').textContent = `$${total.toLocaleString('es-CO')}`;
+  document.getElementById('detPedTotal').textContent = `$${total.toLocaleString('es-CO')}`;
+
+  abrirModal('modalDetallePedido');
+}
+
+function guardarEstadoPedidoModal() {
+  if (!pedidoActivoModalId) return;
+  const nuevoEstado = document.getElementById('detPedEstadoSelect').value;
+
+  let pedidos = [];
+  try { pedidos = JSON.parse(localStorage.getItem('paginas_pedidos_v1') || '[]'); } catch {}
+  const p = pedidos.find(x => String(x.id) === String(pedidoActivoModalId));
+  if (p) {
+    p.estado = nuevoEstado;
+    localStorage.setItem('paginas_pedidos_v1', JSON.stringify(pedidos));
+    renderModalPedidos();
+    actualizarEstadisticas();
+    alert(`✅ El estado de la orden #${pedidoActivoModalId} se actualizó a "${nuevoEstado}".`);
+  }
+}
+
+function imprimirReciboPedido() {
+  if (!pedidoActivoModalId) return;
+  let pedidos = [];
+  try { pedidos = JSON.parse(localStorage.getItem('paginas_pedidos_v1') || '[]'); } catch {}
+  const p = pedidos.find(x => String(x.id) === String(pedidoActivoModalId));
+  if (!p) return;
+
+  const fechaStr = p.fecha ? new Date(p.fecha).toLocaleDateString('es-CO', { day: '2-digit', month: 'long', year: 'numeric' }) : '';
+  const totalStr = '$' + Number(p.total).toLocaleString('es-CO');
+
+  const printWin = window.open('', '_blank', 'width=650,height=750');
+  if (!printWin) {
+    alert('Por favor permite ventanas emergentes para imprimir el recibo.');
+    return;
+  }
+
+  const itemsHtml = (p.items || []).map(it => `
+    <tr>
+      <td style="padding:6px 0; border-bottom:1px dotted #888;">${it.titulo}</td>
+      <td style="padding:6px 0; text-align:center; border-bottom:1px dotted #888;">1</td>
+      <td style="padding:6px 0; text-align:right; border-bottom:1px dotted #888;">$${Number(it.precio).toLocaleString('es-CO')}</td>
+    </tr>
+  `).join('');
+
+  printWin.document.write(`
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <title>Recibo de Venta - ${p.id}</title>
+      <style>
+        body { font-family: 'Courier New', Courier, monospace; padding: 2rem; color: #222; background: #fff; line-height: 1.4; }
+        .receipt-header { text-align: center; border-bottom: 2px dashed #444; padding-bottom: 1rem; margin-bottom: 1rem; }
+        .receipt-title { font-size: 1.4rem; font-weight: bold; letter-spacing: 2px; }
+        table { width: 100%; border-collapse: collapse; margin: 1rem 0; }
+        th { text-align: left; border-bottom: 1.5px solid #000; padding-bottom: 4px; font-size: 0.9rem; }
+        .total-row { border-top: 2px solid #000; font-weight: bold; font-size: 1.1rem; }
+      </style>
+    </head>
+    <body>
+      <div class="receipt-header">
+        <div class="receipt-title">📖 PÁGINAS DEL TIEMPO</div>
+        <div>Librería Vintage & Anticuario</div>
+        <div>Orden: #${p.id}</div>
+        <div>Fecha: ${fechaStr}</div>
+      </div>
+      <div>
+        <strong>Cliente:</strong> ${p.usuario}<br>
+        <strong>Correo:</strong> ${p.email}<br>
+        <strong>Estado:</strong> ${p.estado || 'Completado'}
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>Descripción</th>
+            <th style="text-align:center;">Cant</th>
+            <th style="text-align:right;">Importe</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${itemsHtml}
+          <tr class="total-row">
+            <td colspan="2" style="padding-top:10px;">TOTAL FACTURADO:</td>
+            <td style="text-align:right; padding-top:10px;">${totalStr}</td>
+          </tr>
+        </tbody>
+      </table>
+      <div style="text-align:center; margin-top:2rem; font-size:0.85rem; border-top:1px dashed #666; padding-top:1rem;">
+        ¡Gracias por preservar la literatura con nosotros!<br>
+        www.paginasdeltiempo.com
+      </div>
+    \x3c/body\x3e
+    \x3c/html\x3e
+  `);
+  printWin.document.close();
+  printWin.focus();
+  setTimeout(function() {
+    try {
+      printWin.print();
+    } catch (e) {
+      console.warn('Error al ejecutar impresión automática:', e);
+    }
+  }, 300);
+}
+
+// Renderizado del Modal Inventario
+function renderModalInventario() {
+  const tbody = document.getElementById('tablaInventarioBody');
+  const resumen = document.getElementById('inventarioResumenTexto');
+  if (!tbody) return;
+
+  const totalEjemplares = libros.reduce((acc, curr) => acc + (curr.stock || 0), 0);
+  const criticos = libros.filter(l => l.stock <= 5 && l.stock > 0).length;
+  const agotados = libros.filter(l => l.stock === 0).length;
+
+  if (resumen) {
+    resumen.innerHTML = `<strong>${libros.length}</strong> Títulos Registrados | <strong>${totalEjemplares}</strong> Ejemplares en Stock | <span style="color: #e65100;">${criticos} en stock crítico</span> | <span style="color: #b71c1c;">${agotados} agotados</span>`;
+  }
+
+  tbody.innerHTML = libros.map(l => `
+    <tr>
+      <td><strong>${escaparHTML(l.titulo)}</strong><div style="font-size:0.8rem; color:var(--text-muted);">ISBN: ${escaparHTML(l.isbn)}</div></td>
+      <td>${escaparHTML(l.categoria)}</td>
+      <td>$${Number(l.precio).toLocaleString('es-CO')}</td>
+      <td><strong>${l.stock}</strong></td>
+      <td>${escaparHTML(l.estado === 'Nuevo' ? 'Excelente' : l.estado)}</td>
+      <td class="table-actions">
+        <button type="button" onclick="modificarStock('${l.id}', 1)">+1 Stock</button>
+        <button type="button" onclick="modificarStock('${l.id}', -1)">-1 Stock</button>
+        <button type="button" onclick="cerrarModal('modalInventario'); abrirModalForm('${l.id}');">Editar</button>
+      </td>
+    </tr>
+  `).join('');
+}
+
+function modificarStock(idLibro, cambio) {
+  const libro = libros.find(l => String(l.id) === String(idLibro));
+  if (libro) {
+    libro.stock = Math.max(0, (libro.stock || 0) + cambio);
+    if (libro.stock === 0) {
+      registrarActividad('📦', `¡Agotado! El libro <strong>"${escaparHTML(libro.titulo)}"</strong> se ha quedado sin stock.`);
+    } else if (libro.stock <= 3) {
+      registrarActividad('⚠️', `Stock crítico: Solo quedan <strong>${libro.stock} ejemplares</strong> de <strong>"${escaparHTML(libro.titulo)}"</strong>.`);
+    }
+    guardarDatos();
+    renderizarTabla();
+    renderModalInventario();
+  }
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  cargarDatos();
+  renderizarTabla();
+  renderizarActividadReciente();
+  actualizarBadgeProveedores();
+  renderTablaProveedores();
+
+  // Sincronización en tiempo real con la tienda pública (registro de usuarios, solicitudes, etc.)
+  window.addEventListener('storage', function(e) {
+    if (e.key === 'paginas_usuarios_v2' || e.key === 'paginas_actividades_v1' || e.key === 'proveedorSolicitudes') {
+      cargarDatos();
+      actualizarEstadisticas();
+      renderizarActividadReciente();
+      actualizarBadgeProveedores();
+      renderTablaProveedores();
+      if (document.getElementById('modalUsuarios')?.classList.contains('active')) {
+        renderModalUsuarios();
+      }
+    }
+  });
+
+  // Listener para previsualizar la foto de portada en tiempo real
+  document.getElementById('libroFormPortadaInput')?.addEventListener('change', function() {
+    const file = this.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      const dataUrl = e.target.result;
+      const preview = document.getElementById('libroFormPortadaPreview');
+      preview.src = dataUrl;
+      preview.style.display = 'block';
+      document.getElementById('libroFormPortadaData').value = dataUrl;
+      document.getElementById('libroFormPortadaBorrar').style.display = 'inline-block';
+    };
+    reader.readAsDataURL(file);
+  });
+
+  document.getElementById('menuToggle')?.addEventListener('click', function() {
+    document.getElementById('sidebar').classList.toggle('active');
+  });
+
+  document.getElementById('searchBookInput')?.addEventListener('input', renderizarTabla);
+  document.getElementById('filterCategorySelect')?.addEventListener('change', renderizarTabla);
+  document.getElementById('btnResetFilters')?.addEventListener('click', function() {
+    document.getElementById('searchBookInput').value = '';
+    document.getElementById('filterCategorySelect').value = '';
+    renderizarTabla();
+  });
+
+  document.getElementById('formLibro')?.addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    const idVal = document.getElementById('libroFormId').value;
+    let estadoIngresado = document.getElementById('libroFormEstado').value;
+    if (estadoIngresado === 'Nuevo') estadoIngresado = 'Excelente';
+
+    const precioIngresado = parseFloat(document.getElementById('libroFormPrecio').value) || 0;
+    if (precioIngresado < 20000) {
+      alert('⚠️ El precio mínimo para cualquier libro debe ser $20.000 COP.');
+      return;
+    }
+
+    const selCatVal = document.getElementById('libroFormCategoria').value;
+    let catFinal = selCatVal;
+    if (selCatVal === '__NUEVA__') {
+      catFinal = document.getElementById('libroFormNuevaCategoria').value.trim();
+      if (!catFinal) {
+        alert('⚠️ Por favor ingresa el nombre de la nueva categoría.');
+        return;
+      }
+      const todas = obtenerTodasLasCategorias();
+      const existe = todas.some(c => c.trim().toLowerCase() === catFinal.toLowerCase());
+      if (existe) {
+        alert(`⚠️ La categoría "${catFinal}" ya existe en el sistema. Por favor selecciónala directamente de la lista desplegable.`);
+        return;
+      }
+    }
+
+    if (catFinal && !categoriasPersonalizadas.includes(catFinal)) {
+      categoriasPersonalizadas.push(catFinal);
+    }
+
+    const nuevoLibro = {
+      id: idVal ? parseInt(idVal) : (libros.length > 0 ? Math.max(...libros.map(l => l.id)) + 1 : 101),
+      isbn: document.getElementById('libroFormIsbn').value.trim(),
+      titulo: document.getElementById('libroFormTitulo').value.trim(),
+      autor: document.getElementById('libroFormAutor').value.trim(),
+      categoria: catFinal,
+      precio: precioIngresado,
+      stock: parseInt(document.getElementById('libroFormStock').value) || 0,
+      encuadernacion: document.getElementById('libroFormEncuadernacion').value,
+      estado: estadoIngresado,
+      descripcion: document.getElementById('libroFormDescripcion').value.trim(),
+      portada: document.getElementById('libroFormPortadaData').value || null
+    };
+
+    if (idVal) {
+      const index = libros.findIndex(l => l.id === parseInt(idVal));
+      if (index !== -1) {
+        libros[index] = nuevoLibro;
+        registrarActividad('✏️', `Se editó el libro <strong>"${escaparHTML(nuevoLibro.titulo)}"</strong>`);
+      }
+    } else {
+      libros.unshift(nuevoLibro);
+      registrarActividad('📚', `Se agregó <strong>"${escaparHTML(nuevoLibro.titulo)}"</strong> al catálogo`);
+    }
+
+    guardarDatos();
+    actualizarOpcionesCategorias();
+    renderizarTabla();
+    cerrarModal('modalFormLibro');
+  });
+
+  // Filtros en tiempo real de Pedidos
+  document.getElementById('searchPedidosInput')?.addEventListener('input', renderModalPedidos);
+  document.getElementById('filterPedidosEstado')?.addEventListener('change', renderModalPedidos);
+  document.getElementById('btnResetPedidosFilters')?.addEventListener('click', function() {
+    const s = document.getElementById('searchPedidosInput');
+    const e = document.getElementById('filterPedidosEstado');
+    if (s) s.value = '';
+    if (e) e.value = '';
+    renderModalPedidos();
+  });
+
+  // Filtros en tiempo real de Usuarios
+  document.getElementById('searchUsuariosInput')?.addEventListener('input', renderModalUsuarios);
+  document.getElementById('filterUsuariosRol')?.addEventListener('change', renderModalUsuarios);
+  document.getElementById('filterUsuariosEstado')?.addEventListener('change', renderModalUsuarios);
+  document.getElementById('btnResetUsuariosFilters')?.addEventListener('click', function() {
+    const s = document.getElementById('searchUsuariosInput');
+    const r = document.getElementById('filterUsuariosRol');
+    const e = document.getElementById('filterUsuariosEstado');
+    if (s) s.value = '';
+    if (r) r.value = '';
+    if (e) e.value = '';
+    renderModalUsuarios();
+  });
+
+  document.getElementById('formNuevoUsuario')?.addEventListener('submit', function(e) {
+    e.preventDefault();
+    const nombre = document.getElementById('usrNombre').value.trim();
+    const email = document.getElementById('usrEmail').value.trim();
+    const rol = document.getElementById('usrRol').value;
+
+    if (nombre && email) {
+      const nuevoUsr = {
+        id: `USR-${usuarios.length + 1}`,
+        usuario: nombre,
+        nombres: nombre.split(' ')[0] || nombre,
+        apellidos: nombre.split(' ').slice(1).join(' ') || '',
+        email: email,
+        password: 'password123',
+        rol: rol,
+        estado: 'Activo',
+        fechaRegistro: new Date().toISOString().split('T')[0]
+      };
+      usuarios.push(nuevoUsr);
+      registrarActividad('👥', `Cuenta creada con éxito: <strong>${escaparHTML(nombre)}</strong> (${escaparHTML(email)})`);
+      guardarDatos();
+      renderModalUsuarios();
+      actualizarEstadisticas();
+      document.getElementById('usrNombre').value = '';
+      document.getElementById('usrEmail').value = '';
+      alert(`✅ Usuario "${nombre}" registrado con éxito en el sistema.`);
+    }
+  });
+
+  document.getElementById('formChatGarantia')?.addEventListener('submit', function(e) {
+    e.preventDefault();
+    const input = document.getElementById('inputChatMensaje');
+    const msgText = input.value.trim();
+
+    if ((msgText || fotoAdjuntaDataUrl) && casoGarantiaActivoId) {
+      const caso = garantias.find(g => g.id === casoGarantiaActivoId);
+      if (caso) {
+        const ahora = new Date();
+        const horaStr = `${ahora.getHours()}:${String(ahora.getMinutes()).padStart(2, '0')}`;
+        
+        const nuevoMensaje = {
+          sender: "Admin. J. Salazar",
+          rol: "admin",
+          time: `Hoy ${horaStr}`,
+          text: msgText || (fotoAdjuntaDataUrl ? "Adjunto foto de respuesta:" : "")
+        };
+
+        if (fotoAdjuntaDataUrl) {
+          nuevoMensaje.foto = fotoAdjuntaDataUrl;
+        }
+
+        caso.mensajes.push(nuevoMensaje);
+
+        if (caso.estado === 'Pendiente') {
+          caso.estado = 'En Revisión';
+        }
+
+        guardarDatos();
+        cancelarFotoAdjunta();
+        renderMensajesChat();
+        renderModalGarantias();
+        input.value = '';
+      }
+    }
+  });
+
+  document.getElementById('btnAgregarLibro')?.addEventListener('click', function(e) {
+    e.preventDefault();
+    abrirModalForm();
+  });
+
+  document.getElementById('btnAgregarCategoria')?.addEventListener('click', function(e) {
+    e.preventDefault();
+    renderListaCategoriasModal();
+    abrirModal('modalCategoria');
+  });
+
+  document.getElementById('btnVerPedidos')?.addEventListener('click', function(e) {
+    e.preventDefault();
+    renderModalPedidos();
+    abrirModal('modalPedidos');
+  });
+
+  document.getElementById('btnGestionarUsuarios')?.addEventListener('click', function(e) {
+    e.preventDefault();
+    renderModalUsuarios();
+    abrirModal('modalUsuarios');
+  });
+
+  document.getElementById('btnVerProveedores')?.addEventListener('click', function(e) {
+    e.preventDefault();
+    mostrarProveedores();
+  });
+
+  // Filtros de tabla de proveedores
+  document.getElementById('searchProvInput')?.addEventListener('input', renderTablaProveedores);
+  document.getElementById('filterProvEstadoSelect')?.addEventListener('change', renderTablaProveedores);
+  document.getElementById('filterProvTipoSelect')?.addEventListener('change', renderTablaProveedores);
+  document.getElementById('btnResetProvFilters')?.addEventListener('click', function() {
+    const s = document.getElementById('searchProvInput');
+    const e = document.getElementById('filterProvEstadoSelect');
+    const t = document.getElementById('filterProvTipoSelect');
+    if (s) s.value = '';
+    if (e) e.value = '';
+    if (t) t.value = '';
+    renderTablaProveedores();
+  });
+
+  // Sincronizar texto de respuesta en el modal con el enlace mailto en tiempo real
+  document.getElementById('modalProvRespuesta')?.addEventListener('input', function() {
+    actualizarEnlaceCorreoModal();
+  });
+
+  document.getElementById('logoutBtn')?.addEventListener('click', function(e) {
+    e.preventDefault();
+    if (confirm('¿Deseas cerrar la sesión de administrador?')) {
+      window.cerrarSesion();
+      window.location.href = '../pages/login.html';
+    }
+  });
+
+  document.getElementById('formNuevaCategoria')?.addEventListener('submit', function(e) {
+    e.preventDefault();
+    const nuevaCat = document.getElementById('inputNuevaCat').value.trim();
+    if (nuevaCat) {
+      const todas = obtenerTodasLasCategorias();
+      const existe = todas.some(c => c.trim().toLowerCase() === nuevaCat.toLowerCase());
+      if (existe) {
+        alert(`⚠️ La categoría "${nuevaCat}" ya existe en el sistema.`);
+        return;
+      }
+
+      if (!categoriasPersonalizadas.includes(nuevaCat)) {
+        categoriasPersonalizadas.push(nuevaCat);
+      }
+      registrarActividad('🏷️', `Se añadió la nueva categoría <strong>${escaparHTML(nuevaCat)}</strong>`);
+      guardarDatos();
+      actualizarOpcionesCategorias();
+      renderizarTabla();
+      renderListaCategoriasModal();
+      document.getElementById('inputNuevaCat').value = '';
+    }
+  });
+
+  const sidebarLinks = document.querySelectorAll('.sidebar li a');
+  sidebarLinks.forEach(link => {
+    link.addEventListener('click', function(e) {
+      e.preventDefault();
+      sidebarLinks.forEach(l => l.classList.remove('active'));
+      this.classList.add('active');
+
+      if (window.innerWidth <= 768) {
+        document.getElementById('sidebar')?.classList.remove('active');
+      }
+
+      const text = this.textContent.toLowerCase();
+      if (text.includes('dashboard') || text.includes('inicio') || text.includes('📖')) {
+        mostrarDashboard();
+      } else if (text.includes('libros')) {
+        mostrarDashboard();
+        document.getElementById('seccionLibros')?.scrollIntoView({ behavior: 'smooth' });
+      } else if (text.includes('categor')) {
+        mostrarDashboard();
+        renderListaCategoriasModal();
+        abrirModal('modalCategoria');
+      } else if (text.includes('usuarios')) {
+        mostrarDashboard();
+        renderModalUsuarios();
+        abrirModal('modalUsuarios');
+      } else if (text.includes('pedidos')) {
+        mostrarDashboard();
+        renderModalPedidos();
+        abrirModal('modalPedidos');
+      } else if (text.includes('garant')) {
+        mostrarDashboard();
+        renderModalGarantias();
+        abrirModal('modalGarantias');
+      } else if (text.includes('favorito')) {
+        mostrarDashboard();
+        renderModalFavoritos();
+        abrirModal('modalFavoritos');
+      } else if (text.includes('inventario')) {
+        mostrarDashboard();
+        renderModalInventario();
+        abrirModal('modalInventario');
+      } else if (text.includes('estad')) {
+        mostrarDashboard();
+        renderModalEstadisticas();
+        abrirModal('modalEstadisticas');
+      } else if (text.includes('proveedor')) {
+        mostrarProveedores();
+      }
+    });
+  });
+
+  // Listener para cerrar modales al hacer clic en el overlay o presionar Escape
+  document.querySelectorAll('.modal-overlay').forEach(overlay => {
+    overlay.addEventListener('click', function(e) {
+      if (e.target === this) {
+        cerrarModal(this.id);
+      }
+    });
+  });
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      const activeModal = document.querySelector('.modal-overlay.active');
+      if (activeModal) {
+        cerrarModal(activeModal.id);
+      }
+    }
+  });
+
+  // Sincronización en tiempo real: cuando se realiza una compra o interacción desde la tienda,
+  // actualizar las estadísticas, pedidos, favoritos e inventario del panel de admin.
+  window.addEventListener('storage', function(e) {
+    if (e.key === 'paginas_pedidos_v1') {
+      // Recargar libros (stock actualizado), pedidos y estadísticas
+      const guardadosLibros = localStorage.getItem('paginas_libros_v4');
+      if (guardadosLibros) try { libros = JSON.parse(guardadosLibros); } catch {}
+      actualizarEstadisticas();
+      renderizarTabla();
+      renderModalPedidos();
+      renderModalEstadisticas();
+      renderModalFavoritos();
+      renderModalInventario();
+    }
+    if (e.key === 'paginas_libros_v4') {
+      try { libros = JSON.parse(e.newValue || '[]'); } catch {}
+      actualizarEstadisticas();
+      renderizarTabla();
+      renderModalInventario();
+      renderModalFavoritos();
+    }
+    if (e.key && e.key.startsWith('paginas_favoritos')) {
+      renderModalFavoritos();
+    }
+    if (e.key === 'paginas_actividades_v1') {
+      try { actividades = JSON.parse(e.newValue || '[]'); } catch {}
+      renderizarActividadReciente();
+    }
+    if (e.key === 'paginas_usuarios_v2') {
+      try { usuarios = JSON.parse(e.newValue || '[]'); } catch {}
+      actualizarEstadisticas();
+    }
+  });
+});
+
+function renderModalEstadisticas() {
+  // Leer pedidos reales
+  let pedidos = [];
+  try { pedidos = JSON.parse(localStorage.getItem('paginas_pedidos_v1') || '[]'); } catch {}
+
+  const totalVentas = pedidos.length;
+  const totalIngresos = pedidos.reduce((acc, p) => acc + (p.total || 0), 0);
+  const ticketPromedio = totalVentas > 0 ? Math.round(totalIngresos / totalVentas) : 0;
+
+  // Este mes
+  const ahora = new Date();
+  const pedidosMes = pedidos.filter(p => {
+    const f = new Date(p.fecha);
+    return f.getMonth() === ahora.getMonth() && f.getFullYear() === ahora.getFullYear();
+  });
+  const ventasMes = pedidosMes.reduce((acc, p) => acc + (p.total || 0), 0);
+  const unidadesMes = pedidosMes.reduce((acc, p) => acc + (p.items ? p.items.length : 0), 0);
+
+  // Actualizar cards del modal estadísticas
+  const elIngresos = document.getElementById('statRealIngresos');
+  const elUnidades = document.getElementById('statRealUnidades');
+  const elTicket = document.getElementById('statRealTicket');
+  if (elIngresos) elIngresos.textContent = '$' + totalIngresos.toLocaleString('es-CO');
+  if (elUnidades) elUnidades.textContent = unidadesMes;
+  if (elTicket) elTicket.textContent = ticketPromedio > 0 ? '$' + ticketPromedio.toLocaleString('es-CO') : '$0';
+
+  const casosCount = garantias.length;
+  const porcentaje = totalVentas > 0
+    ? Math.max(0, ((1 - (casosCount / totalVentas)) * 100)).toFixed(1)
+    : '100.0';
+
+  const elGarantia = document.getElementById('statRealGarantia');
+  const elGarantiaSub = document.getElementById('statRealGarantiaSub');
+  if (elGarantia) {
+    elGarantia.textContent = `${porcentaje}%`;
+    elGarantia.style.color = parseFloat(porcentaje) >= 90 ? '#33691e' : '#e65100';
+  }
+  if (elGarantiaSub) elGarantiaSub.textContent = `${casosCount} caso${casosCount === 1 ? '' : 's'} en ${totalVentas} pedido${totalVentas !== 1 ? 's' : ''}`;
+
+  // Renderizar tabla de ventas por mes
+  const tablaVentasMesBody = document.getElementById('tablaVentasMesBody');
+  if (tablaVentasMesBody) {
+    // Agrupar por mes
+    const porMes = {};
+    pedidos.forEach(p => {
+      const f = new Date(p.fecha);
+      const clave = `${f.getFullYear()}-${String(f.getMonth() + 1).padStart(2, '0')}`;
+      if (!porMes[clave]) porMes[clave] = { ventas: 0, ingresos: 0, unidades: 0 };
+      porMes[clave].ventas++;
+      porMes[clave].ingresos += p.total || 0;
+      porMes[clave].unidades += p.items ? p.items.length : 0;
+    });
+
+    const meses = Object.entries(porMes).sort((a, b) => b[0].localeCompare(a[0])).slice(0, 6);
+    if (meses.length > 0) {
+      tablaVentasMesBody.innerHTML = meses.map(([mes, data]) => {
+        const [anio, numMes] = mes.split('-');
+        const nombreMes = new Date(parseInt(anio), parseInt(numMes) - 1, 1)
+          .toLocaleString('es-CO', { month: 'long', year: 'numeric' });
+        return `<tr>
+          <td>${nombreMes}</td>
+          <td>${data.ventas} pedido${data.ventas !== 1 ? 's' : ''}</td>
+          <td>${data.unidades} unidades</td>
+          <td>$${data.ingresos.toLocaleString('es-CO')}</td>
+        </tr>`;
+      }).join('');
+    } else {
+      tablaVentasMesBody.innerHTML = `<tr><td colspan="4" style="text-align:center; color:var(--text-muted); padding:1.5rem; font-style:italic;">No hay ventas registradas aún. Las ventas de la tienda aparecerán aquí automáticamente.</td></tr>`;
+    }
+  }
+}
+
+function renderListaCategoriasModal() {
+  const lista = document.getElementById('listaCategoriasExistentes');
+  if (!lista) return;
+  const categorias = obtenerTodasLasCategorias();
+  lista.innerHTML = categorias.map(c => {
+    const count = libros.filter(l => l.categoria === c).length;
+    const textoConteo = count === 1 ? '1 libro' : `${count} libros`;
+    const catEscapada = escapingJSString(c);
+    return `
+      <li style="display: flex; justify-content: space-between; align-items: center; padding: 0.5rem 0.6rem; margin-bottom: 0.4rem; background: var(--bg-main); border: 1px solid var(--brown-light); border-radius: 4px;">
+        <span><strong>${escaparHTML(c)}</strong> <span style="font-size:0.85rem; color:var(--text-muted);">(${textoConteo})</span></span>
+        <button type="button" onclick="eliminarCategoria('${catEscapada}')" style="color: #b71c1c; background: #fff0f0; border: 1px solid #b71c1c; padding: 3px 10px; border-radius: 3px; cursor: pointer; font-family: inherit; font-size: 0.8rem; font-weight: bold; display: flex; align-items: center; gap: 0.3rem;" title="Eliminar categoría">
+          🗑️ Eliminar
+        </button>
+      </li>
+    `;
+  }).join('');
+}
+
+function escapingJSString(str) {
+  if (!str) return '';
+  return str.replace(/\\/g, '\\\\').replace(/'/g, "\\'").replace(/"/g, '&quot;');
+}
+
+function eliminarCategoria(nombreCat) {
+  const librosConCat = libros.filter(l => l.categoria === nombreCat);
+  let mensajeConf = `¿Estás seguro de eliminar la categoría "${nombreCat}"?`;
+  if (librosConCat.length > 0) {
+    mensajeConf = `La categoría "${nombreCat}" tiene ${librosConCat.length} libro(s) asociado(s). Si la eliminas, esos libros se reasignarán a la categoría "General". ¿Deseas continuar?`;
+  }
+
+  if (confirm(mensajeConf)) {
+    if (librosConCat.length > 0) {
+      librosConCat.forEach(l => l.categoria = 'General');
+      if (!categoriasPersonalizadas.includes('General')) {
+        categoriasPersonalizadas.push('General');
+      }
+    }
+    categoriasPersonalizadas = categoriasPersonalizadas.filter(c => c !== nombreCat);
+    registrarActividad('🗑️', `Se eliminó la categoría <strong>${escaparHTML(nombreCat)}</strong>`);
+    guardarDatos();
+    actualizarOpcionesCategorias();
+    renderizarTabla();
+    renderListaCategoriasModal();
+  }
+}
+
+/* ========================================================
+   NAVEGACIÓN DEL DASHBOARD Y SECCIÓN PROVEEDORES
+   ======================================================== */
+
+function mostrarDashboard() {
+  const secProv = document.getElementById('seccionProveedores');
+  if (secProv) secProv.style.display = 'none';
+  ['.welcome-section', '.quick-actions', '.stats-grid', '.content-grid'].forEach(sel => {
+    const el = document.querySelector(sel);
+    if (el) el.style.display = '';
+  });
+  const sidebarLinks = document.querySelectorAll('.sidebar li a');
+  sidebarLinks.forEach(l => l.classList.remove('active'));
+  sidebarLinks[0]?.classList.add('active');
+}
+
+function mostrarProveedores() {
+  ['.welcome-section', '.quick-actions', '.stats-grid', '.content-grid'].forEach(sel => {
+    const el = document.querySelector(sel);
+    if (el) el.style.display = 'none';
+  });
+  const secProv = document.getElementById('seccionProveedores');
+  if (secProv) {
+    secProv.style.display = 'block';
+    renderTablaProveedores();
+    secProv.scrollIntoView({ behavior: 'smooth' });
+  }
+  const sidebarLinks = document.querySelectorAll('.sidebar li a');
+  sidebarLinks.forEach(l => l.classList.remove('active'));
+  document.getElementById('sidebarProveedores')?.classList.add('active');
+}
+
+/* ========================================================
+   MÓDULO: PROVEEDORES
+   Lee/escribe en localStorage bajo la clave 'proveedorSolicitudes'
+   ======================================================== */
+
+const PROV_KEY = 'proveedorSolicitudes';
+
+const solicitudesProveedoresInicialesRespaldo = window.SOLICITUDES_PROVEEDORES_INICIALES || [
+  {
+    id: 1714500001,
+    fecha: "2026-03-01T14:30:00.000Z",
+    nombre: "Carlos Restrepo",
+    empresa: "Librería El Ateneo Medellín",
+    email: "carlos.restrepo@ateneolibros.co",
+    telefono: "+57 312 456 7890",
+    tipo: "vender-libros",
+    ciudad: "Medellín",
+    mensaje: "Buenas tardes, contamos con un lote de 85 libros de literatura clásica y latinoamericana en excelente estado (ediciones de los años 70 y 80). Nos gustaría evaluar una venta o consignación con ustedes.",
+    estado: "pendiente",
+    respuestaAdmin: ""
+  },
+  {
+    id: 1714500002,
+    fecha: "2026-02-24T10:15:00.000Z",
+    nombre: "Valentina Montoya",
+    empresa: "Papelería & Empaques Vintage S.A.S.",
+    email: "ventas@empaquesvintage.com",
+    telefono: "+57 301 987 6543",
+    tipo: "proveedor-materiales",
+    ciudad: "Bogotá",
+    mensaje: "Ofrecemos papel kraft reciclado, sellos de cera personalizados y bolsas de tela estampadas para librerías con estética clásica. Adjuntamos catálogo en caso de interés.",
+    estado: "respondido",
+    respuestaAdmin: "Nos contactamos vía telefónica. Se solicitó muestra de los sellos de cera y bolsas kraft."
+  }
+];
+
+function cargarSolicitudesProveedores() {
+  const guardado = localStorage.getItem(PROV_KEY);
+  const iniciales = window.SOLICITUDES_PROVEEDORES_INICIALES || solicitudesProveedoresInicialesRespaldo;
+  if (guardado !== null) {
+    try {
+      const parsed = JSON.parse(guardado);
+      if (parsed && parsed.length >= iniciales.length) {
+        return parsed;
+      }
+    } catch {
+      return [...iniciales];
+    }
+  }
+  localStorage.setItem(PROV_KEY, JSON.stringify(iniciales));
+  return [...iniciales];
+}
+
+function guardarSolicitudesProveedores(data) {
+  localStorage.setItem(PROV_KEY, JSON.stringify(data));
+}
+
+function actualizarBadgeProveedores() {
+  const solicitudes = cargarSolicitudesProveedores();
+  const pendientes = solicitudes.filter(s => s.estado === 'pendiente').length;
+  const badge = document.getElementById('badgeProveedores');
+  if (!badge) return;
+  if (pendientes > 0) {
+    badge.textContent = pendientes;
+    badge.style.display = 'flex';
+  } else {
+    badge.style.display = 'none';
+  }
+}
+
+function etiquetaTipo(tipo) {
+  const map = {
+    'vender-libros': '📚 Vender libros',
+    'proveedor-materiales': '📦 Proveedor materiales',
+    'colaboracion': '🤝 Colaboración',
+    'otro': '✉️ Otro'
+  };
+  return map[tipo] || tipo;
+}
+
+function formatearFecha(iso) {
+  if (!iso) return '—';
+  try {
+    return new Date(iso).toLocaleDateString('es-CO', {
+      day: '2-digit', month: 'short', year: 'numeric',
+      hour: '2-digit', minute: '2-digit'
+    });
+  } catch {
+    return iso;
+  }
+}
+
+function renderTablaProveedores() {
+  const todas = cargarSolicitudesProveedores();
+  const tbody = document.getElementById('tablaProveedoresBody');
+  if (!tbody) return;
+
+  const searchVal = (document.getElementById('searchProvInput')?.value || '').toLowerCase().trim();
+  const estadoVal = (document.getElementById('filterProvEstadoSelect')?.value || '').trim();
+  const tipoVal = (document.getElementById('filterProvTipoSelect')?.value || '').trim();
+
+  const filtradas = todas.filter(s => {
+    if (estadoVal && s.estado !== estadoVal) return false;
+    if (tipoVal && s.tipo !== tipoVal) return false;
+    if (searchVal) {
+      const matchNom = (s.nombre || '').toLowerCase().includes(searchVal);
+      const matchEmp = (s.empresa || '').toLowerCase().includes(searchVal);
+      const matchMail = (s.email || '').toLowerCase().includes(searchVal);
+      const matchCiu = (s.ciudad || '').toLowerCase().includes(searchVal);
+      if (!matchNom && !matchEmp && !matchMail && !matchCiu) return false;
+    }
+    return true;
+  });
+
+  if (filtradas.length === 0) {
+    tbody.innerHTML = `
+      <tr>
+        <td colspan="6" style="text-align:center; padding: 2.5rem 1rem; color: var(--text-muted); font-style:italic;">
+          ${todas.length === 0 
+            ? '📭 Aún no hay solicitudes de proveedores registradas.' 
+            : '🔍 No se encontraron solicitudes que coincidan con los filtros aplicados.'}
+        </td>
+      </tr>`;
+    return;
+  }
+
+  tbody.innerHTML = '';
+  filtradas.forEach(s => {
+    const tr = document.createElement('tr');
+    const badgeClass = s.estado === 'respondido'
+      ? 'style="background:#d1fae5; color:#065f46; border:1px solid #6ee7b7; padding:3px 9px; border-radius:4px; font-size:0.8rem; font-weight:bold; display:inline-block;"'
+      : 'style="background:#fee2e2; color:#991b1b; border:1px solid #fca5a5; padding:3px 9px; border-radius:4px; font-size:0.8rem; font-weight:bold; display:inline-block;"';
+    const badgeText = s.estado === 'respondido' ? '✅ Respondido' : '🕐 Pendiente';
+
+    tr.innerHTML = `
+      <td>
+        <strong>${escaparHTML(s.nombre)}</strong>
+        ${s.empresa ? `<div style="font-size:0.8rem; color:var(--text-muted);">${escaparHTML(s.empresa)}</div>` : ''}
+      </td>
+      <td><span style="font-size:0.85rem;">${etiquetaTipo(s.tipo)}</span></td>
+      <td><a href="mailto:${escaparHTML(s.email)}" style="color:var(--link); font-size:0.9rem;">${escaparHTML(s.email)}</a></td>
+      <td style="font-size:0.85rem; white-space:nowrap;">${formatearFecha(s.fecha)}</td>
+      <td><span ${badgeClass}>${badgeText}</span></td>
+      <td class="table-actions">
+        <button type="button" onclick="abrirModalProveedor(${s.id})" title="Ver detalle y responder" style="color:var(--brown-dark);">Ver</button>
+        ${s.estado !== 'respondido'
+          ? `<button type="button" onclick="marcarProveedorRespondido(${s.id})" title="Marcar como respondido" style="color:#065f46;">✔ Listo</button>`
+          : ''}
+        <button type="button" onclick="eliminarSolicitudProveedor(${s.id})" title="Eliminar solicitud" style="color:#b71c1c;">Borrar</button>
+      </td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+function abrirModalProveedor(id) {
+  const solicitudes = cargarSolicitudesProveedores();
+  const s = solicitudes.find(x => x.id === id);
+  if (!s) return;
+
+  document.getElementById('modalProvNombre').textContent   = s.nombre || '—';
+  document.getElementById('modalProvEmpresa').textContent  = s.empresa || '—';
+  document.getElementById('modalProvEmail').textContent    = s.email || '—';
+  document.getElementById('modalProvEmail').href           = `mailto:${s.email}`;
+  document.getElementById('modalProvTel').textContent      = s.telefono || '—';
+  document.getElementById('modalProvTipo').textContent     = etiquetaTipo(s.tipo);
+  document.getElementById('modalProvCiudad').textContent   = s.ciudad || '—';
+  document.getElementById('modalProvFecha').textContent    = formatearFecha(s.fecha);
+  document.getElementById('modalProvEstado').textContent   = s.estado === 'respondido' ? '✅ Respondido' : '🕐 Pendiente';
+  document.getElementById('modalProvMensaje').textContent  = s.mensaje || '—';
+  document.getElementById('modalProvRespuesta').value      = s.respuestaAdmin || '';
+  document.getElementById('modalProvId').value             = id;
+
+  actualizarEnlaceCorreoModal();
+  abrirModal('modalProveedores');
+}
+
+function actualizarEnlaceCorreoModal() {
+  const id = parseInt(document.getElementById('modalProvId').value);
+  if (!id) return;
+  const solicitudes = cargarSolicitudesProveedores();
+  const s = solicitudes.find(x => x.id === id);
+  if (!s) return;
+
+  const respuestaEscrita = document.getElementById('modalProvRespuesta').value.trim();
+  const cuerpoTexto = respuestaEscrita || '[Escribe tu respuesta aquí]';
+  const asunto = encodeURIComponent(`Re: Solicitud de proveedor - ${s.nombre}`);
+  const cuerpo = encodeURIComponent(
+    `Hola ${s.nombre},\n\nGracias por contactarnos a través de Páginas del Tiempo.\n\nEn respuesta a tu solicitud "${etiquetaTipo(s.tipo)}":\n\n${cuerpoTexto}\n\nSaludos cordiales,\nEquipo de Administración - Páginas del Tiempo`
+  );
+  const btn = document.getElementById('btnProvCorreo');
+  if (btn) btn.href = `mailto:${s.email}?subject=${asunto}&body=${cuerpo}`;
+}
+
+function guardarRespuestaProveedor() {
+  const id = parseInt(document.getElementById('modalProvId').value);
+  const respuesta = document.getElementById('modalProvRespuesta').value.trim();
+  const solicitudes = cargarSolicitudesProveedores();
+  const idx = solicitudes.findIndex(x => x.id === id);
+  if (idx === -1) return;
+
+  solicitudes[idx].respuestaAdmin = respuesta;
+  solicitudes[idx].estado = 'respondido';
+  guardarSolicitudesProveedores(solicitudes);
+  actualizarBadgeProveedores();
+  renderTablaProveedores();
+  actualizarEnlaceCorreoModal();
+
+  registrarActividad('🤝', `Se guardó respuesta para el proveedor <strong>${escaparHTML(solicitudes[idx].nombre)}</strong>`);
+
+  document.getElementById('modalProvEstado').textContent = '✅ Respondido';
+  const confirmMsg = document.getElementById('modalProvConfirm');
+  if (confirmMsg) {
+    confirmMsg.style.display = 'block';
+    setTimeout(() => confirmMsg.style.display = 'none', 3000);
+  }
+}
+
+function marcarProveedorRespondido(id) {
+  const solicitudes = cargarSolicitudesProveedores();
+  const idx = solicitudes.findIndex(x => x.id === id);
+  if (idx !== -1) {
+    solicitudes[idx].estado = 'respondido';
+    guardarSolicitudesProveedores(solicitudes);
+    actualizarBadgeProveedores();
+    renderTablaProveedores();
+    registrarActividad('✔', `Se marcó como respondida la solicitud de <strong>${escaparHTML(solicitudes[idx].nombre)}</strong>`);
+  }
+}
+
+function eliminarSolicitudProveedor(id) {
+  let solicitudes = cargarSolicitudesProveedores();
+  const sol = solicitudes.find(x => x.id === id);
+  const nombre = sol ? sol.nombre : 'solicitud';
+  if (!confirm(`¿Eliminar la solicitud de "${nombre}"? Esta acción no se puede deshacer.`)) return;
+
+  solicitudes = solicitudes.filter(x => x.id !== id);
+  guardarSolicitudesProveedores(solicitudes);
+  actualizarBadgeProveedores();
+  renderTablaProveedores();
+  registrarActividad('🗑️', `Se eliminó la solicitud de proveedor de <strong>${escaparHTML(nombre)}</strong>`);
+}
+
+</script>
+</body>
+</html>

@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet">
+
+    <!-- CSS del proyecto -->
+    <link rel="stylesheet" href="./../assets/css/style.css">
+    <link rel="stylesheet" href="./../assets/css/pages/auth.css">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="./../assets/img/favicon/libro.png" type="image/x-icon">
+    <title>Registrarse</title>
+
+    <!-- Scripts de Catálogo y Autenticación -->
+    <script src="./../assets/js/data-initial.js"></script>
+    <script src="./../assets/js/data/reservas.js"></script>
+    <script src="./../assets/js/catalog.js"></script>
+    <script src="./../assets/js/auth.js"></script>
+</head>
+
+<body>
+    <header>
+        <!-- Parte Superior -->
+        <div class="header-top">
+            <div class="logo">
+                <a href="./../index.html">
+                    <img src="./../assets/img/logo/libro.png" alt="Logo pag">
+                    <div class="logo-content">
+                        <h1>PÁGINAS DEL TIEMPO</h1>
+                        <p>LIBROS QUE CUENTAN HISTORIAS</p>
+                    </div>
+                </a>
+            </div>
+
+            <div class="search">
+                <input type="search" id="search" placeholder="🔍 Buscar libro, autor o ISBN">
+                <button type="submit">Buscar</button>
+            </div>
+
+            <div class="actions">
+                <div class="icon-actions">
+
+                    <a href="./login.html">
+                        <img src="./../assets/img/icons/actions/favorito.png" alt="Ver favoritos">
+                    </a>
+
+                    <a href="./cart.html">
+                        <img src="./../assets/img/icons/actions/carrito-de-compras.png" alt="Ver carrito">
+                    </a>
+
+                </div>
+
+                <div class="auth-actions">
+
+                    <a href="./login.html" class="login-btn">Iniciar sesión</a>
+                    <a href="./register.html" class="register-btn">Registrarse</a>
+
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Navegacion -->
+        <nav class="header-nav" aria-label="Navegación principal">
+            <ul>
+                <li><a href="./../index.html">Inicio</a></li>
+                <li><a href="./book-categories.html">Libros</a></li>
+                <li><a href="./about-us.html">Sobre Nosotros</a></li>
+                <li><a href="./contact.html">Contáctanos</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+
+        <div class="register-page-wrapper">
+
+            <section class="register-form">
+
+                <div class="register-form-container">
+
+                    <h2>CREAR CUENTA</h2>
+
+                    <p>
+                        Únete a <strong>Páginas del Tiempo</strong> y disfruta de una experiencia literaria única.
+                    </p>
+
+                    <form action="javascript:void(0);" onsubmit="event.preventDefault(); return (window.ejecutarRegistro ? window.ejecutarRegistro(event) : false);" id="registerForm">
+
+                        <div class="form-group">
+                            <label for="names">Nombres: (<span>*</span>)</label>
+                            <input type="text" id="names" name="names" placeholder="Ej: John" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="surnames">Apellidos: (<span>*</span>)</label>
+                            <input type="text" id="surnames" name="surnames" placeholder="Ej: Doe" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="account-type">Tipo de cuenta: (<span>*</span>)</label>
+                            <select id="account-type" name="account-type" required>
+                                <option value="User">Cliente (quiero comprar libros)</option>
+                                <option value="Proveedor">Proveedor (quiero ofrecer libros)</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email">Correo electrónico: (<span>*</span>)</label>
+                            <input type="email" name="email" id="email" placeholder="Ej: johndoe@gmail.com" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="password">Contraseña: (<span>*</span>)</label>
+                            <input type="password" name="password" id="password" minlength="6"
+                                placeholder="Mínimo 6 caracteres" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="confirm-password">Confirmar Contraseña: (<span>*</span>)</label>
+                            <input type="password" name="confirm-password" id="confirm-password" minlength="6"
+                                placeholder="Repite tu contraseña" required>
+                        </div>
+
+                        <button type="submit" class="btn-submit" id="btnRegisterSubmit" onclick="event.preventDefault(); return (window.ejecutarRegistro ? window.ejecutarRegistro(event) : false);">Registrarse</button>
+
+                        <div class="form-footer-actions footer-border-bottom">
+
+                            <p class="form-legal">
+                                Al continuar, aceptas las <a href="#">Condiciones de uso</a> y el <a href="#">Aviso de
+                                    Privacidad</a> de Páginas del Tiempo.
+                            </p>
+
+                            <p class="form-redirect">
+                                ¿Ya tienes una cuenta? <a href="./login.html">Inicia sesión</a>
+                            </p>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </section>
+
+            <section class="register-final">
+                <div class="register-final-container">
+                    <p>
+                        (<span>*</span>) Campos obligatorios. Respetamos tu privacidad. Nunca compartimos tus datos.
+                    </p>
+                    <p>
+                        <strong>Gracias por confiar en Páginas del Tiempo.</strong>
+                    </p>
+                    <p>
+                        Cada nueva cuenta abre las puertas a un universo de historias. Estamos felices de tener a un
+                        lector
+                        apasionado más en nuestra comunidad.
+                    </p>
+                </div>
+            </section>
+
+        </div>
+
+    </main>
+
+    <footer class="footer">
+        <!-- Marca -->
+        <div class="footer-brand">
+            <h3>PÁGINAS DEL TIEMPO</h3>
+            <p>Libros que cuentan historias</p>
+        </div>
+
+        <!-- Contenido -->
+        <div class="footer-content">
+
+            <div class="footer-links">
+                <h4>Explorar</h4>
+                <ul>
+                    <li><a href="./../index.html">Inicio</a></li>
+                    <li><a href="./book-categories.html">Libros</a></li>
+                    <li><a href="./about-us.html">Sobre Nosotros</a></li>
+                    <li><a href="./../index.html#categories">Categorías</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-help">
+                <h4>Ayuda</h4>
+                <ul>
+                    <li><a href="#">Preguntas frecuentes</a></li>
+                    <li><a href="#">Envíos</a></li>
+                    <li><a href="#">Devoluciones</a></li>
+                    <li><a href="./contact.html">Contáctanos</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-social-pay">
+
+                <h4>Síguenos</h4>
+                <div class="social-icons">
+                    <a href="#" target="_blank">
+                        <img src="./../assets/img/icons/social/instagram.svg" alt="Instagram" title="Instagram">
+                    </a>
+                    <a href="#" target="_blank">
+                        <img src="./../assets/img/icons/social/facebook.svg" alt="Facebook" title="Facebook">
+                    </a>
+                    <a href="#" target="_blank">
+                        <img src="./../assets/img/icons/social/gmail.svg" alt="Gmail" title="Gmail">
+                    </a>
+                </div>
+
+                <h4>Métodos de pago</h4>
+                <div class="payment-icons">
+                    <img src="./../assets/img/icons/payment/visa.svg" alt="Visa" title="Visa">
+                    <img src="./../assets/img/icons/payment/mastercard.svg" alt="Mastercard" title="Mastercard">
+                    <img src="./../assets/img/icons/payment/american-express.svg" alt="American Express"
+                        title="American Express">
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2026 PÁGINAS DEL TIEMPO - Todos los derechos reservados.</p>
+        </div>
+    </footer>
+</body>
+
+</html>

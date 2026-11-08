@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Special+Elite&amp;display=swap" rel="stylesheet">
+
+    <!-- CSS del proyecto -->
+    <link rel="stylesheet" href="./../assets/css/style.css">
+    <link rel="stylesheet" href="./../assets/css/pages/book-categories.css">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="./../assets/img/favicon/libro.png" type="image/x-icon">
+    <title>Categorías de libros</title>
+</head>
+
+<body>
+    <header>
+        <!-- Parte Superior -->
+        <div class="header-top">
+            <div class="logo">
+                <a href="./../index.html">
+                    <img src="./../assets/img/logo/libro.png" alt="Logo pag">
+                    <div class="logo-content">
+                        <h1>PÁGINAS DEL TIEMPO</h1>
+                        <p>LIBROS QUE CUENTAN HISTORIAS</p>
+                    </div>
+                </a>
+            </div>
+
+            <div class="search">
+                <input type="search" id="search" placeholder="🔍 Buscar libro, autor o ISBN">
+                <button type="submit">Buscar</button>
+            </div>
+
+            <div class="actions">
+                <div class="icon-actions">
+
+                    <a href="./login.html">
+                        <img src="./../assets/img/icons/actions/favorito.png" alt="Ver favoritos">
+                    </a>
+
+                    <a href="./cart.html">
+                        <img src="./../assets/img/icons/actions/carrito-de-compras.png" alt="Ver carrito">
+                    </a>
+
+                </div>
+
+                <div class="auth-actions">
+
+                    <a href="./login.html" class="login-btn">Iniciar sesión</a>
+                    <a href="./register.html" class="register-btn">Registrarse</a>
+
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Navegacion -->
+        <nav class="header-nav" aria-label="Navegación principal">
+            <ul>
+                <li><a href="./../index.html">Inicio</a></li>
+                <li><a href="./book-categories.html">Libros</a></li>
+                <li><a href="./about-us.html">Sobre Nosotros</a></li>
+                <li><a href="./contact.html">Contáctanos</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="categories-container">
+            <h1>Explorar libros por categoría</h1>
+            <!-- Sección: Novelas clásicas -->
+            <section class="book-list" data-type="classic-novels">
+
+                <div class="section-header">
+                    <h2>Novelas clásicas</h2>
+                    <a href="" class="view-all">Ver todos →</a>
+                </div>
+
+                <div class="books-grid"></div>
+
+            </section>
+
+            <!-- Sección: Poesía -->
+            <section class="book-list" data-type="poetry">
+
+                <div class="section-header">
+                    <h2>Poesía</h2>
+                    <a href="" class="view-all">Ver todos →</a>
+                </div>
+
+                <div class="books-grid"></div>
+
+            </section>
+
+            <!-- Sección: Historia -->
+            <section class="book-list" data-type="history">
+
+                <div class="section-header">
+                    <h2>Historia</h2>
+                    <a href="" class="view-all">Ver todos →</a>
+                </div>
+
+                <div class="books-grid"></div>
+
+            </section>
+
+            <!-- Sección: Filosofía -->
+            <section class="book-list" data-type="philosophy">
+
+                <div class="section-header">
+                    <h2>Filosofía</h2>
+                    <a href="" class="view-all">Ver todos →</a>
+                </div>
+
+                <div class="books-grid"></div>
+
+            </section>
+
+            <!-- Sección: Ensayos -->
+            <section class="book-list" data-type="essays">
+
+                <div class="section-header">
+                    <h2>Ensayos</h2>
+                    <a href="" class="view-all">Ver todos →</a>
+                </div>
+
+                <div class="books-grid"></div>
+
+            </section>
+
+            <!-- Sección: Infantil -->
+            <section class="book-list" data-type="children">
+
+                <div class="section-header">
+                    <h2>Infantil</h2>
+                    <a href="" class="view-all">Ver todos →</a>
+                </div>
+
+                <div class="books-grid"></div>
+
+            </section>
+
+            <!-- Sección: Arte y fotografía -->
+            <section class="book-list" data-type="art-photography">
+
+                <div class="section-header">
+                    <h2>Arte y fotografía</h2>
+                    <a href="" class="view-all">Ver todos →</a>
+                </div>
+
+                <div class="books-grid"></div>
+
+            </section>
+
+            <!-- Sección: Ciencia -->
+            <section class="book-list" data-type="science">
+
+                <div class="section-header">
+                    <h2>Ciencia</h2>
+                    <a href="" class="view-all">Ver todos →</a>
+                </div>
+
+                <div class="books-grid"></div>
+
+            </section>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <!-- Marca -->
+        <div class="footer-brand">
+            <h3>PÁGINAS DEL TIEMPO</h3>
+            <p>Libros que cuentan historias</p>
+        </div>
+
+        <!-- Contenido -->
+        <div class="footer-content">
+
+            <div class="footer-links">
+                <h4>Explorar</h4>
+                <ul>
+                    <li><a href="./../index.html">Inicio</a></li>
+                    <li><a href="./book-categories.html">Libros</a></li>
+                    <li><a href="./about-us.html">Sobre Nosotros</a></li>
+                    <li><a href="./../index.html#categories">Categorías</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-help">
+                <h4>Ayuda</h4>
+                <ul>
+                    <li><a href="#">Preguntas frecuentes</a></li>
+                    <li><a href="#">Envíos</a></li>
+                    <li><a href="#">Devoluciones</a></li>
+                    <li><a href="./contact.html">Contáctanos</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-social-pay">
+
+                <h4>Síguenos</h4>
+                <div class="social-icons">
+                    <a href="#" target="_blank">
+                        <img src="./../assets/img/icons/social/instagram.svg" alt="Instagram" title="Instagram">
+                    </a>
+                    <a href="#" target="_blank">
+                        <img src="./../assets/img/icons/social/facebook.svg" alt="Facebook" title="Facebook">
+                    </a>
+                    <a href="#" target="_blank">
+                        <img src="./../assets/img/icons/social/gmail.svg" alt="Gmail" title="Gmail">
+                    </a>
+                </div>
+
+                <h4>Métodos de pago</h4>
+                <div class="payment-icons">
+                    <img src="./../assets/img/icons/payment/visa.svg" alt="Visa" title="Visa">
+                    <img src="./../assets/img/icons/payment/mastercard.svg" alt="Mastercard" title="Mastercard">
+                    <img src="./../assets/img/icons/payment/american-express.svg" alt="American Express"
+                        title="American Express">
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2026 PÁGINAS DEL TIEMPO - Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- MODAL DE DETALLE DE LIBRO -->
+    <div class="modal-overlay" id="modalDetalleLibro" aria-hidden="true">
+        <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modalLibroTitulo">
+            <h3>Detalle del Libro <button type="button" class="modal-close" id="modalCloseButton" aria-label="Cerrar detalle">&times;</button></h3>
+            <div class="book-modal-content">
+                <div class="book-modal-cover">
+                    <img id="modalLibroPortada" src="./../assets/img/hero-features/libro.png" alt="Portada del libro">
+                </div>
+                <div class="book-modal-details">
+                    <h2 id="modalLibroTitulo">Título del libro</h2>
+                    <p class="author" id="modalLibroAutor">Autor</p>
+                    <div class="book-modal-meta">
+                        <div><span class="label">Categoría:</span> <span id="modalLibroCategoria">—</span></div>
+                        <div><span class="label">ISBN:</span> <span id="modalLibroIsbn">—</span></div>
+                        <div><span class="label">Encuadernación:</span> <span id="modalLibroEncuadernacion">—</span></div>
+                        <div><span class="label">Estado físico:</span> <span id="modalLibroEstado">—</span></div>
+                        <div><span class="label">Disponibilidad:</span> <span id="modalLibroStock">—</span></div>
+                    </div>
+                    <p class="book-modal-synopsis" id="modalLibroSinopsis">Sinopsis o descripción bibliográfica del ejemplar...</p>
+                    <div class="book-modal-footer">
+                        <div class="book-modal-price" id="modalLibroPrecio">$0</div>
+                        <button type="button" class="btn-modal-add" id="modalBtnAgregarCarrito">🛒 Agregar al carrito</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Controlador modular del catálogo y su conexión con el carrito -->
+    <script src="./../assets/js/data-initial.js"></script>
+    <script src="./../assets/js/data/precios.js"></script>
+    <script src="./../assets/js/data/reservas.js"></script>
+    <script type="module" src="./../assets/js/pages/catalog-page.js"></script>
+</body>
+
+</html>

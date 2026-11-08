@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet">
+
+    <!-- CSS del proyecto -->
+    <link rel="stylesheet" href="./assets/css/style.css">
+    <link rel="stylesheet" href="./assets/css/pages/home.css">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="./assets/img/favicon/libro.png" type="image/x-icon">
+    <title>Páginas del Tiempo | Libros que cuentan historias</title>
+</head>
+
+<body>
+    <header>
+        <!-- Parte Superior -->
+        <div class="header-top">
+            <div class="logo">
+                <a href="./index.html">
+                    <img src="./assets/img/logo/libro.png" alt="Logo pag">
+                    <div class="logo-content">
+                        <h1>PÁGINAS DEL TIEMPO</h1>
+                        <p>LIBROS QUE CUENTAN HISTORIAS</p>
+                    </div>
+                </a>
+            </div>
+
+            <div class="search">
+                <input type="search" id="search" placeholder="🔍 Buscar libro, autor o ISBN">
+                <button type="submit">Buscar</button>
+            </div>
+
+            <div class="actions">
+                <div class="icon-actions">
+
+                    <a href="./pages/login.html">
+                        <img src="./assets/img/icons/actions/favorito.png" alt="Ver favoritos">
+                    </a>
+
+                    <a href="./pages/cart.html">
+                        <img src="./assets/img/icons/actions/carrito-de-compras.png" alt="Ver carrito">
+                    </a>
+
+                </div>
+
+                <div class="auth-actions">
+
+                    <a href="./pages/login.html" class="login-btn">Iniciar sesión</a>
+
+                    <a href="./pages/register.html" class="register-btn">Registrarse</a>
+
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Navegacion -->
+        <nav class="header-nav" aria-label="Navegación principal">
+            <ul>
+                <li><a href="./index.html">Inicio</a></li>
+                <li><a href="./pages/book-categories.html">Libros</a></li>
+                <li><a href="./pages/about-us.html">Sobre Nosotros</a></li>
+                <li><a href="./pages/contact.html">Contáctanos</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="hero-content">
+                <h2>Libros Vintage para mentes curiosas.</h2>
+                <p>Descubre historias que resisten al tiempo.</p>
+                <div class="hero-buttons">
+                    <a href="#categories" class="btn-primary">Explorar colección</a>
+                    <a href="#new-releases" class="btn-secondary">Explorar libros</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="hero-features">
+            <article class="service-feature">
+                <img src="./assets/img/hero-features/book_80.svg" alt="Libros seleccionados">
+                <h3>Libros Seleccionados</h3>
+                <p>Cada libro es elegido cuidadosamente.</p>
+            </article>
+
+            <div class="separator"></div>
+
+            <article class="service-feature">
+                <img src="./assets/img/hero-features/shoppingmode_80.svg" alt="Ediciones únicas">
+                <h3>Ediciones únicas</h3>
+                <p>Tesoros difíciles de encontrar.</p>
+            </article>
+
+            <div class="separator"></div>
+
+            <article class="service-feature">
+                <img src="./assets/img/hero-features/local_shipping_80.svg" alt="Envíos a todo el país">
+                <h3>Envíos a todo el país</h3>
+                <p>Empaques seguros y con amor.</p>
+            </article>
+
+            <div class="separator"></div>
+
+            <article class="service-feature">
+                <img src="./assets/img/hero-features/favorite_80.svg" alt="Amantes de los libros">
+                <h3>Amantes de los libros</h3>
+                <p>Aquí compartimos tu misma pasión.</p>
+            </article>
+        </section>
+
+        <section class="book-explorer">
+            <!-- Categorías -->
+            <aside class="categories" id="categories">
+                <h2>Explora por categorías</h2>
+
+                <ul id="categoriesList">
+                    <!-- Cargadas dinámicamente desde localStorage -->
+                </ul>
+
+                <a href="./pages/book-categories.html" class="categories-view-all">Ver todas las categorías →</a>
+            </aside>
+
+            <!-- Libros Destacados -->
+            <section class="book-section" id="featured-books" data-type="featured">
+
+                <!-- Banner dinámico para búsquedas o filtros de categoría -->
+                <div id="filtroBannerContenedor"></div>
+
+                <div class="section-header">
+                    <h2>Libros Destacados</h2>
+                    <a href="./pages/book-categories.html" class="view-all">Ver todos →</a>
+                </div>
+
+                <div class="books-grid">
+                    <!-- Cargados dinámicamente desde localStorage -->
+                </div>
+
+            </section>
+        </section>
+
+        <!-- Más Vendidos -->
+        <section class="book-list" id="best-sellers" data-type="best-sellers">
+
+            <div class="section-header">
+                <h2>Más vendidos</h2>
+                <a href="./pages/book-categories.html" class="view-all">Ver todos →</a>
+            </div>
+
+            <div class="books-grid">
+                <!-- Cargados dinámicamente desde localStorage -->
+            </div>
+
+        </section>
+
+        <!-- Mejor Calificados -->
+        <section class="book-list" id="top-rated" data-type="top-rated">
+
+            <div class="section-header">
+                <h2>Mejor calificados</h2>
+                <a href="./pages/book-categories.html" class="view-all">Ver todos →</a>
+            </div>
+
+            <div class="books-grid">
+                <!-- Cargados dinámicamente desde localStorage -->
+            </div>
+
+        </section>
+
+        <!-- Nuevos Libros -->
+        <section class="book-list" id="new-releases" data-type="new-releases">
+
+            <div class="section-header">
+                <h2>Nuevos libros agregados</h2>
+                <a href="./pages/book-categories.html" class="view-all">Ver todos →</a>
+            </div>
+
+            <div class="books-grid">
+                <!-- Cargados dinámicamente desde localStorage -->
+            </div>
+
+        </section>
+
+        <section class="receive-stories">
+            <div class="receive-stories-container">
+
+                <div class="receive-stories-content-wrapper">
+
+                    <div class="receive-stories-content">
+                        <h3>Recibe historias en tu correo</h3>
+                        <p>
+                            Suscríbete y descubre libros únicos
+                            y nuevas historias cada semana.
+                        </p>
+                    </div>
+
+                    <div class="receive-stories-form">
+                        <input type="email" placeholder="Tu correo electrónico">
+                        <button type="submit">Suscribirse</button>
+                    </div>
+
+                    <div class="receive-stories-image">
+                        <img src="./assets/img/icons/stamps/stamp_2.png" alt="Estampilla">
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="footer">
+        <!-- Marca -->
+        <div class="footer-brand">
+            <h3>PÁGINAS DEL TIEMPO</h3>
+            <p>Libros que cuentan historias</p>
+        </div>
+
+        <!-- Contenido -->
+        <div class="footer-content">
+
+            <div class="footer-links">
+                <h4>Explorar</h4>
+                <ul>
+                    <li><a href="./index.html">Inicio</a></li>
+                    <li><a href="./pages/book-categories.html">Libros</a></li>
+                    <li><a href="./pages/about-us.html">Sobre Nosotros</a></li>
+                    <li><a href="#categories">Categorías</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-help">
+                <h4>Ayuda</h4>
+                <ul>
+                    <li><a href="#">Preguntas frecuentes</a></li>
+                    <li><a href="#">Envíos</a></li>
+                    <li><a href="#">Devoluciones</a></li>
+                    <li><a href="./pages/contact.html">Contáctanos</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-social-pay">
+
+                <h4>Síguenos</h4>
+                <div class="social-icons">
+                    <a href="#" target="_blank">
+                        <img src="./assets/img/icons/social/instagram.svg" alt="Instagram" title="Instagram">
+                    </a>
+                    <a href="#" target="_blank">
+                        <img src="./assets/img/icons/social/facebook.svg" alt="Facebook" title="Facebook">
+                    </a>
+                    <a href="#" target="_blank">
+                        <img src="./assets/img/icons/social/gmail.svg" alt="Gmail" title="Gmail">
+                    </a>
+                </div>
+
+                <h4>Métodos de pago</h4>
+                <div class="payment-icons">
+                    <img src="./assets/img/icons/payment/visa.svg" alt="Visa" title="Visa">
+                    <img src="./assets/img/icons/payment/mastercard.svg" alt="Mastercard" title="Mastercard">
+                    <img src="./assets/img/icons/payment/american-express.svg" alt="American Express"
+                        title="American Express">
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2026 PÁGINAS DEL TIEMPO - Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- MODAL DE DETALLE DE LIBRO -->
+    <div class="modal-overlay" id="modalDetalleLibro">
+        <div class="modal-card">
+            <h3>Detalle del Libro <button type="button" class="modal-close" onclick="cerrarModalDetalle()">&times;</button></h3>
+            <div class="book-modal-content">
+                <div class="book-modal-cover">
+                    <img id="modalLibroPortada" src="./assets/img/hero-features/libro.png" alt="Portada del libro">
+                </div>
+                <div class="book-modal-details">
+                    <h2 id="modalLibroTitulo">Título del libro</h2>
+                    <p class="author" id="modalLibroAutor">Autor</p>
+                    <div class="book-modal-meta">
+                        <div><span class="label">Categoría:</span> <span id="modalLibroCategoria">—</span></div>
+                        <div><span class="label">ISBN:</span> <span id="modalLibroIsbn">—</span></div>
+                        <div><span class="label">Encuadernación:</span> <span id="modalLibroEncuadernacion">—</span></div>
+                        <div><span class="label">Estado físico:</span> <span id="modalLibroEstado">—</span></div>
+                        <div><span class="label">Disponibilidad:</span> <span id="modalLibroStock">—</span></div>
+                    </div>
+                    <p class="book-modal-synopsis" id="modalLibroSinopsis">Sinopsis o descripción bibliográfica del ejemplar...</p>
+                    <div class="book-modal-footer">
+                        <div class="book-modal-price" id="modalLibroPrecio">$0</div>
+                        <button type="button" class="btn-modal-add" id="modalBtnAgregarCarrito">🛒 Agregar al carrito</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Datos Iniciales del Sistema (105 clientes, compras, garantías) -->
+    <script src="./assets/js/data-initial.js"></script>
+    <!-- Script del Catálogo Dinámico sincronizado con Administración -->
+    <script src="./assets/js/data/precios.js"></script>
+    <script src="./assets/js/data/reservas.js"></script>
+    <script src="./assets/js/catalog.js"></script>
+    <!-- Script de Autenticación y Sesión de Usuario -->
+    <script src="./assets/js/auth.js"></script>
+
+</body>
+
+</html>

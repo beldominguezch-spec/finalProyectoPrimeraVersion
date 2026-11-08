@@ -1,0 +1,23 @@
+/* 
+======================================================
+ESTILOS GENERALES DEL PROYECTO
+======================================================
+*/
+
+html,
+body {
+    width: 100%;
+    overflow-x: hidden;
+}
+
+body {
+    /* Google Fonts */
+    font-family: "Special Elite", system-ui;
+    font-weight: 400;
+    font-style: normal;
+
+    /* Otros valores de body */
+    background-color: var(--bg-soft);
+    background-image: url("https://www.transparenttextures.com/patterns/natural-paper.png");
+    color: var(--text-main);
+}

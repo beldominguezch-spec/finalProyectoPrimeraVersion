@@ -1,0 +1,284 @@
+/* 
+===============================================================================================
+HOME PAGE STYLES
+===============================================================================================
+*/
+
+/* 
+======================================================
+SECTION: HERO
+====================================================== 
+*/
+
+.hero {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 3.75rem 0;
+}
+
+.hero-content {
+    background-color: var(--bg-soft);
+    background-image: url("https://www.transparenttextures.com/patterns/clean-gray-paper.png");
+    padding: 3.75rem 2.5rem;
+    border-radius: 20px;
+    box-shadow: 0 0 30px 12px rgba(0, 0, 0, 0.25);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.hero-buttons {
+    display: flex;
+    justify-content: center;
+    margin: 1.25rem 0;
+    align-items: center;
+}
+
+.btn-primary {
+    background-color: var(--btn-bg);
+    color: var(--bg-main);
+    border: none;
+    padding: 1rem 1.5625rem;
+    margin-right: 0.625rem;
+    border: 2px solid var(--btn-bg);
+    border-radius: 10px;
+
+}
+
+.btn-primary:hover {
+    background-color: var(--btn-hover);
+    font-weight: bold;
+    border: 2px solid var(--btn-hover);
+}
+
+
+.btn-secondary {
+    border: 2px solid var(--btn-bg);
+    padding: 1rem 1.5625rem;
+    margin-right: 1.25rem;
+    border-radius: 10px;
+}
+
+.btn-secondary:hover {
+    background-color: var(--btn-hover);
+    font-weight: bold;
+    border: 2px solid var(--btn-hover);
+    color: var(--bg-main);
+}
+
+.btn-primary:active,
+.btn-secondary:active {
+    background: var(--btn-active);
+}
+
+.hero-image {
+    display: flex;
+    gap: 3.75rem;
+}
+
+.hero-image img {
+    width: 13.75rem;
+    box-shadow: 0 0 30px 12px rgba(0, 0, 0, 0.18);
+    background-color: rgba(0, 0, 0, 0.13);
+    border-radius: 40px;
+}
+
+/* 
+======================================================
+SECTION: HERO FEATURES
+======================================================
+*/
+
+.hero-features {
+    display: flex;
+    justify-content: space-evenly;
+    border-bottom: 2px solid var(--border-color);
+    text-align: center;
+    padding-bottom: 1.25rem;
+    width: 96%;
+    margin: 0 auto;
+}
+
+.service-feature img {
+    margin: 0 auto 0.625rem auto;
+}
+
+.separator {
+    width: 0.125rem;
+    background-color: var(--border-color);
+}
+
+/* 
+======================================================
+SECTION: BOOK EXPLORER
+======================================================
+*/
+
+.book-explorer {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 2rem;
+    margin: 2.5rem auto;
+    width: 95%;
+}
+
+/* 
+====
+ASIDE: CATEGORÍAS
+====
+*/
+
+.categories {
+    width: 25%;
+    background-color: var(--bg-soft);
+    background-image: url("https://www.transparenttextures.com/patterns/light-paper-fibers.png");
+    padding: 2rem;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 4px;
+    border-bottom-left-radius: 40px;
+    box-shadow: 0 0 30px 12px rgba(0, 0, 0, 0.25);
+    position: sticky;
+    top: 1.5rem;
+}
+
+.categories h2 {
+    text-align: center;
+}
+
+.categories ul {
+    margin: 1.5625rem 0 0.9375rem 0;
+}
+
+.categories ul li {
+    margin-bottom: 0.625rem;
+}
+
+.categories a {
+    color: var(--text-main);
+}
+
+.categories a:hover {
+    color: var(--link-hover);
+    text-decoration: underline;
+    font-weight: bold;
+}
+
+.categories-view-all {
+    display: block;
+    margin-top: 0.9375rem;
+    text-align: center;
+    font-weight: bold;
+    color: var(--link);
+}
+
+.categories-view-all:hover {
+    color: var(--link-hover);
+}
+
+/* 
+====
+SECCIÓN: LIBROS DESTACADOS
+==== 
+*/
+
+.book-section {
+    width: 70%;
+    min-height: 520px;
+    background-color: var(--bg-section-transparent);
+    padding: 1rem;
+    border-radius: 8px;
+    border: 2px dashed var(--border-color);
+}
+
+/* 
+======================================================
+SECTIONS: RECEIVE STORIES
+======================================================
+*/
+
+.receive-stories {
+    width: 100%;
+    margin-bottom: 3rem;
+}
+
+.receive-stories-container {
+    width: 80%;
+    margin: 0 auto;
+    padding: 1rem;
+
+    background: repeating-linear-gradient(-45deg,
+            var(--bg-card) 0px, var(--bg-card) 18px,
+            var(--bg-gradient-red) 18px, var(--bg-gradient-red) 30px,
+            var(--bg-card) 30px, var(--bg-card) 48px,
+            var(--bg-gradient-blue) 48px, var(--bg-gradient-blue) 60px);
+
+    border-radius: 12px;
+    box-shadow: 0 0 30px 12px rgba(0, 0, 0, 0.25);
+}
+
+.receive-stories-content-wrapper {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    background-color: var(--bg-soft);
+    background-image: url("https://www.transparenttextures.com/patterns/light-paper-fibers.png");
+    padding: 1.875rem;
+    border-radius: 8px;
+}
+
+.receive-stories-content {
+    width: 45%;
+    padding: 0 0.9375rem 0 1.25rem;
+}
+
+.receive-stories-content h3{
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--border-color);
+    margin-bottom: 0.625rem;
+}
+
+.receive-stories-form {
+    width: 40%;
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+}
+
+.receive-stories-form input {
+    width: 60%;
+    padding: 0.75rem 1.875rem;
+    background-color: var(--bg-soft);
+    background-image: url("https://www.transparenttextures.com/patterns/light-paper-fibers.png");
+    border: 1px solid var(--text-strong);
+    outline: none;
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+}
+
+.receive-stories-form button {
+    padding: 0.75rem 1.25rem;
+    background-color: var(--text-strong);
+    border: 1px solid var(--text-strong);
+    color: var(--bg-main);
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+
+.receive-stories-image {
+    width: 15%;
+    display: flex;
+    justify-content: center;
+}
+
+.receive-stories-image img {
+    width: 6.875rem;
+}
+
+#filtroBannerContenedor {
+    display: none;
+    margin-bottom: 1rem;
+}

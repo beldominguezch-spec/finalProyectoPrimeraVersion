@@ -1,0 +1,59 @@
+/* 
+========================================
+VARIABLES GLOBALES
+======================================== */
+
+/* 🎨 PALETA DE COLORES PRINCIPAL */
+:root {
+    --bg-main: #F5EBDD;
+    /* Fondo principal (claro tipo papel) */
+    --bg-secondary: #E8D8C3;
+    /* Secciones secundarias */
+    --bg-card: #DCC8AA;
+    /* Tarjetas de libros */
+    --bg-soft: #CBB89A;
+    /* Fondo suave general */
+
+    /* Texto */
+    --text-main: #2B2B2B;
+    /* Texto principal */
+    --text-strong: #1A1A1A;
+    /* Títulos */
+    --text-muted: #5C5C5C;
+    /* Texto secundario */
+
+    /* Tonos marrones */
+    --brown-dark: #3E2F23;
+    --brown-medium: #6B4F36;
+    --brown-light: #8B6B4A;
+
+    /* Botones */
+    --btn-bg: #3E2F23;
+    --btn-hover: #5A4332;
+    --btn-active: #2B1F17;
+
+    /* Enlaces */
+    --link: #4A3728;
+    --link-hover: #8B6B4A;
+    --link-visited: #6B4F36;
+
+
+
+
+
+    /* Colores Nuevos */
+    --color-surface-medium: #e0c8aa;
+    --color-surface-dark: #d4bfa3;
+
+    --color-overlay-soft: rgba(139, 107, 74, 0.4);
+    --color-overlay-light: rgba(139, 107, 74, 0.2);
+
+    --color-white: #ffffff;
+
+
+    --bg-gradient-red: #b91c1c;
+    --bg-gradient-blue: #1e3a8a;
+    --border-color: #000000;
+    --bg-section-transparent: rgba(220, 200, 170, 0.4);
+
+}

@@ -1,0 +1,117 @@
+/* ============================================================
+   PARTE 1: FUNCIONAL (no borrar, las ventanas dependen de esto)
+   ============================================================ */
+
+/* Mostrar / ocultar las ventanas emergentes */
+.overlay {
+    position: fixed;
+    inset: 0;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.overlay.activo {
+    display: flex;
+}
+
+/* Mensaje de error: oculto hasta que falte algo */
+.mensaje-error {
+    display: none;
+}
+
+.mensaje-error.visible {
+    display: block;
+}
+
+/* La X de cerrar queda en la esquina de la ventana */
+.modal {
+    position: relative;
+    max-height: 100%;
+    overflow-y: auto;
+}
+
+.boton-reculiado {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+}
+
+
+/* ============================================================
+   PARTE 2: DECORACIÓN (cámbiala o bórrala a tu gusto)
+   ============================================================ */
+
+.overlay {
+    background: rgba(0, 0, 0, 0.7);
+}
+
+.modal {
+    background: #fff;
+    padding: 24px;
+    width: 100%;
+    max-width: 420px;
+}
+
+.campo {
+    margin-bottom: 12px;
+}
+
+.campo label,
+.campo .etiqueta {
+    display: block;
+    margin-bottom: 4px;
+}
+
+.campo input[type="text"],
+.campo input[type="password"] {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.fila {
+    display: flex;
+    gap: 12px;
+}
+
+.fila .campo {
+    flex: 1;
+}
+
+.tipos {
+    display: flex;
+    gap: 16px;
+}
+
+.acciones {
+    display: flex;
+    gap: 10px;
+}
+
+.campo.error input {
+    border: 1px solid red;
+}
+
+.mensaje-error {
+    color: red;
+    margin-bottom: 12px;
+}
+
+/* Factura */
+.factura table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 12px 0;
+}
+
+.factura th,
+.factura td {
+    text-align: left;
+    padding: 4px;
+    border-bottom: 1px solid #ccc;
+}
+
+.factura p {
+    margin: 4px 0;
+}

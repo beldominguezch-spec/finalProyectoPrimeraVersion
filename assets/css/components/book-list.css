@@ -1,0 +1,32 @@
+/* 
+======================================================
+SECTIONS: BOOK LIST
+======================================================
+*/
+
+/* Secciones de libros fuera del book-explorer */
+.book-list {
+    width: 95%;
+    margin: 0 auto 3rem auto;
+    background-color: var(--bg-section-transparent);
+    border: 2px dashed var(--border-color);
+    padding: 1rem;
+    border-radius: 8px;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.9375rem;
+}
+
+.section-header .view-all {
+    color: var(--link);
+    font-weight: bold;
+}
+
+.section-header .view-all:hover {
+    color: var(--link-hover);
+    text-decoration: underline;
+}

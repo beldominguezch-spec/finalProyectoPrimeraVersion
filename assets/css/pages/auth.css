@@ -1,0 +1,415 @@
+/* 
+===============================================================================================
+PÁGINAS DEL TIEMPO - ESTILOS DE AUTENTICACIÓN (LOGIN & REGISTRO)
+===============================================================================================
+*/
+
+.register-page-wrapper,
+.login-page-wrapper {
+    width: 65%;
+    max-width: 680px;
+    background-color: var(--bg-soft);
+    background-image: url("https://www.transparenttextures.com/patterns/light-paper-fibers.png");
+    border: 2px dashed var(--brown-dark);
+    border-radius: 20px;
+    padding: 3.5rem 3rem;
+    margin: 4rem auto;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15), inset 0 0 40px rgba(62, 47, 35, 0.05);
+}
+
+@media (max-width: 768px) {
+    .register-page-wrapper,
+    .login-page-wrapper {
+        width: 90%;
+        padding: 2.5rem 1.5rem;
+        margin: 2.5rem auto;
+    }
+}
+
+.register-form-container h2,
+.login-form-container h2 {
+    text-align: center;
+    font-size: 1.9rem;
+    color: var(--text-strong);
+    letter-spacing: 1px;
+    margin-bottom: 0.8rem;
+}
+
+.register-form-container p,
+.login-form-container p {
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    line-height: 1.5;
+    margin-bottom: 1.5rem;
+}
+
+.login-welcome-text .login-notice {
+    background-color: var(--bg-card);
+    border-left: 4px solid var(--brown-dark);
+    padding: 0.8rem 1.2rem;
+    border-radius: 4px;
+    margin: 1.2rem 0;
+    text-align: left;
+    color: var(--text-main);
+    font-size: 0.92rem;
+}
+
+/* ========================================================
+   ALERTAS VINTAGE DE AUTENTICACIÓN
+   ======================================================== */
+
+.auth-alert {
+    display: none;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 1rem 1.2rem;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    margin-bottom: 1.5rem;
+    border: 1px solid transparent;
+    animation: fadeInAlert 0.25s ease-out;
+}
+
+@keyframes fadeInAlert {
+    from { opacity: 0; transform: translateY(-8px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.auth-alert-icon {
+    font-size: 1.4rem;
+    flex-shrink: 0;
+}
+
+.auth-alert-text {
+    flex-grow: 1;
+    line-height: 1.4;
+}
+
+.auth-alert-error {
+    background-color: #fee2e2;
+    border-color: #f87171;
+    color: #991b1b;
+}
+
+.auth-alert-success {
+    background-color: #dcfce7;
+    border-color: #4ade80;
+    color: #166534;
+}
+
+.auth-alert-info {
+    background-color: #fef3c7;
+    border-color: #f59e0b;
+    color: #92400e;
+}
+
+/* ========================================================
+   CAJA DE DEMOSTRACIÓN DE CREDENCIALES
+   ======================================================== */
+
+.demo-credentials-box {
+    background-color: var(--bg-card);
+    border: 1px dashed var(--brown-medium);
+    border-radius: 8px;
+    padding: 0.9rem 1.1rem;
+    margin-bottom: 1.6rem;
+}
+
+.demo-box-header {
+    font-size: 0.85rem;
+    font-weight: bold;
+    color: var(--brown-dark);
+    margin-bottom: 0.6rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.demo-buttons-row {
+    display: flex;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+}
+
+.btn-demo-fill {
+    background-color: var(--bg-main);
+    color: var(--text-strong);
+    border: 1px solid var(--brown-dark);
+    padding: 0.45rem 0.85rem;
+    border-radius: 5px;
+    font-size: 0.82rem;
+    cursor: pointer;
+    font-family: inherit;
+    transition: all 0.15s ease;
+}
+
+.btn-demo-fill:hover {
+    background-color: var(--brown-dark);
+    color: var(--bg-main);
+}
+
+.btn-demo-admin {
+    border-color: #854d0e;
+}
+
+/* ========================================================
+   CAMPOS DEL FORMULARIO
+   ======================================================== */
+
+#loginForm, #registerForm {
+    margin-top: 1rem;
+}
+
+.form-group {
+    margin-bottom: 1.3rem;
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    position: relative;
+}
+
+.form-group label {
+    font-weight: bold;
+    color: var(--text-strong);
+    margin-bottom: 0.4rem;
+    font-size: 0.95rem;
+}
+
+.form-group input,
+.form-group select {
+    padding: 0.85rem 1rem;
+    background-color: var(--bg-main);
+    border: 1.5px solid var(--border-color);
+    border-radius: 6px;
+    font-family: inherit;
+    font-size: 1rem;
+    color: var(--text-strong);
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+/* Dar espacio al botón de ojo en inputs de contraseña */
+#loginForm input[type="password"],
+#loginForm input[type="text"],
+#registerForm input[type="password"],
+#registerForm input[type="text"] {
+    padding-right: 2.8rem;
+}
+
+/* Wrapper para inputs de contraseña con botón de visibilidad */
+.password-input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.password-input-wrapper input {
+    flex: 1;
+    width: 100%;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    border-color: var(--brown-dark);
+    box-shadow: 0 0 0 3px rgba(62, 47, 35, 0.2);
+}
+
+/* BOTÓN TOGGLE PASSWORD (ICONO OJO) */
+.btn-toggle-password {
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 2.6rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--text-muted);
+    padding: 0;
+    line-height: 1;
+    flex-shrink: 0;
+    transition: color 0.15s, transform 0.15s;
+    border-radius: 0 6px 6px 0;
+}
+
+.btn-toggle-password svg {
+    display: block;
+    pointer-events: none;
+}
+
+.btn-toggle-password:hover {
+    color: var(--brown-dark);
+    transform: scale(1.15);
+}
+
+/* BOTÓN SUBMIT */
+.btn-submit {
+    display: block;
+    width: 100%;
+    margin: 1.8rem 0 1rem 0;
+    background-color: var(--brown-dark);
+    color: var(--bg-main);
+    border: 2px solid var(--brown-dark);
+    padding: 1rem 2rem;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    font-family: inherit;
+    letter-spacing: 0.5px;
+    transition: all 0.2s ease;
+    box-shadow: 2px 2px 0 var(--border-color);
+}
+
+.btn-submit:hover {
+    background-color: var(--brown-medium);
+    border-color: var(--brown-medium);
+    transform: translateY(-2px);
+    box-shadow: 4px 4px 0 var(--border-color);
+}
+
+.btn-submit:active {
+    transform: translateY(0);
+    box-shadow: 1px 1px 0 var(--border-color);
+}
+
+/* ENLACES AL PIE DEL FORMULARIO */
+.form-footer-actions {
+    margin-top: 1.5rem;
+    font-size: 0.92rem;
+    text-align: center;
+}
+
+.form-redirect,
+.form-legal {
+    margin: 0.6rem 0;
+    color: var(--text-muted);
+}
+
+.form-footer-actions a,
+.register-form-container a {
+    font-weight: bold;
+    color: var(--brown-dark);
+    text-decoration: underline;
+}
+
+.form-footer-actions a:hover,
+.register-form-container a:hover {
+    color: var(--brown-medium);
+}
+
+.footer-border-bottom {
+    width: 100%;
+    padding-bottom: 1.5rem;
+    margin: 0 auto 1.5rem auto;
+    border-bottom: 2px dotted var(--brown-medium);
+}
+
+.register-final p {
+    text-align: center;
+    margin-top: 0.8rem;
+    color: var(--text-muted);
+    font-size: 0.88rem;
+}
+
+.register-final span {
+    color: #991b1b;
+}
+
+/* ========================================================
+   ESTILOS DE USUARIO LOGUEADO EN EL HEADER (.user-logged-info)
+   ======================================================== */
+
+.user-logged-info {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+.user-greeting-chip {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    background-color: var(--bg-soft);
+    color: var(--text-strong);
+    padding: 0.45rem 0.8rem;
+    border-radius: 20px;
+    border: 1px solid var(--color-surface-dark);
+    font-size: 0.88rem;
+    font-weight: bold;
+}
+
+.user-avatar-icon {
+    font-size: 1rem;
+}
+
+.user-role-badge {
+    font-size: 0.7rem;
+    padding: 0.15rem 0.45rem;
+    border-radius: 10px;
+    text-transform: uppercase;
+    font-weight: bold;
+    background-color: var(--bg-card);
+    color: var(--brown-dark);
+}
+
+.user-role-badge.badge-admin {
+    background-color: #854d0e;
+    color: #ffffff;
+}
+
+.btn-admin-header {
+    background-color: #854d0e;
+    color: #ffffff !important;
+    padding: 0.45rem 0.85rem;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    text-decoration: none;
+    font-weight: bold;
+    border: 1px solid #713f12;
+    transition: background-color 0.15s ease;
+}
+
+.btn-admin-header:hover {
+    background-color: #a16207;
+}
+
+.btn-logout-header {
+    background: none;
+    border: 1px solid var(--color-surface-dark);
+    color: var(--bg-main);
+    padding: 0.45rem 0.8rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 0.85rem;
+    transition: all 0.15s ease;
+}
+
+.btn-logout-header:hover {
+    background-color: #991b1b;
+    border-color: #991b1b;
+    color: #ffffff;
+}
+
+/* INSIGNIAS DE CONTEO EN FAVORITOS Y CARRITO */
+.action-count-badge {
+    position: absolute;
+    top: -5px;
+    right: -8px;
+    background-color: #991b1b;
+    color: #ffffff;
+    font-size: 0.72rem;
+    font-weight: bold;
+    border-radius: 10px;
+    min-width: 19px;
+    height: 19px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}

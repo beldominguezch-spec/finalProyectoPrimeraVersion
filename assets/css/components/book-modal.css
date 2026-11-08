@@ -1,0 +1,181 @@
+/*
+===============================================================================================
+BOOK DETAIL MODAL
+===============================================================================================
+*/
+
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    padding: 1rem;
+}
+
+.modal-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.modal-card {
+    background-color: var(--bg-main);
+    background-image: url("https://www.transparenttextures.com/patterns/cream-paper.png");
+    border: 3px solid var(--border-color);
+    box-shadow: 8px 8px 0 rgba(0, 0, 0, 0.4);
+    max-width: 680px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    padding: 2rem;
+    position: relative;
+    border-radius: 6px;
+}
+
+.modal-card h3 {
+    font-size: 1.6rem;
+    color: var(--text-strong);
+    border-bottom: 2px dashed var(--brown-medium);
+    padding-bottom: 0.8rem;
+    margin-bottom: 1.2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-close {
+    background: none;
+    border: none;
+    font-size: 1.8rem;
+    cursor: pointer;
+    color: var(--brown-dark);
+    line-height: 1;
+}
+
+.modal-close:hover {
+    color: #b71c1c;
+}
+
+.book-modal-content {
+    display: flex;
+    gap: 1.8rem;
+}
+
+.book-modal-cover {
+    width: 180px;
+    flex-shrink: 0;
+}
+
+.book-modal-cover img {
+    width: 100%;
+    height: 260px;
+    object-fit: cover;
+    border: 2px solid var(--border-color);
+    box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.25);
+    border-radius: 4px;
+}
+
+.book-modal-details {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+#modalLibroTitulo {
+    font-size: 1.4rem;
+    color: var(--text-strong);
+    margin-bottom: 0.2rem;
+}
+
+.book-modal-details .author {
+    font-size: 1.1rem;
+    font-style: italic;
+    color: var(--text-muted);
+    margin-bottom: 0.8rem;
+}
+
+.book-modal-meta {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem 1rem;
+    background: var(--bg-secondary);
+    padding: 0.8rem 1rem;
+    border-radius: 6px;
+    border: 1px solid var(--brown-light);
+    font-size: 0.88rem;
+    margin-bottom: 1rem;
+}
+
+.book-modal-meta span.label {
+    font-weight: bold;
+    color: var(--text-muted);
+}
+
+.book-modal-synopsis {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: var(--text-main);
+    margin-bottom: 1.2rem;
+    max-height: 120px;
+    overflow-y: auto;
+    padding-right: 0.5rem;
+}
+
+.book-modal-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: auto;
+    padding-top: 1rem;
+    border-top: 2px dotted var(--brown-medium);
+}
+
+.book-modal-price {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--brown-dark);
+}
+
+.btn-modal-add {
+    background-color: var(--btn-bg);
+    color: var(--bg-main);
+    border: 2px solid var(--border-color);
+    padding: 0.75rem 1.6rem;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.2);
+}
+
+.btn-modal-add:hover {
+    background-color: var(--btn-hover);
+    transform: translate(-1px, -1px);
+    box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.25);
+    font-weight: bold;
+}
+
+@media (max-width: 768px) {
+    .book-modal-content {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .book-modal-cover {
+        width: 140px;
+    }
+
+    .book-modal-cover img {
+        height: 200px;
+    }
+
+    .book-modal-meta {
+        grid-template-columns: 1fr;
+    }
+}

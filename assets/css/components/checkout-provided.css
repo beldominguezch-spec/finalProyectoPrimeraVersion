@@ -1,0 +1,433 @@
+/* Ventanas de compra y factura: los estilos se limitan a estos dos modales. */
+#overlay,
+#overlay-factura {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    background: rgba(24, 18, 14, 0.72);
+}
+
+#overlay.activo,
+#overlay-factura.activo {
+    display: flex;
+}
+
+#overlay .modal,
+#overlay-factura .modal {
+    position: relative;
+    width: 100%;
+    max-height: calc(100vh - 2rem);
+    overflow-y: auto;
+    padding: 1.75rem;
+    color: var(--text-main);
+    background-color: var(--bg-main);
+    background-image: url("https://www.transparenttextures.com/patterns/cream-paper.png");
+    border: 2px solid var(--brown-dark);
+    border-radius: 6px;
+    box-shadow: 7px 7px 0 rgba(0, 0, 0, 0.32);
+}
+
+#overlay .modal {
+    max-width: 560px;
+}
+
+#overlay-factura .modal {
+    max-width: 720px;
+}
+
+#overlay .modal > h2,
+#overlay-factura .modal > h2 {
+    padding-right: 2.5rem;
+    padding-bottom: 0.8rem;
+    margin-bottom: 1.1rem;
+    color: var(--brown-dark);
+    border-bottom: 2px solid var(--brown-medium);
+    font-size: clamp(1.4rem, 4vw, 1.9rem);
+    line-height: 1.25;
+}
+
+/* La línea de guiones del formulario se sustituye visualmente por el borde del título. */
+#overlay .modal > p {
+    display: none;
+}
+
+#overlay-factura .modal > p {
+    padding: 0.65rem 0.8rem;
+    margin-bottom: 1rem;
+    color: var(--text-muted);
+    background: var(--bg-secondary);
+    border-left: 3px solid var(--brown-medium);
+    font-size: 0.85rem;
+    line-height: 1.4;
+}
+
+#overlay .boton-reculiado,
+#overlay-factura .boton-reculiado {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    width: 2rem;
+    height: 2rem;
+    color: var(--brown-dark);
+    font-size: 1.7rem;
+    line-height: 1;
+}
+
+#overlay .boton-reculiado:hover,
+#overlay-factura .boton-reculiado:hover {
+    color: var(--btn-hover);
+}
+
+/* Formulario de pago y dirección. */
+#form-pago h3 {
+    padding-bottom: 0.45rem;
+    margin: 1.25rem 0 0.9rem;
+    color: var(--brown-dark);
+    border-bottom: 1px dashed var(--brown-light);
+    font-size: 1.05rem;
+}
+
+#form-pago h3:first-of-type {
+    margin-top: 0;
+}
+
+#overlay .campo {
+    min-width: 0;
+    margin-bottom: 0.95rem;
+}
+
+#overlay .campo label,
+#overlay .campo .etiqueta {
+    display: block;
+    margin-bottom: 0.4rem;
+    color: var(--brown-dark);
+    font-size: 0.9rem;
+    font-weight: bold;
+}
+
+#overlay .campo input[type="text"],
+#overlay .campo input[type="password"] {
+    display: block;
+    width: 100%;
+    min-height: 42px;
+    padding: 0.6rem 0.7rem;
+    color: var(--text-main);
+    background: #fffdf9;
+    border: 1px solid var(--brown-light);
+    border-radius: 4px;
+    font-family: inherit;
+    font-size: 0.95rem;
+}
+
+#overlay .campo input:focus-visible {
+    outline: 2px solid var(--brown-medium);
+    outline-offset: 1px;
+}
+
+#overlay .campo input::placeholder {
+    color: var(--text-muted);
+    opacity: 0.8;
+}
+
+#overlay .fila {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+}
+
+#overlay .tipos {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+}
+
+#overlay .tipos label {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    min-height: 40px;
+    padding: 0.45rem 0.75rem;
+    margin: 0;
+    background: var(--bg-secondary);
+    border: 1px solid var(--brown-light);
+    border-radius: 4px;
+    font-weight: normal;
+}
+
+#overlay .radio-tipo {
+    accent-color: var(--brown-dark);
+}
+
+#overlay .mensaje-error {
+    display: none;
+    padding: 0.7rem 0.8rem;
+    margin-bottom: 1rem;
+    color: #84271f;
+    background: #f9e9e4;
+    border-left: 3px solid #a33a2b;
+    border-radius: 3px;
+    line-height: 1.4;
+}
+
+#overlay .mensaje-error.visible {
+    display: block;
+}
+
+#overlay .campo.error input {
+    border-color: #a33a2b;
+}
+
+#overlay .campo.error .tipos {
+    outline: 2px solid #a33a2b;
+    outline-offset: 2px;
+}
+
+/* Botones de ambas ventanas. */
+#overlay .acciones,
+#overlay-factura .acciones {
+    display: flex;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    padding-top: 1rem;
+    margin-top: 1.25rem;
+    border-top: 1px dashed var(--brown-light);
+}
+
+#overlay .acciones button,
+#overlay-factura .acciones button {
+    min-height: 44px;
+    padding: 0.65rem 1rem;
+    border: 2px solid var(--brown-dark);
+    border-radius: 4px;
+    font-family: inherit;
+    font-size: 0.9rem;
+}
+
+#overlay .boton-cancelar,
+#overlay-factura .boton-cerrar-factura {
+    color: var(--brown-dark);
+    background: var(--bg-main);
+}
+
+#overlay .boton-confirmar,
+#overlay-factura .boton-revisar-pedido {
+    color: var(--bg-main);
+    background: var(--brown-dark);
+}
+
+#overlay .boton-cancelar:hover,
+#overlay-factura .boton-cerrar-factura:hover {
+    background: var(--bg-secondary);
+}
+
+#overlay .boton-confirmar:hover,
+#overlay-factura .boton-revisar-pedido:hover {
+    background: var(--btn-hover);
+}
+
+#overlay button:focus-visible,
+#overlay-factura button:focus-visible {
+    outline: 2px solid var(--brown-medium);
+    outline-offset: 3px;
+}
+
+/* Factura: datos del cliente, artículos y totales. */
+#factura-contenido > h3 {
+    padding-bottom: 0.7rem;
+    margin-bottom: 0.9rem;
+    color: var(--brown-dark);
+    border-bottom: 1px dashed var(--brown-light);
+    font-size: 1.15rem;
+    line-height: 1.3;
+    overflow-wrap: anywhere;
+}
+
+/* Los primeros cuatro párrafos son fecha, cliente, envío y medio de pago. */
+#factura-contenido > p:nth-of-type(-n+4) {
+    padding: 0.3rem 0.9rem;
+    margin: 0;
+    background: var(--bg-secondary);
+    border-left: 1px solid var(--brown-light);
+    border-right: 1px solid var(--brown-light);
+    line-height: 1.45;
+    overflow-wrap: anywhere;
+}
+
+#factura-contenido > p:nth-of-type(1) {
+    padding-top: 0.9rem;
+    border-top: 1px solid var(--brown-light);
+    border-radius: 6px 6px 0 0;
+}
+
+#factura-contenido > p:nth-of-type(4) {
+    padding-bottom: 0.9rem;
+    border-bottom: 1px solid var(--brown-light);
+    border-radius: 0 0 6px 6px;
+}
+
+#factura-contenido table {
+    width: 100%;
+    margin: 1.3rem 0;
+    border-collapse: collapse;
+    border: 1px solid var(--brown-medium);
+}
+
+#factura-contenido th,
+#factura-contenido td {
+    padding: 0.7rem 0.6rem;
+    text-align: left;
+    vertical-align: top;
+}
+
+#factura-contenido th {
+    color: var(--bg-main);
+    background: var(--brown-dark);
+    font-size: 0.78rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+#factura-contenido td {
+    background: rgba(245, 235, 221, 0.75);
+    border-bottom: 1px dotted var(--brown-light);
+    font-size: 0.9rem;
+}
+
+#factura-contenido td:first-child {
+    font-weight: bold;
+    overflow-wrap: anywhere;
+}
+
+#factura-contenido th:not(:first-child),
+#factura-contenido td:not(:first-child) {
+    text-align: right;
+    white-space: nowrap;
+}
+
+/* Los cuatro párrafos después de la tabla forman el resumen de la factura. */
+#factura-contenido > p:nth-of-type(n+5) {
+    width: min(100%, 310px);
+    padding: 0.35rem 0.85rem;
+    margin: 0 0 0 auto;
+    text-align: right;
+    background: var(--bg-secondary);
+    border-left: 1px solid var(--brown-light);
+    border-right: 1px solid var(--brown-light);
+}
+
+#factura-contenido > p:nth-of-type(5) {
+    padding-top: 0.8rem;
+    border-top: 1px solid var(--brown-light);
+    border-radius: 6px 6px 0 0;
+}
+
+#factura-contenido > p:nth-of-type(8) {
+    padding-top: 0.65rem;
+    padding-bottom: 0.8rem;
+    color: var(--brown-dark);
+    border-top: 1px dashed var(--brown-medium);
+    border-bottom: 1px solid var(--brown-light);
+    border-radius: 0 0 6px 6px;
+    font-size: 1.1rem;
+}
+
+/* En pantallas pequeñas el formulario va en una columna y cada libro se lee completo. */
+@media (max-width: 600px) {
+    #overlay,
+    #overlay-factura {
+        align-items: flex-start;
+        padding: 0.75rem;
+    }
+
+    #overlay .modal,
+    #overlay-factura .modal {
+        max-height: calc(100vh - 1.5rem);
+        padding: 1rem;
+    }
+
+    #overlay .fila {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+
+    #overlay .acciones,
+    #overlay-factura .acciones {
+        flex-direction: column;
+    }
+
+    #overlay .acciones button,
+    #overlay-factura .acciones button {
+        width: 100%;
+    }
+
+    #factura-contenido table,
+    #factura-contenido tbody {
+        display: block;
+        width: 100%;
+    }
+
+    #factura-contenido table {
+        border: 0;
+    }
+
+    #factura-contenido thead {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip-path: inset(50%);
+        white-space: nowrap;
+    }
+
+    #factura-contenido tbody tr {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 0.4rem 0.75rem;
+        padding: 0.75rem;
+        margin-bottom: 0.6rem;
+        background: var(--bg-main);
+        border: 1px solid var(--brown-light);
+        border-radius: 4px;
+    }
+
+    #factura-contenido td {
+        display: block;
+        min-width: 0;
+        padding: 0;
+        background: none;
+        border: 0;
+        white-space: normal;
+    }
+
+    #factura-contenido td:first-child {
+        grid-column: 1 / -1;
+        padding-bottom: 0.4rem;
+        border-bottom: 1px dashed var(--brown-light);
+    }
+
+    #factura-contenido td:nth-child(2) {
+        text-align: left;
+    }
+
+    #factura-contenido td:nth-child(4) {
+        grid-column: 1 / -1;
+        font-weight: bold;
+    }
+
+    #factura-contenido td:nth-child(2)::before {
+        content: "Cant.: ";
+    }
+
+    #factura-contenido td:nth-child(3)::before {
+        content: "Precio: ";
+    }
+
+    #factura-contenido td:nth-child(4)::before {
+        content: "Subtotal: ";
+    }
+}

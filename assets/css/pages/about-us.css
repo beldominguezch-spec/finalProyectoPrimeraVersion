@@ -1,0 +1,362 @@
+/* 
+===============================================================================================
+ABOUT US PAGE STYLES
+===============================================================================================
+*/
+
+@media (max-width: 425px) {
+
+    /* 
+    ======================================================
+    SECTION: MAIN
+    ====================================================== 
+    */
+
+    .about {
+        width: 90%;
+        margin: 2.5rem auto 3.75rem auto;
+        border: 2px dashed var(--border-color);
+        border-radius: 10px;
+    }
+
+    .about h2 {
+        text-align: center;
+        font-size: 1.4rem;
+        margin: 1.875rem 0 1.625rem 0;
+    }
+
+    .about-container {
+        margin: 3.125rem 2.5rem;
+    }
+
+    /* 
+    ======================================================
+    SECTION: HERO
+    ====================================================== 
+    */
+
+    .hero-subtitle {
+        font-weight: bold;
+        font-size: 1rem;
+        margin-bottom: 1rem;
+    }
+
+    /* 
+    ======================================================
+    SECTION: OUR STORY
+    ======================================================
+    */
+
+    .story-image {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        margin: 1.875rem 0;
+    }
+
+    .story-image img {
+        border-radius: 15px;
+        box-shadow: 0 0 30px 12px rgba(0, 0, 0, 0.28);
+    }
+
+    /* 
+    ======================================================
+    SECTION: MISSION & VISION
+    ======================================================
+    */
+
+    .mission-vision-container {
+        display: flex;
+        flex-direction: column;
+        border: 2px dotted var(--border-color);
+        border-radius: 8px;
+        padding: 2.5rem 0;
+        margin: 2.5rem 0;
+    }
+
+    .mission-vision-container h2 {
+        margin: 0 0 1.25rem 0;
+    }
+
+    .mission,
+    .vision {
+        width: 80%;
+        margin: 0 auto;
+        text-align: center;
+        background-color: var(--bg-soft);
+        background-image: url("https://transparenttextures.com/patterns/light-paper-fibers.png");
+        padding: 2.5rem 2.1875rem;
+        border-top-left-radius: 60px;
+        border-bottom-left-radius: 8px;
+        border-bottom-right-radius: 40px;
+        box-shadow: 0 0 30px 12px rgba(0, 0, 0, 0.25);
+    }
+
+    .vision {
+        margin-top: 2.8125rem;
+    }
+
+    /* 
+    ======================================================
+    SECTION: VALORES Y ¿QUÉ NOS HACE DIFERENTES?
+    ======================================================
+    */
+
+    .values-grid,
+    .why-grid {
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .value-card,
+    .why-item {
+        width: 100%;
+        padding: 1.5625rem 1.875rem;
+        border-bottom: 2px solid var(--border-color);
+    }
+
+
+    .value-card:nth-child(1),
+    .why-item:nth-child(1) {
+        padding-top: 0px;
+    }
+
+    .value-card img,
+    .why-item img {
+        width: 3.125rem;
+        margin: 0 auto;
+    }
+
+    .value-card h3,
+    .why-item h3 {
+        margin: 1rem 0 0.625rem 0;
+    }
+
+    .separator-grid {
+        width: 0.125rem;
+        background-color: var(--border-color);
+    }
+
+    /* 
+    ======================================================
+    SECTION: CTA FINAL
+    ======================================================
+    */
+
+    .cta-buttons {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 1.5625rem;
+    }
+
+    .btn-explore-collection {
+        width: 100%;
+        background-color: var(--btn-bg);
+        color: var(--bg-main);
+        border: none;
+        padding: 1rem 1.5625rem;
+        border: 2px solid var(--btn-bg);
+        border-radius: 10px;
+    }
+
+    .btn-explore-collection:hover {
+        background-color: var(--btn-hover);
+        font-weight: bold;
+        border: 2px solid var(--btn-hover)
+    }
+
+    .btn-explore-books {
+        width: 100%;
+        border: 2px solid var(--btn-bg);
+        padding: 1rem 1.5625rem;
+        border-radius: 10px;
+    }
+
+    .btn-explore-books:hover {
+        background-color: var(--btn-hover);
+        font-weight: bold;
+        border: 2px solid var(--btn-hover);
+        color: var(--bg-main);
+    }
+
+    .btn-explore-collection:active,
+    .btn-explore-books:active {
+        background: var(--btn-active);
+        border: 2px solid var(--btn-active)
+    }
+
+}
+
+@media (min-width: 1440px) {
+
+    /* 
+    ======================================================
+    SECTION: MAIN
+    ====================================================== 
+    */
+
+    .about {
+        width: 92%;
+        margin: 2.5rem auto 3.75rem auto;
+        border: 2px dashed var(--border-color);
+        border-radius: 10px;
+    }
+
+    .about h2 {
+        text-align: center;
+        font-size: 1.7rem;
+        margin: 1.875rem 0 1.625rem 0;
+    }
+
+    .about-container {
+        margin: 4.375rem 3.75rem;
+    }
+
+    /* 
+    ======================================================
+    SECTION: HERO
+    ====================================================== 
+    */
+
+    .hero-subtitle {
+        font-weight: bold;
+        font-size: 1.2rem;
+        margin-bottom: 1rem;
+    }
+
+    /* 
+    ======================================================
+    SECTION: OUR STORY
+    ======================================================
+    */
+
+    .story-image {
+        display: flex;
+        justify-content: center;
+        margin: 1.875rem 0;
+    }
+
+    .story-image img {
+        border-radius: 15px;
+        box-shadow: 0 0 30px 12px rgba(0, 0, 0, 0.28);
+    }
+
+    /* 
+    ======================================================
+    SECTION: MISSION & VISION
+    ======================================================
+    */
+
+    .mission-vision-container {
+        display: flex;
+        justify-content: space-around;
+        border: 2px dotted var(--border-color);
+        border-radius: 8px;
+        padding: 3.75rem 0;
+        margin: 2.5rem 0;
+    }
+
+    .mission-vision-container h2 {
+        margin: 0 0 1.25rem 0;
+    }
+
+    .mission,
+    .vision {
+        width: 40%;
+        text-align: center;
+        background-color: var(--bg-soft);
+        background-image: url("https://transparenttextures.com/patterns/light-paper-fibers.png");
+        padding: 3.125rem 2.5rem;
+        border-top-left-radius: 60px;
+        border-bottom-left-radius: 8px;
+        border-bottom-right-radius: 40px;
+        box-shadow: 0 0 30px 12px rgba(0, 0, 0, 0.25);
+    }
+
+    /* 
+    ======================================================
+    SECTION: VALORES Y ¿QUÉ NOS HACE DIFERENTES?
+    ======================================================
+    */
+
+    .values-grid,
+    .why-grid {
+        display: flex;
+        text-align: center;
+        border-bottom: 2px solid var(--border-color);
+        padding-bottom: 1.25rem;
+    }
+
+    .value-card,
+    .why-item {
+        width: 25%;
+        padding: 0.625rem 1.875rem;
+    }
+
+    .value-card img,
+    .why-item img {
+        width: 3.125rem;
+        margin: 0 auto;
+    }
+
+    .value-card h3,
+    .why-item h3 {
+        margin: 1rem 0 0.625rem 0;
+    }
+
+    .separator-grid {
+        width: 0.125rem;
+        background-color: var(--border-color);
+    }
+
+    /* 
+    ======================================================
+    SECTION: CTA FINAL
+    ======================================================
+    */
+
+    .cta-buttons {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 1.25rem;
+    }
+
+    .btn-explore-collection {
+        background-color: var(--btn-bg);
+        color: var(--bg-main);
+        border: none;
+        padding: 1rem 1.5625rem;
+        border: 2px solid var(--btn-bg);
+        border-radius: 10px;
+    }
+
+    .btn-explore-collection:hover {
+        background-color: var(--btn-hover);
+        font-weight: bold;
+        border: 2px solid var(--btn-hover)
+    }
+
+    .btn-explore-books {
+        border: 2px solid var(--btn-bg);
+        padding: 1rem 1.5625rem;
+        margin-right: 1.25rem;
+        border-radius: 10px;
+    }
+
+    .btn-explore-books:hover {
+        background-color: var(--btn-hover);
+        font-weight: bold;
+        border: 2px solid var(--btn-hover);
+        color: var(--bg-main);
+    }
+
+    .btn-explore-collection:active,
+    .btn-explore-books:active {
+        background: var(--btn-active);
+        border: 2px solid var(--btn-active)
+    }
+}

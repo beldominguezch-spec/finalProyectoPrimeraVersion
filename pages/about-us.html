@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet">
+
+    <!-- CSS del proyecto -->
+    <link rel="stylesheet" href="./../assets/css/style.css">
+    <link rel="stylesheet" href="./../assets/css/pages/about-us.css">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="./../assets/img/favicon/libro.png" type="image/x-icon">
+    <title>Sobre Nosotros</title>
+</head>
+
+<body>
+    <header>
+        <!-- Parte Superior -->
+        <div class="header-top">
+            <div class="logo">
+                <a href="./../index.html">
+                    <img src="./../assets/img/logo/libro.png" alt="Logo pag">
+                    <div class="logo-content">
+                        <h1>PÁGINAS DEL TIEMPO</h1>
+                        <p>LIBROS QUE CUENTAN HISTORIAS</p>
+                    </div>
+                </a>
+            </div>
+
+            <!-- SEARCH (DESKTOP) -->
+            <div class="search">
+                <input type="search" id="search" placeholder="🔍 Buscar libro, autor o ISBN">
+                <button type="submit">Buscar</button>
+            </div>
+
+            <!-- ACTIONS (DESKTOP) -->
+            <div class="actions">
+                <div class="icon-actions">
+
+                    <a href="./login.html">
+                        <img src="./../assets/img/icons/actions/favorito.png" alt="Ver favoritos">
+                    </a>
+
+                    <a href="./cart.html">
+                        <img src="./../assets/img/icons/actions/carrito-de-compras.png" alt="Ver carrito">
+                    </a>
+
+                </div>
+
+                <div class="auth-actions">
+
+                    <a href="./login.html" class="login-btn">Iniciar sesión</a>
+                    <a href="./register.html" class="register-btn">Registrarse</a>
+
+                </div>
+
+            </div>
+
+            <!-- HAMBURGUESA (SOLO MOBILE) -->
+            <button class="menu-toggle">
+                <img src="./../assets/img/icons/menu-toggle/menu.png" alt="Menu Hamburguesa">
+            </button>
+        </div>
+
+        <!-- NAV DESKTOP -->
+        <nav class="header-nav" aria-label="Navegación principal">
+            <ul>
+                <li><a href="./../index.html">Inicio</a></li>
+                <li><a href="./book-categories.html">Libros</a></li>
+                <li><a href="./about-us.html">Sobre Nosotros</a></li>
+                <li><a href="./contact.html">Contáctanos</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- ============================= -->
+    <!-- SIDEBAR MOBILE -->
+    <!-- ============================= -->
+
+    <aside class="mobile-sidebar">
+
+        <!-- BOTÓN CERRAR -->
+        <button class="close-menu">
+            <img src="" alt="Cerrar menú">
+        </button>
+
+        <!-- SEARCH MOBILE -->
+        <div class="mobile-search">
+            <input type="search" placeholder="Buscar libro, autor o ISBN">
+            <button type="submit">Buscar</button>
+        </div>
+
+        <!-- NAV MOBILE -->
+        <nav class="mobile-nav">
+            <ul>
+                <li><a href="./../index.html">Inicio</a></li>
+                <li><a href="./book-categories.html">Libros</a></li>
+                <li><a href="./about-us.html">Sobre Nosotros</a></li>
+                <li><a href="./contact.html">Contáctanos</a></li>
+            </ul>
+        </nav>
+
+        <!-- ICONOS MOBILE -->
+        <div class="mobile-icons">
+            <a href="./login.html">
+                <img src="" alt="Ver favoritos"> Favoritos</a>
+            <a href="./login.html">
+                <img src="" alt="Ver carrito"> Carrito</a>
+        </div>
+
+        <!-- AUTH MOBILE -->
+        <div class="mobile-auth">
+            <a href="./login.html" class="login-btn">Iniciar sesión</a>
+            <a href="./register.html" class="register-btn">Registrarse</a>
+        </div>
+
+    </aside>
+
+    <div class="overlay"></div>
+
+    <main class="about">
+
+        <div class="about-container">
+
+            <!-- HERO -->
+            <section class="about-hero">
+                <div class="about-hero-content">
+                    <h2>Libros que resisten al tiempo</h2>
+                    <p class="hero-subtitle">Somos guardianes de historias que merecen ser leídas una y otra vez.</p>
+                    <p>
+                        En <span>Páginas del Tiempo</span>, creemos que los libros no son simples objetos:
+                        son testigos de épocas, emociones y pensamientos que siguen vivos. Nuestro propósito es
+                        rescatar esas historias y entregarlas a nuevos lectores que sepan valorarlas.
+                    </p>
+                </div>
+            </section>
+
+            <!-- NUESTRA HISTORIA -->
+            <section class="our-story">
+                <div class="our-history-container">
+                    <h2>Nuestra Historia</h2>
+                    <div class="story-grid">
+                        <div class="story-text">
+                            <p>
+                                <span>Páginas del Tiempo</span> nació en 2023 de la pasión de un grupo de bibliófilos
+                                que veían con tristeza cómo las grandes cadenas olvidaban las ediciones antiguas, los
+                                clásicos descatalogados y las verdaderas joyas literarias.
+                            </p>
+                            <br>
+                            <p>
+                                Lo que empezó como una pequeña colección personal se convirtió en una misión: crear un
+                                espacio donde los libros con alma fueran los protagonistas. No vendemos solo libros
+                                usados,
+                                preservamos historias, conocimiento y emociones que han viajado a través de décadas.
+                            </p>
+                        </div>
+                        <div class="story-image">
+                            <img src="./../assets/img/our-story/nuestra-historia.jpg" alt="Libros antiguos apilados">
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- MISIÓN Y VISIÓN -->
+            <section class="mission-vision">
+                <div class="mission-vision-container">
+                    <div class="mission">
+                        <h2>Nuestra Misión</h2>
+                        <p>
+                            Conectar lectores apasionados con libros que tienen alma. Creemos que un libro usado
+                            no es un libro viejo, sino un libro con historia propia que ahora puede formar parte de la
+                            tuya.
+                        </p>
+                    </div>
+
+                    <div class="vision">
+                        <h2>Nuestra Visión</h2>
+                        <p>
+                            Ser el marketplace de referencia para amantes de los libros vintage, ediciones especiales
+                            y literatura atemporal en el mundo hispanohablante.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- VALORES -->
+            <section class="about-values">
+                <div class="about-values-container">
+                    <h2>Nuestros Valores</h2>
+                    <div class="values-grid">
+                        <div class="value-card">
+                            <img src="./../assets/img/our-values/libro-abierto.png" alt="Pasión por lo eterno">
+                            <h3>Pasión por lo eterno</h3>
+                            <p>Clásicos, primeras ediciones, libros ilustrados y obras que merecen una segunda (o
+                                tercera)
+                                vida.
+                            </p>
+                        </div>
+
+                        <div class="separator-grid"></div>
+
+                        <div class="value-card">
+                            <img src="./../assets/img/our-values/curaduria.png" alt="Curaduría cuidadosa">
+                            <h3>Curaduría cuidadosa</h3>
+                            <p>Cada libro es revisado personalmente. Solo ofrecemos ejemplares en buen estado con
+                                encuadernaciones y páginas que conservan su magia.
+                            </p>
+                        </div>
+
+                        <div class="separator-grid"></div>
+
+                        <div class="value-card">
+                            <img src="./../assets/img/our-values/pergamino-antiguo.png" alt="Respeto por la historia">
+                            <h3>Respeto por la historia</h3>
+                            <p>Valoramos el recorrido de cada obra y su importancia cultural.</p>
+                        </div>
+
+                        <div class="separator-grid"></div>
+
+                        <div class="value-card">
+                            <img src="./../assets/img/our-values/comunidad.png" alt="Comunidad de lectores">
+                            <h3>Comunidad de lectores</h3>
+                            <p>Aspiramos a ser más que una tienda: un espacio donde los amantes de los libros se
+                                encuentren,
+                                recomienden y celebren la literatura.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ¿QUÉ NOS HACE DIFERENTES? -->
+            <section class="why-us">
+                <div class="why-us-container">
+                    <h2>¿Qué nos hace diferentes?</h2>
+                    <div class="why-grid">
+                        <div class="why-item">
+                            <img src="./../assets/img/why-us/diamante.png" alt="Selección única">
+                            <h3>Selección única</h3>
+                            <p>Libros que no encontrarás fácilmente en otras plataformas. Ediciones especiales y
+                                ejemplares
+                                difíciles de conseguir.</p>
+                        </div>
+
+                        <div class="separator-grid"></div>
+
+                        <div class="why-item">
+                            <img src="./../assets/img/why-us/calidad.png" alt="Calidad garantizada">
+                            <h3>Calidad garantizada</h3>
+                            <p>Revisamos el estado de cada libro y lo describimos con total honestidad.</p>
+                        </div>
+
+                        <div class="separator-grid"></div>
+
+                        <div class="why-item">
+                            <img src="./../assets/img/why-us/envios.png" alt="Envíos cuidados">
+                            <h3>Envíos cuidados</h3>
+                            <p>Empaques especiales para proteger tus tesoros literarios durante el viaje.</p>
+                        </div>
+
+                        <div class="separator-grid"></div>
+
+                        <div class="why-item">
+                            <img src="./../assets/img/why-us/amor-libros.png" alt="">
+                            <h3>Amor genuino</h3> <!-- 🤝 Atención cercana (Otra opcion) -->
+                            <p>Detrás de cada pedido hay personas que realmente aman la literatura.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+
+            <!-- COMPROMISO + CTA FINAL -->
+            <section class="final-cta">
+                <div class="final-cta-container">
+                    <h2>Nuestro compromiso</h2>
+                    <p>
+                        Nos comprometemos a ofrecer una experiencia transparente, segura y llena de pasión.
+                        Cada libro que enviamos es tratado como lo que es: una pieza de historia que merece llegar en
+                        las
+                        mejores condiciones.
+                    </p>
+
+                    <h2>¿Listo para encontrar tu próximo tesoro?</h2>
+                    <div class="cta-buttons">
+                        <a href="./book-categories.html" class="btn-explore-collection">Explorar nuestra colección</a>
+                        <a href="" class="btn-explore-books">Explorar nuestros libros</a>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+
+    </main>
+
+    <footer class="footer">
+        <!-- Marca -->
+        <div class="footer-brand">
+            <h3>PÁGINAS DEL TIEMPO</h3>
+            <p>Libros que cuentan historias</p>
+        </div>
+
+        <!-- Contenido -->
+        <div class="footer-content">
+
+            <div class="footer-links">
+                <h4>Explorar</h4>
+                <ul>
+                    <li><a href="./../index.html">Inicio</a></li>
+                    <li><a href="./book-categories.html">Libros</a></li>
+                    <li><a href="./about-us.html">Sobre Nosotros</a></li>
+                    <li><a href="./../index.html#categories">Categorías</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-help">
+                <h4>Ayuda</h4>
+                <ul>
+                    <li><a href="#">Preguntas frecuentes</a></li>
+                    <li><a href="#">Envíos</a></li>
+                    <li><a href="#">Devoluciones</a></li>
+                    <li><a href="./contact.html">Contáctanos</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-social-pay">
+
+                <h4>Síguenos</h4>
+                <div class="social-icons">
+                    <a href="#" target="_blank">
+                        <img src="./../assets/img/icons/social/instagram.svg" alt="Instagram" title="Instagram">
+                    </a>
+                    <a href="#" target="_blank">
+                        <img src="./../assets/img/icons/social/facebook.svg" alt="Facebook" title="Facebook">
+                    </a>
+                    <a href="#" target="_blank">
+                        <img src="./../assets/img/icons/social/gmail.svg" alt="Gmail" title="Gmail">
+                    </a>
+                </div>
+
+                <h4>Métodos de pago</h4>
+                <div class="payment-icons">
+                    <img src="./../assets/img/icons/payment/visa.svg" alt="Visa" title="Visa">
+                    <img src="./../assets/img/icons/payment/mastercard.svg" alt="Mastercard" title="Mastercard">
+                    <img src="./../assets/img/icons/payment/american-express.svg" alt="American Express"
+                        title="American Express">
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2026 PÁGINAS DEL TIEMPO - Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- Script de Datos Iniciales (105 clientes, compras, garantías) -->
+    <script src="./../assets/js/data-initial.js"></script>
+    <script src="./../assets/js/data/reservas.js"></script>
+    <!-- Script de Catálogo y Buscador flotante -->
+    <script src="./../assets/js/catalog.js"></script>
+    <script src="./../assets/js/auth.js"></script>
+</body>
+
+</html>

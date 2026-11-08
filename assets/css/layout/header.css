@@ -1,0 +1,135 @@
+/* 
+========================================
+HEADER LAYOUT
+========================================
+*/
+
+@media (max-width: 425px) {
+
+    .logo-content p,
+    .actions,
+    .header-nav,
+    .mobile-sidebar  {
+        display: none;
+    }
+
+    .menu-toggle img {
+        width: 2.375rem;
+        color: var(--color-surface-medium);
+    } 
+
+    .header-top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1.25rem 2.1875rem;
+        background-color: var(--text-strong);
+    }
+
+    .logo {
+        width: 55%;
+    }
+
+    .logo a {
+        display: flex;
+        align-items: center;
+        color: var(--color-surface-medium);
+        gap: 0.625rem;
+    }
+
+    .logo img {
+        width: 3.75rem;
+    }
+
+    .logo-content h1 {
+        font-size: 1.1rem;
+    }
+
+}
+
+@media (min-width: 1440px) {
+
+    .menu-toggle,
+    .mobile-sidebar {
+        display: none;
+    }
+
+    /* HEADER TOP */
+
+    .header-top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1.25rem 3.125rem;
+        background-color: var(--text-strong);
+    }
+
+    /* LOGO */
+
+    .logo a {
+        display: flex;
+        align-items: center;
+        color: var(--color-surface-medium);
+        gap: 0.625rem;
+    }
+
+    /* ICONO LOGO */
+
+    .logo img {
+        width: 3.75rem;
+    }
+
+    /* TEXTO LOGO */
+
+    .logo-content h1,
+    .logo-content p {
+        font-size: 1.1rem;
+    }
+
+    /* ACCIONES */
+
+    .actions {
+        display: flex;
+        align-items: center;
+        gap: 1.25rem;
+    }
+
+    .icon-actions {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .icon-actions a img {
+        width: 2.8125rem;
+    }
+
+    .auth-actions {
+        display: flex;
+        gap: 1rem;
+    }
+
+    .login-btn {
+        background-color: var(--color-surface-medium);
+        color: var(--text-strong);
+        padding: 0.75rem;
+        border: 2px solid var(--color-surface-medium);
+        border-radius: 6px;
+    }
+
+    .register-btn {
+        border: 2px solid var(--color-surface-dark);
+        border-radius: 6px;
+        padding: 0.75rem;
+        color: var(--color-surface-dark);
+    }
+
+    .register-btn:hover,
+    .login-btn:hover {
+        background-color: var(--bg-soft);
+        color: var(--text-strong);
+        font-weight: bold;
+        border: 2px solid var(--bg-soft);
+    }
+
+}
